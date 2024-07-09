@@ -1,4 +1,4 @@
-package com.example.progettolam.ui.homeFragment
+package com.example.progettolam.ui.profileFragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,30 +8,26 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.progettolam.R
-
-class HomeFragment: Fragment() {
-
-    lateinit var viewModel: HomeViewModel
+class ProfileFragment: Fragment() {
+    lateinit var profileModel: ProfileViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.home_fragment, container, false)
+        return inflater.inflate(R.layout.profile_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
-        val textView: TextView = view.findViewById(R.id.textView)
-        viewModel.text.observe(viewLifecycleOwner) {
+        profileModel = ViewModelProvider(this)[ProfileViewModel::class.java]
+        val textView: TextView = view.findViewById(R.id.profileText)
+        profileModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
 
         textView.setOnClickListener() {
-            viewModel.changeTest()
+            profileModel.changeTest()
         }
-
     }
-
 }
