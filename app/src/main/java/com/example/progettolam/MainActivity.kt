@@ -32,9 +32,12 @@ class MainActivity : AppCompatActivity() {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 supportFragmentManager.popBackStackImmediate()
+                /*
                 navigationBar.selectedItemId = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)?.tag?.toInt()
                     ?: R.id.homeMenu
 
+                
+                 */
             }
         }
 
@@ -56,7 +59,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navbarListener(menuItem: MenuItem): Boolean {
-        when (val id: Int? = menuItem.itemId) {
+        when (val id: Int = menuItem.itemId) {
             R.id.homeMenu -> {
                 if(!(menuItem.isChecked)) {
                     changeFragment(HomeFragment(),id.toString())
