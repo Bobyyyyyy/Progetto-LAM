@@ -30,6 +30,7 @@ class frontpageActivity: AppCompatActivity(){
         })
 
 
+
     }
 
 

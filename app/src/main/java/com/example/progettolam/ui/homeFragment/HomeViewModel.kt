@@ -15,4 +15,6 @@ class HomeViewModel: ViewModel() {
     fun changeTest() {
         _text.value = "Ciao"
     }
+
+
 }
