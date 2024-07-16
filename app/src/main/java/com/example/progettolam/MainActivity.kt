@@ -1,14 +1,14 @@
 package com.example.progettolam
 
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
-import com.example.progettolam.ui.homeFragment.HomeFragment
-import com.example.progettolam.ui.profileFragment.ProfileFragment
+import com.example.progettolam.DataStore.SharedPreferences
+import com.example.progettolam.UI.homeFragment.HomeFragment
+import com.example.progettolam.UI.profileFragment.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -19,15 +19,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navigationBar: BottomNavigationView
     private lateinit var fragmentContainer: FragmentContainerView
 
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         fragmentContainer = findViewById(R.id.fragmentContainerView)
         navigationBar = findViewById(R.id.homeNavigation)
-
+        val preferenceDataStore = SharedPreferences(this)
 
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -36,7 +33,7 @@ class MainActivity : AppCompatActivity() {
                 navigationBar.selectedItemId = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)?.tag?.toInt()
                     ?: R.id.homeMenu
 
-                
+
                  */
             }
         }
@@ -67,6 +64,8 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.calendarMenu -> {
+                if(!menuItem.isChecked) {
+                }
                 true
             }
             R.id.profileMenu -> {

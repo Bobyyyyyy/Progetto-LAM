@@ -1,4 +1,4 @@
-package com.example.progettolam.ui.homeFragment;
+package com.example.progettolam.UI.homeFragment
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -1,4 +1,4 @@
-package com.example.progettolam.ui.profileFragment
+package com.example.progettolam.UI.profileFragment
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
