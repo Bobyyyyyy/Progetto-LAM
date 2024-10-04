@@ -15,7 +15,7 @@
 
         <activity
             android:name=".UI.frontpageActivity.frontpageActivity"
-            android:exported="true">
+            android:exported="true" android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,6 +33,7 @@
 
         <activity android:name=".UI.preferencesActivity.preferencesActivity"
                 android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"></action>
                 <category android:name="android.intent.category.DEFAULT"></category>

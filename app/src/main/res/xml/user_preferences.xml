@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+<EditTextPreference
+        app:key = "@string/preferences_username"
+        app:title = "@string/username_tag"
+        />
+
+    <SwitchPreference
+            app:key="@string/preferences_theme"
+            app:title="@string/theme_tag" />
+
+</androidx.preference.PreferenceScreen>

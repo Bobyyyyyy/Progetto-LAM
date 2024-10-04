@@ -26,7 +26,7 @@ class HomeFragment: Fragment() {
         viewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
-
+        
         textView.setOnClickListener {
             viewModel.changeTest()
         }

@@ -1,7 +1,9 @@
 package com.example.progettolam.UI.profileFragment
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +12,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.progettolam.R
+import com.example.progettolam.UI.preferencesActivity.PreferencesFragment
 import com.example.progettolam.UI.preferencesActivity.preferencesActivity
 
 class ProfileFragment: Fragment() {
@@ -35,11 +38,24 @@ class ProfileFragment: Fragment() {
             profileModel.changeTest()
         }
 
+
+        settings.setOnClickListener{
+            parentFragmentManager.beginTransaction().run {
+                setReorderingAllowed(true)
+                replace(R.id.fragmentContainerView, PreferencesFragment())
+                addToBackStack(null)
+                commit()
+            }
+        }
+
+
+        /*
         settings.setOnClickListener{
             val intent: Intent = Intent(activity,preferencesActivity::class.java)
             startActivity(intent)
         }
 
+         */
 
     }
 }
