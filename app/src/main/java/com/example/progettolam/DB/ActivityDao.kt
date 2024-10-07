@@ -1,4 +1,4 @@
-package com.example.progettolam
+package com.example.progettolam.DB
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -14,5 +14,6 @@ interface ActivityDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(activity: Activity)
+
 
 }

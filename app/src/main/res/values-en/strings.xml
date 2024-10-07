@@ -6,5 +6,9 @@
     <string name="username_tag">Change Username</string>
     <string name="theme_default">Choose Theme</string>
     <string name="theme_tag">Dark Theme</string>
+    <string name="greetings">Hello</string>
+
+
+
 
 </resources>

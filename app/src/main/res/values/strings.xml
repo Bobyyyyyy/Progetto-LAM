@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name" translatable="false">Physical Tracker</string>
     <string name="save_button">Salva</string>
-
+    <string name="greetings">Ciao</string>
 
 
 

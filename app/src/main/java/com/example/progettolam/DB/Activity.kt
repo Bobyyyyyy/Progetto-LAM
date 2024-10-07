@@ -1,4 +1,4 @@
-package com.example.progettolam
+package com.example.progettolam.DB
 
 import androidx.annotation.NonNull
 import androidx.room.Entity
@@ -11,15 +11,14 @@ import com.google.gson.annotations.SerializedName
 class Activity(
 
     @PrimaryKey
-    @NonNull
     @SerializedName("id")
-    var id: String,
+    var id: Int,
 
     @SerializedName("startTime")
-    var startTime: Date,
+    var startTime: String,
 
     @SerializedName("endTime")
-    var endTime: Date,
+    var endTime: String,
 
 )
 

@@ -40,12 +40,7 @@ class ProfileFragment: Fragment() {
 
 
         settings.setOnClickListener{
-            parentFragmentManager.beginTransaction().run {
-                setReorderingAllowed(true)
-                replace(R.id.fragmentContainerView, PreferencesFragment())
-                addToBackStack(null)
-                commit()
-            }
+            changeFragment(PreferencesFragment(), R.id.settings.toString())
         }
 
 
@@ -56,6 +51,44 @@ class ProfileFragment: Fragment() {
         }
 
          */
+
+    }
+
+
+    private fun changeFragment(fragment: Fragment, tag: String) {
+
+        val currentFragment = parentFragmentManager.findFragmentById(R.id.fragmentContainerView)
+
+        if (currentFragment != null && currentFragment.tag == tag) {
+            return
+        }
+
+
+        val storedFragment = parentFragmentManager.findFragmentByTag(tag)
+
+        if ( storedFragment != null ) {
+            parentFragmentManager.beginTransaction().run {
+                if (currentFragment != null) {
+                    detach(currentFragment)
+                }
+                attach(storedFragment)
+                commit()
+            }
+        }
+
+        else {
+
+            parentFragmentManager.beginTransaction().run {
+                setReorderingAllowed(true)
+                if (currentFragment != null) {
+                    detach(currentFragment)
+                }
+                add(R.id.fragmentContainerView,fragment,tag)
+                addToBackStack(null)
+                commit()
+            }
+        }
+
 
     }
 }

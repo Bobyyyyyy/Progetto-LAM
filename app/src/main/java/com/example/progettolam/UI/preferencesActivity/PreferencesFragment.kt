@@ -11,7 +11,6 @@ import com.example.progettolam.R
 class PreferencesFragment: PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.user_preferences, rootKey)
-        val defaultShared = PreferenceManager.getDefaultSharedPreferences(requireContext())
 
         findPreference<EditTextPreference>(getString(R.string.preferences_username))
             ?.setOnPreferenceChangeListener { _, newValue ->

@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+    kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.preference.ktx)
     implementation(libs.gson)

@@ -126,7 +126,7 @@ class MainActivity : AppCompatActivity() {
                     detach(currentFragment)
                 }
                 add(R.id.fragmentContainerView,fragment,tag)
-                addToBackStack(tag)
+                addToBackStack(null)
                 commit()
             }
         }
