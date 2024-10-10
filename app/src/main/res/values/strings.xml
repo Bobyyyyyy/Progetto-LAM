@@ -5,17 +5,7 @@
     <string name="greetings">Ciao</string>
 
 
-
-
-
-
-
-
-
-
-
-
-    <string name="preferences_username" translatable="false">preferences_username</string>
+    <string name="preferences_username" translatable="false" />
     <string name="username_default">Inserisci nome utente</string>
     <string name="username_tag"> Nome Utente </string>
 

@@ -16,6 +16,9 @@ import com.example.progettolam.DB.ActivityRepository
 import com.example.progettolam.DB.ActivityViewModel
 import com.example.progettolam.DB.ActivityViewModelFactory
 import com.example.progettolam.R
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 class HomeFragment: Fragment() {
     override fun onCreateView(
@@ -45,7 +48,7 @@ class HomeFragment: Fragment() {
 
 
         addButton.setOnClickListener {
-            activityViewModel.insertActivity(Activity(0,"ciao","ciao"))
+           activityViewModel.insertActivity(Activity(null, LocalTime.now(), LocalDate.now(), LocalTime.now().plusHours(1), LocalDate.now().plusDays(1)))
         }
 
 

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.preference.PreferenceManager
+import com.example.progettolam.UI.calendarFragment.CalendarFragment
 import com.example.progettolam.UI.homeFragment.HomeFragment
 import com.example.progettolam.UI.profileFragment.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -83,6 +84,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             R.id.calendarMenu -> {
+                    changeFragment(CalendarFragment(),id.toString())
             }
             R.id.profileMenu -> {
                 if(!(menuItem.isChecked)) {
