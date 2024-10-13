@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.progettolam.UI.homeFragment.HomeViewModel
+import java.time.LocalDate
 import java.time.YearMonth
 
 class ActivityViewModel(private val repository: ActivityRepository): ViewModel() {
@@ -11,8 +12,8 @@ class ActivityViewModel(private val repository: ActivityRepository): ViewModel()
     var currentMonth: YearMonth = YearMonth.now()
 
 
-    fun getActivities(): LiveData<List<Activity>> {
-        return repository.getAllActivities()
+    fun getActivities(startDate: LocalDate?): LiveData<List<Activity>> {
+        return repository.getAllActivities(startDate)
     }
 
     fun insertActivity(activity: Activity) {

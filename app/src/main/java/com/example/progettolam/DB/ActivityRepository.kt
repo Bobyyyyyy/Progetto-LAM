@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import java.time.LocalTime
 
 class ActivityRepository(app: Application) {
@@ -24,8 +25,8 @@ class ActivityRepository(app: Application) {
         }
     }
 
-    fun getAllActivities(): LiveData<List<Activity>> {
-        return activityDao.getListOfActivities(startTime = LocalTime.now())
+    fun getAllActivities(startDate: LocalDate?): LiveData<List<Activity>> {
+        return activityDao.getListOfActivities(startDate)
     }
 
 

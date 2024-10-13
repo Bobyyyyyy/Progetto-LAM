@@ -2,11 +2,13 @@ package com.example.progettolam.UI.calendarFragment
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.children
+import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -66,18 +68,6 @@ class CalendarFragment: Fragment() {
         calendarView.scrollToMonth(currentMonth)
 
 
-       activityViewModel.getActivities().observe(requireActivity()) { newActivities ->
-            activityAdapter.apply {
-                activities = newActivities
-                notifyDataSetChanged()
-            }
-
-        }
-
-
-
-
-
         calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
             // Called only when a new container is needed.
             override fun create(view: View) = DayViewContainer(view) {
@@ -89,13 +79,26 @@ class CalendarFragment: Fragment() {
                 container.day = data
                 container.textView.text = data.date.dayOfMonth.toString()
                 if (data.position == DayPosition.MonthDate) {
-                    // Show the month dates. Remember that views are reused!
+                    if(selectedDate == null && activityAdapter.activities != null) {
+                        activityAdapter.apply {
+                            activities = null
+                            notifyDataSetChanged()
+                        }
+
+                    }
+
                     container.textView.visibility = View.VISIBLE
+
                     if (data.date == selectedDate) {
-                        // If this is the selected date, show a round background and change the text color.
+                        activityViewModel.getActivities(selectedDate).observe(requireActivity()) { newActivities ->
+                            activityAdapter.apply {
+                                activities = newActivities
+                                notifyDataSetChanged()
+                            }
+                        }
                         container.textView.setTextColor(Color.WHITE)
                         container.textView.setBackgroundColor(Color.BLACK)
-                    } else if(data.date == LocalDate.now()) {
+                    } else if (data.date == LocalDate.now()) {
                         container.textView.setTextColor(Color.RED)
                         container.textView.setBackgroundResource(R.drawable.bordercustom)
                         }
@@ -107,6 +110,8 @@ class CalendarFragment: Fragment() {
                 } else {
                     container.textView.visibility = View.INVISIBLE
                 }
+
+
             }
         }
 
@@ -136,8 +141,6 @@ class CalendarFragment: Fragment() {
                 activityViewModel.currentMonth = p1.yearMonth
             }
         }
-
-
 
 
 

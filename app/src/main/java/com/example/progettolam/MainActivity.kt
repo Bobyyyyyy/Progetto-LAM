@@ -15,9 +15,6 @@ import com.example.progettolam.UI.profileFragment.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
-// da cambiare la gestione del backstack, vorrei farlo come instagram che quandi clicchi su una sezione ed è già nel backstack riapre quella.
-
-
 class MainActivity : AppCompatActivity() {
     private lateinit var navigationBar: BottomNavigationView
     private lateinit var fragmentContainer: FragmentContainerView
@@ -44,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
 
+                TODO("handle backpress for fragments")
                 /*
                 val currentFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
                 val backstackCount = supportFragmentManager.backStackEntryCount
@@ -76,6 +74,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
     private fun navbarListener(menuItem: MenuItem): Boolean {
         when (val id: Int = menuItem.itemId) {
             R.id.homeMenu -> {
@@ -97,6 +96,7 @@ class MainActivity : AppCompatActivity() {
         }
         return true
     }
+
 
 
     private fun changeFragment(fragment: Fragment, tag: String) {

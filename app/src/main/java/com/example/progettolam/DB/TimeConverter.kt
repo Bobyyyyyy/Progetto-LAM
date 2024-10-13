@@ -17,8 +17,6 @@ class TimeConverter {
         return value?.let { LocalTime.parse(it) }
     }
 
-
-
     @TypeConverter
     fun dateToString(date: LocalDate?): String? {
         return date?.toString()
