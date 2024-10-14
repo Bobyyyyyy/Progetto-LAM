@@ -90,6 +90,7 @@ class CalendarFragment: Fragment() {
                     container.textView.visibility = View.VISIBLE
 
                     if (data.date == selectedDate) {
+
                         activityViewModel.getActivities(selectedDate).observe(requireActivity()) { newActivities ->
                             activityAdapter.apply {
                                 activities = newActivities
