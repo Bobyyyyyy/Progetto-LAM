@@ -13,5 +13,9 @@
     <string name="chilling_tag">Chill</string>
     <string name="drive_tag">Drive</string>
 
+    <string name="time_tag">Time</string>
+    <string name="speed_tag">Speed</string>
+    <string name="calories_tag">Calories</string>
+    <string name="steps_tag">Steps</string>
 
 </resources>

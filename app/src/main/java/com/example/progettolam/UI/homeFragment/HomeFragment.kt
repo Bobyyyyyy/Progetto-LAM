@@ -53,7 +53,7 @@ class HomeFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        return inflater.inflate(R.layout.home_fragment_effettivo, container, false)
+        return inflater.inflate(R.layout.recording_stats_activity, container, false)
     }
 
     /*

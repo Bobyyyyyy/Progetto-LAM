@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/padding_linear_layout"
+                android:layout_weight="1">
+
+            <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray_dark"
+                    app:cardCornerRadius="@dimen/radius_card_view"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/margin_card_view">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/padding_constraint_layout">
+
+                    <TextView
+                            android:text="@string/time_tag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/timeTextView"
+                            android:textColor="@color/gray_light"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:textSize="@dimen/title_card_activity_stat" />
+
+
+                    <TextView
+                            android:text="@string/default_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/valueTimeTextView"
+                            android:textSize="@dimen/value_card_activity_stat"
+                            android:textColor="@color/gray_light"
+                            android:textStyle="bold"
+
+                            app:layout_constraintStart_toStartOf="@+id/timeTextView"
+                            app:layout_constraintEnd_toEndOf="@+id/timeTextView"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/timeTextView"
+                            android:layout_marginTop="@dimen/space_between_title_value_card_activity" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray_dark"
+                    app:cardCornerRadius="@dimen/radius_card_view"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/margin_card_view">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/padding_constraint_layout">
+
+                    <TextView
+                            android:text="@string/speed_tag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/speedTextView"
+                            android:textColor="@color/gray_light"
+                            android:textSize="@dimen/title_card_activity_stat"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                            android:text="@string/default_speed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/valueSpeedTextView"
+                            android:textSize="@dimen/value_card_activity_stat"
+                            android:textColor="@color/gray_light"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="@+id/speedTextView"
+                            app:layout_constraintEnd_toEndOf="@+id/speedTextView"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/speedTextView"
+                            android:layout_marginTop="@dimen/space_between_title_value_card_activity" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/padding_linear_layout"
+                android:layout_weight="1">
+
+            <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray_dark"
+                    app:cardCornerRadius="@dimen/radius_card_view"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="@dimen/margin_card_view"
+                    android:layout_marginLeft="@dimen/margin_card_view"
+                    android:layout_marginRight="@dimen/margin_card_view"
+                    android:layout_marginTop="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/padding_constraint_layout">
+
+                    <TextView
+                            android:text="@string/steps_tag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/stepTextView"
+                            android:layout_weight="1"
+                            android:textSize="@dimen/title_card_activity_stat"
+                            android:textColor="@color/gray_light"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                            android:text="@string/default_steps"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/valueStepTextView"
+                            android:layout_weight="1"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/value_card_activity_stat"
+                            app:layout_constraintEnd_toEndOf="@+id/stepTextView"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/stepTextView"
+                            app:layout_constraintStart_toStartOf="@+id/stepTextView"
+                            android:layout_marginTop="@dimen/space_between_title_value_card_activity" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray_dark"
+                    app:cardCornerRadius="@dimen/radius_card_view"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="@dimen/margin_card_view"
+                    android:layout_marginLeft="@dimen/margin_card_view"
+                    android:layout_marginRight="@dimen/margin_card_view"
+                    android:layout_marginTop="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/padding_constraint_layout">
+
+                    <TextView
+                            android:text="@string/calories_tag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/caloriesTextView"
+                            android:layout_weight="1"
+                            android:textSize="@dimen/title_card_activity_stat"
+                            android:textColor="@color/gray_light"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                            android:text="@string/default_calories"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/valueCaloriesTextView"
+                            android:layout_weight="1"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/value_card_activity_stat"
+                            app:layout_constraintEnd_toEndOf="@+id/caloriesTextView"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/caloriesTextView"
+                            app:layout_constraintStart_toStartOf="@+id/caloriesTextView"
+                            android:layout_marginTop="@dimen/space_between_title_value_card_activity" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
