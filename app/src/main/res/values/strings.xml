@@ -15,7 +15,10 @@
     <string name="theme_default">Seleziona tema</string>
     <string name="theme_tag"> Tema Scuro </string>
 
-
+    <string name="walk_tag">Camminata</string>
+    <string name="bike_tag">Bici</string>
+    <string name="chilling_tag">Riposo</string>
+    <string name="drive_tag">Guida</string>
 
     <string name="preferences_user" translatable="false">preferences_user</string>
 </resources>

@@ -2,13 +2,11 @@ package com.example.progettolam.UI.calendarFragment
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.children
-import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -101,12 +99,12 @@ class CalendarFragment: Fragment() {
                         container.textView.setBackgroundColor(Color.BLACK)
                     } else if (data.date == LocalDate.now()) {
                         container.textView.setTextColor(Color.RED)
-                        container.textView.setBackgroundResource(R.drawable.bordercustom)
+                        container.textView.setBackgroundResource(R.drawable.border_custom_rectangle)
                         }
                         else {
                             // If this is NOT the selected date, remove the background and reset the text color.
                             container.textView.setTextColor(Color.BLACK)
-                            container.textView.setBackgroundResource(R.drawable.bordercustom)
+                            container.textView.setBackgroundResource(R.drawable.border_custom_rectangle)
                         }
                 } else {
                     container.textView.visibility = View.INVISIBLE

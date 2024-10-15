@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
 
-                TODO("handle backpress for fragments")
+                //TODO("handle backpress for fragments")
                 /*
                 val currentFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
                 val backstackCount = supportFragmentManager.backStackEntryCount

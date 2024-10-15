@@ -8,7 +8,10 @@
     <string name="theme_tag">Dark Theme</string>
     <string name="greetings">Hello</string>
 
-
+    <string name="walk_tag">Walk</string>
+    <string name="bike_tag">Bike</string>
+    <string name="chilling_tag">Chill</string>
+    <string name="drive_tag">Drive</string>
 
 
 </resources>

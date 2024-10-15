@@ -53,9 +53,10 @@ class HomeFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        return inflater.inflate(R.layout.home_fragment, container, false)
+        return inflater.inflate(R.layout.home_fragment_effettivo, container, false)
     }
 
+    /*
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
@@ -75,12 +76,14 @@ class HomeFragment: Fragment() {
 
 
         addButton.setOnClickListener {
+        /*
             val intent = Intent(requireActivity(),TimerService::class.java)
             intent.putExtra(
                 TimerService.TIMER_ACTION,TimerService.START
             )
             requireActivity().startService(intent)
-
+         */
+            activityViewModel.insertActivity(Activity(null, LocalTime.now(), LocalDate.now(), LocalTime.now().plusHours(1), LocalDate.now().plusDays(2)))
 
         }
 
@@ -91,6 +94,8 @@ class HomeFragment: Fragment() {
 
 
     }
+
+     */
 
 
     override fun onStart() {

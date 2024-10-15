@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@color/gray_dark"
+            app:cardCornerRadius="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray_dark"
+                android:gravity="center|center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+            <ImageButton
+                    android:id="@+id/walkButton"
+                    android:layout_width="@dimen/button_width"
+                    android:layout_height="@dimen/button_height"
+                    android:background="@drawable/border_custom_circle"
+                    android:contentDescription="@string/walk_tag"
+                    app:layout_constraintBottom_toTopOf="@+id/walkTextView"
+                    app:layout_constraintEnd_toStartOf="@+id/bikeButton"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/round_directions_walk_24" />
+
+            <ImageButton
+                    android:id="@+id/bikeButton"
+                    android:layout_width="@dimen/button_width"
+                    android:layout_height="@dimen/button_height"
+                    android:background="@drawable/border_custom_circle"
+                    android:contentDescription="@string/bike_tag"
+                    app:layout_constraintBottom_toTopOf="@+id/bikeTextView"
+                    app:layout_constraintEnd_toStartOf="@+id/chairButton"
+                    app:layout_constraintStart_toEndOf="@+id/walkButton"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/baseline_directions_bike_24" />
+
+            <ImageButton
+                    android:id="@+id/chairButton"
+                    android:layout_width="@dimen/button_width"
+                    android:layout_height="@dimen/button_height"
+                    android:background="@drawable/border_custom_circle"
+                    android:contentDescription="@string/chilling_tag"
+                    app:layout_constraintBottom_toTopOf="@+id/chairTextView"
+                    app:layout_constraintEnd_toStartOf="@+id/driveButton"
+                    app:layout_constraintStart_toEndOf="@+id/bikeButton"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/baseline_chair_24" />
+
+            <ImageButton
+                    android:id="@+id/driveButton"
+                    android:layout_width="@dimen/button_width"
+                    android:layout_height="@dimen/button_height"
+                    android:background="@drawable/border_custom_circle"
+                    android:contentDescription="@string/drive_tag"
+                    app:layout_constraintBottom_toTopOf="@+id/driveTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/chairButton"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/baseline_drive_eta_24" />
+
+            <TextView
+                    android:id="@+id/walkTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/walk_tag"
+                    android:textColor="@color/gray_light"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/walkButton"
+                    app:layout_constraintStart_toStartOf="@+id/walkButton"
+                    app:layout_constraintTop_toBottomOf="@+id/walkButton"
+                    android:layout_marginTop="@dimen/space_between_imageBtn_textView" />
+
+            <TextView
+                    android:id="@+id/bikeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bike_tag"
+                    android:textColor="@color/gray_light"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/bikeButton"
+                    app:layout_constraintStart_toStartOf="@+id/bikeButton"
+                    app:layout_constraintTop_toBottomOf="@+id/bikeButton"
+                    android:layout_marginTop="@dimen/space_between_imageBtn_textView" />
+
+            <TextView
+                    android:id="@+id/chairTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/chilling_tag"
+                    android:textColor="@color/gray_light"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/chairButton"
+                    app:layout_constraintStart_toStartOf="@+id/chairButton"
+                    app:layout_constraintTop_toBottomOf="@+id/chairButton"
+                    android:layout_marginTop="@dimen/space_between_imageBtn_textView" />
+
+            <TextView
+                    android:id="@+id/driveTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/drive_tag"
+                    android:textColor="@color/gray_light"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/driveButton"
+                    app:layout_constraintStart_toStartOf="@+id/driveButton"
+                    app:layout_constraintTop_toBottomOf="@+id/driveButton"
+                    android:layout_marginTop="@dimen/space_between_imageBtn_textView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
