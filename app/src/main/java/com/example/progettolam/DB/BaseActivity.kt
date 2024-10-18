@@ -8,7 +8,7 @@ import java.time.LocalTime
 
 
 @Entity(tableName = "base_activity_table")
-data class BaseActivity(
+class BaseActivity(
 
     @PrimaryKey(autoGenerate = true)
     @SerializedName("id")
