@@ -36,8 +36,8 @@ class ActivityRepository(app: Application) {
     }
 
 
-    fun getAllActivities(): LiveData<List<ActivityJoin>> {
-        return activityDao.getListOfActivities()
+    fun getAllActivities(startDate: LocalDate?): LiveData<List<ActivityJoin>> {
+        return activityDao.getListOfActivities(startDate)
     }
 
 

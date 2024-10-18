@@ -37,10 +37,6 @@ class ActivityAdapter(var activities: List<ActivityJoin>?): RecyclerView.Adapter
             val endDate = activities?.get(position)?.baseActivity?.endDate
 
 
-
-            activityTitle.text = startTime.toString()
-            activityTitle2.text = endTime.toString()
-
             val start: LocalDateTime = LocalDateTime.of(startDate,startTime)
             val end: LocalDateTime = LocalDateTime.of(endDate,endTime)
             var duration = Duration.between(start,end)
@@ -57,9 +53,9 @@ class ActivityAdapter(var activities: List<ActivityJoin>?): RecyclerView.Adapter
             }
 
 
-            activityTitle2.text = startDate?.toString()
-            activityTitle3.text = endDate?.toString()
-            activityTitle.text = time
+            activityTitle2.text = activities?.get(position)?.baseActivity?.activityType.toString()
+            activityTitle3.text = time
+            activityTitle.text = activities?.get(position)?.runningActivity?.steps?.toString() ?: "Ciao"
 
         }
     }

@@ -8,18 +8,22 @@ import android.content.IntentFilter
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.progettolam.DB.ActivityRepository
+import com.example.progettolam.DB.ActivityString
 import com.example.progettolam.DB.ActivityType
 import com.example.progettolam.DB.ActivityViewModel
 import com.example.progettolam.DB.ActivityViewModelFactory
 import com.example.progettolam.DB.BaseActivity
+import com.example.progettolam.DB.DrivingActivity
 import com.example.progettolam.DB.RunningActivity
 import com.example.progettolam.services.StepCounter
 import com.example.progettolam.services.TimerService
@@ -39,7 +43,6 @@ class OnGoingActivity: AppCompatActivity() {
     private lateinit var endButton: Button
     private lateinit var viewModel: OnGoingViewModel
     private var isBound: Boolean = false
-    private var steps: Float = 0f
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -57,13 +60,38 @@ class OnGoingActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.ongoing_activity)
+
+        val receivingIntent: Intent = intent
+
+        if (receivingIntent != null) {
+            val type = receivingIntent.getStringExtra(ActivityString.ACTIVITY_TYPE)
+
+            when(type) {
+                ActivityString.WALKING, ActivityString.RUNNING -> {
+                    setContentView(R.layout.recording_stats_with_map_activity)
+                }
+
+                ActivityString.DRIVING -> {
+                    setContentView(R.layout.recording_stats_with_map_activity)
+                    //da cambiare con altri layout
+                }
+
+                ActivityString.STILL -> {
+                    setContentView(R.layout.recording_stats_with_map_activity)
+                    //da cambiare con altri layout
+                }
+            }
+        }
+
         initViews()
+
+
         val activityViewModel: ActivityViewModel by viewModels {
             ActivityViewModelFactory(
                 ActivityRepository(this.application)
             )
         }
+
 
         viewModel = ViewModelProvider(this)[OnGoingViewModel::class.java]
 
@@ -86,16 +114,16 @@ class OnGoingActivity: AppCompatActivity() {
             viewModel.endTime = LocalTime.now()
             endActivity()
 
-            activityViewModel.insertRunningActivity(
+            activityViewModel.insertDrivingActivity(
                 BaseActivity(
                 null,
-                    ActivityType.RUNNING,
+                    ActivityType.DRIVING,
                 viewModel.startTime,
                 viewModel.startDate,
                 viewModel.endTime,
                 viewModel.endDate
                 ),
-                RunningActivity(null,steps.toInt()))
+                DrivingActivity(null))
 
         }
 
@@ -224,4 +252,6 @@ class OnGoingActivity: AppCompatActivity() {
 
         registerReceiver(stepReceiver,stepFilter)
     }
+
+
 }

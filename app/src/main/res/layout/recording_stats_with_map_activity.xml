@@ -12,39 +12,54 @@
             android:layout_height="wrap_content" />
 
 
-    <fragment
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toTopOf="@+id/editMarker"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:padding="@dimen/padding_constraint_layout"
             android:id="@+id/constraintLayout">
 
-        <Button
-                android:text="Button"
-                android:layout_width="wrap_content"
+        <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button2" />
+                android:layout_marginBottom="430dp"
+                app:layout_constraintBottom_toTopOf="@+id/startButton"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent" />
 
         <Button
-                android:text="Button"
+                android:text="@string/start_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/button2"
+                android:id="@+id/startButton"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="60dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/button"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:layout_marginBottom="24dp" />
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/endButton"
+                android:layout_marginEnd="54dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="11dp"
+                app:layout_constraintStart_toEndOf="@+id/pauseButton"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintHorizontal_bias="0.0"
+                android:text="@string/end_button" />
+
+        <Button
+                android:text="@string/pause_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/pauseButton"
+                android:layout_marginStart="6dp"
+                app:layout_constraintStart_toEndOf="@+id/startButton"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="23dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

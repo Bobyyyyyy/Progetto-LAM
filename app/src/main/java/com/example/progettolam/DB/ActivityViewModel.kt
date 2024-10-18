@@ -53,8 +53,8 @@ class ActivityViewModel(private val repository: ActivityRepository): ViewModel()
 
 
 
-    fun getAllActivites(): LiveData<List<ActivityJoin>> {
-        return repository.getAllActivities()
+    fun getAllActivites(startDate: LocalDate?): LiveData<List<ActivityJoin>> {
+        return repository.getAllActivities(startDate)
     }
 
 

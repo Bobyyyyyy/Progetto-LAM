@@ -13,6 +13,8 @@ class OnGoingViewModel: ViewModel() {
     var startDate: LocalDate? = null
     var endDate: LocalDate? = null
 
+    var steps: Float = 0f
+
     private val _timeElapsed = MutableLiveData<Int>().apply {
         value = 0
     }
@@ -39,6 +41,7 @@ class OnGoingViewModel: ViewModel() {
     val totalSteps: LiveData<Float> = _totalSteps
 
     fun setTotalSteps(value: Float) {
+        steps = value
         _totalSteps.value = value
     }
 

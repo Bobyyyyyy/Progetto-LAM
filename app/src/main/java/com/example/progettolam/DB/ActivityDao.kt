@@ -13,8 +13,22 @@ interface ActivityDao {
 
 
     @Transaction
-    @Query("SELECT * FROM base_activity_table")
-    fun getListOfActivities(): LiveData<List<ActivityJoin>>
+    @Query("SELECT * FROM base_activity_table WHERE startDate = :startDate")
+    fun getListOfActivities(startDate: LocalDate?): LiveData<List<ActivityJoin>>
+
+    @Transaction
+    @Query("SELECT * FROM base_activity_table WHERE activityType = :activityType")
+    fun getActivitiesFromType(activityType: ActivityType): LiveData<List<ActivityJoin>>
+
+    @Transaction
+    @Query("""SELECT sum(tot_steps) FROM
+             (SELECT sum(steps) as tot_steps FROM base_activity_table JOIN WalkingActivity_table ON id=activityId WHERE endDate = :endDate
+                UNION
+              SELECT sum(steps) as tot_steps FROM base_activity_table JOIN RunningActivity_table ON id=activityId WHERE endDate = :endDate)
+            """)
+    fun getAllStepsFromDay(endDate: LocalDate?) : LiveData<Int>
+
+
 
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

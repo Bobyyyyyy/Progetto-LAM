@@ -89,7 +89,7 @@ class CalendarFragment: Fragment() {
 
                     if (data.date == selectedDate) {
 
-                        activityViewModel.getAllActivites().observe(requireActivity()) { newActivities ->
+                        activityViewModel.getAllActivites(selectedDate).observe(requireActivity()) { newActivities ->
                             activityAdapter.apply {
                                 activities = newActivities
                                 notifyDataSetChanged()
