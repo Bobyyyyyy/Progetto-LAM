@@ -9,6 +9,8 @@ import com.example.progettolam.R
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.time.LocalTime
+import java.time.LocalDate
 
 class ActivityAdapter(var activities: List<ActivityJoin>?): RecyclerView.Adapter<ActivityViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivityViewHolder {
@@ -55,8 +57,8 @@ class ActivityAdapter(var activities: List<ActivityJoin>?): RecyclerView.Adapter
             }
 
 
-            activityTitle2.text = startDate?.format(timeFormatter).toString()
-            activityTitle3.text = endDate?.format(timeFormatter).toString()
+            activityTitle2.text = startDate?.toString()
+            activityTitle3.text = endDate?.toString()
             activityTitle.text = time
 
         }
