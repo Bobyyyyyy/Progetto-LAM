@@ -89,13 +89,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".OnGoingActivity" android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"></action>
-                <category android:name="android.intent.category.DEFAULT"></category>
-            </intent-filter>
-        </activity>
-
 
     </application>
 
