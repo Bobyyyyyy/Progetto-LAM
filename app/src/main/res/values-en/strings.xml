@@ -8,6 +8,10 @@
     <string name="theme_tag">Dark Theme</string>
     <string name="greetings">Hello</string>
 
+    <string name="start_button">Start</string>
+    <string name="pause_button">Pause</string>
+    <string name="end_button">End</string>
+
     <string name="walk_tag">Walk</string>
     <string name="bike_tag">Bike</string>
     <string name="chilling_tag">Chill</string>

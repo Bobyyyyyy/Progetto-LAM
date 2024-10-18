@@ -19,6 +19,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.example.progettolam.MainActivity
+import com.example.progettolam.OnGoingActivity
 import com.example.progettolam.R
 import java.time.LocalTime
 import java.util.Timer
@@ -47,10 +48,6 @@ class TimerService: Service() {
         const val STOPWATCH_STATUS = "STOPWATCH_STATUS"
 
     }
-
-    private var startTime: LocalTime? = null
-    private var endTime: LocalTime? = null
-
     private var timeElapsed: Int = 0
     private var isStopWatchRunning = false
     private lateinit var notificationManagerCompat: NotificationManagerCompat
@@ -65,34 +62,36 @@ class TimerService: Service() {
 
     private val binder = TimerBinder()
 
-
-    /*
-    chiamata solo una volta per il primo cliente, poi viene dato sempre lo stesso binder
-     */
     override fun onBind(intent: Intent?): IBinder {
         return binder
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        getNotificationManager()
-        createChannel()
+
         val action = intent?.getStringExtra(TIMER_ACTION)!!
 
         when (action) {
             START -> startStopwatch()
             PAUSE -> pauseStopwatch()
+            END -> deleteTimer()
             GET_STATUS -> sendStatus()
             MOVE_TO_FOREGROUND -> moveToForeground()
             MOVE_TO_BACKGROUND -> moveToBackground()
         }
 
 
-
         return START_STICKY
     }
 
 
-    private fun moveToForeground() {
+    override fun onCreate() {
+        getNotificationManager()
+        createChannel()
+        super.onCreate()
+    }
+
+
+    fun moveToForeground() {
 
         if (isStopWatchRunning) {
             startForeground(1,buildNotification())
@@ -104,9 +103,12 @@ class TimerService: Service() {
                 }
             }, 0, 1000)
         }
+        else {
+            startForeground(1,buildNotification())
+        }
     }
 
-    private fun startStopwatch() {
+    fun startStopwatch() {
         isStopWatchRunning = true
 
         sendStatus()
@@ -118,7 +120,7 @@ class TimerService: Service() {
                 stopwatchIntent.action = STOPWATCH_TICK
 
                 timeElapsed++
-                Log.i("pietro",timeElapsed.toString())
+
                 stopwatchIntent.putExtra(TIME_ELAPSED, timeElapsed)
                 sendBroadcast(stopwatchIntent)
             }
@@ -126,17 +128,25 @@ class TimerService: Service() {
     }
 
 
-    private fun pauseStopwatch() {
+    fun pauseStopwatch() {
         stopwatchTimer.cancel()
         isStopWatchRunning = false
         sendStatus()
     }
 
-    private fun moveToBackground() {
+    fun moveToBackground() {
         updateTimer.cancel()
-        stopForeground(true)
+        stopForeground(STOP_FOREGROUND_REMOVE)
     }
 
+    fun deleteTimer() {
+        pauseStopwatch()
+        stopwatchTimer.purge()
+        stopForeground(STOP_FOREGROUND_REMOVE)
+        updateTimer.cancel()
+        updateTimer.purge()
+        stopSelf()
+    }
 
 
 
@@ -223,6 +233,5 @@ class TimerService: Service() {
         }
 
     }
-
 
 }

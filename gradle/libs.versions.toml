@@ -16,6 +16,7 @@ activity = "1.9.0"
 constraintlayout = "2.1.4"
 navigationFragmentKtx = "2.7.7"
 preferenceKtx = "1.2.1"
+roomCoroutines = "2.5.0"
 roomKtx = "2.6.1"
 view = "2.6.0 "
 playServicesMaps = "19.0.0"
@@ -30,6 +31,7 @@ androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-view
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "preferenceKtx" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomKtx" }
+androidx-room-coroutines = { module = "androidx.room:room-coroutines", version.ref = "roomCoroutines" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
 desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }

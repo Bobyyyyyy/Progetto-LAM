@@ -9,7 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 
 
-@Database(entities = [Activity:: class], version = 1, exportSchema = false)
+@Database(entities = [BaseActivity:: class,WalkingActivity::class,RunningActivity::class,SittingActivity::class,DrivingActivity::class], version = 2, exportSchema = false)
 @TypeConverters(TimeConverter::class)
 abstract class ActivityDatabase: RoomDatabase() {
 

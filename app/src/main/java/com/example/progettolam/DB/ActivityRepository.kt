@@ -2,11 +2,7 @@ package com.example.progettolam.DB
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.LocalTime
 
 class ActivityRepository(app: Application) {
 
@@ -19,14 +15,29 @@ class ActivityRepository(app: Application) {
     }
 
 
-    fun insertActivity(activity: Activity) {
-        ActivityDatabase.scope.launch {
-            activityDao.insert(activity)
-        }
+    fun insertBaseActivity(baseActivity: BaseActivity): Long {
+        return activityDao.insertBaseActivity(baseActivity)
     }
 
-    fun getAllActivities(startDate: LocalDate?): LiveData<List<Activity>> {
-        return activityDao.getListOfActivities(startDate)
+    fun insertWalkingActivity(walkingActivity: WalkingActivity) {
+        return activityDao.insertWalkingActivity(walkingActivity)
+    }
+
+    fun insertRunningActivity(runningActivity: RunningActivity) {
+        return activityDao.insertRunningActivity(runningActivity)
+    }
+
+    fun insertDrivingActivity(drivingActivity: DrivingActivity) {
+        return activityDao.insertDrivingActivity(drivingActivity)
+    }
+
+    fun insertSittingActivity(sittingActivity: SittingActivity){
+        return activityDao.insertSittingActivity(sittingActivity)
+    }
+
+
+    fun getAllActivities(): LiveData<List<ActivityJoin>> {
+        return activityDao.getListOfActivities()
     }
 
 
