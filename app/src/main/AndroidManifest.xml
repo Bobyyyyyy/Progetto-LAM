@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_HEALTH"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
 
     <application
         android:allowBackup="true"
@@ -19,6 +21,11 @@
         <service android:name=".services.TimerService"
             android:enabled="true"
                 android:foregroundServiceType="shortService"/>
+
+
+        <service android:name=".services.StepCounter"
+            android:enabled="true"
+            android:foregroundServiceType="shortService"/>
 
         <activity
             android:name=".UI.frontpageActivity.frontpageActivity"
@@ -41,6 +48,13 @@
         <activity android:name=".UI.preferencesActivity.preferencesActivity"
                 android:exported="true">
 
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"></action>
+                <category android:name="android.intent.category.DEFAULT"></category>
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".OnGoingActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"></action>
                 <category android:name="android.intent.category.DEFAULT"></category>

@@ -1,35 +1,32 @@
 package com.example.progettolam.DB
 
-import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.Date
 import com.google.gson.annotations.SerializedName
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.LocalTime
 
 
-@Entity(tableName = "Activity_table")
-class Activity(
+@Entity(tableName = "base_activity_table")
+data class BaseActivity(
 
     @PrimaryKey(autoGenerate = true)
     @SerializedName("id")
-    var id: Int?,
+    var id: Long?,
+
+    @SerializedName("activityType")
+    var activityType: ActivityType,
 
     @SerializedName("startTime")
-    var startTime: LocalTime,
+    var startTime: LocalTime?,
 
     @SerializedName("startDate")
-    var startDate: LocalDate,
-
+    var startDate: LocalDate?,
 
     @SerializedName("endTime")
-    var endTime: LocalTime,
+    var endTime: LocalTime?,
 
     @SerializedName("endDate")
-    var endDate: LocalDate
-
-    )
-
+    var endDate: LocalDate?
+)
 

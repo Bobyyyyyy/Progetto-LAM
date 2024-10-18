@@ -91,12 +91,15 @@ class CalendarFragment: Fragment() {
 
                     if (data.date == selectedDate) {
 
-                        activityViewModel.getActivities(selectedDate).observe(requireActivity()) { newActivities ->
+                        activityViewModel.getAllActivites().observe(requireActivity()) { newActivities ->
                             activityAdapter.apply {
                                 activities = newActivities
                                 notifyDataSetChanged()
                             }
                         }
+
+
+
                         container.textView.setTextColor(Color.WHITE)
                         container.textView.setBackgroundColor(Color.BLACK)
                     } else if (data.date == LocalDate.now()) {
