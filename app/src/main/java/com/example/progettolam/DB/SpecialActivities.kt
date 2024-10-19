@@ -34,7 +34,7 @@ data class RunningActivity (
     var activityId: Long?,
 
     @SerializedName("steps")
-    val steps: Int
+    val steps: Int?
 
 )
 

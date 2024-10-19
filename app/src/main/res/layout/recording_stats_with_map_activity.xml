@@ -18,15 +18,14 @@
             android:padding="@dimen/padding_constraint_layout"
             android:id="@+id/constraintLayout">
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/map"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="430dp"
-                app:layout_constraintBottom_toTopOf="@+id/startButton"
+                android:layout_width="379dp"
+                android:layout_height="409dp"
                 android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/pauseButton" />
 
         <Button
                 android:text="@string/start_button"

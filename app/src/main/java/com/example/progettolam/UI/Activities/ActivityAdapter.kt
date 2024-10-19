@@ -52,7 +52,6 @@ class ActivityAdapter(var activities: List<ActivityJoin>?): RecyclerView.Adapter
                 time = "${"%02d".format(duration.toDays())}:${"%02d".format(duration.toMinutes())}:${"%02d".format(duration.seconds)}"
             }
 
-
             activityTitle2.text = activities?.get(position)?.baseActivity?.activityType.toString()
             activityTitle3.text = time
             activityTitle.text = activities?.get(position)?.runningActivity?.steps?.toString() ?: "Ciao"

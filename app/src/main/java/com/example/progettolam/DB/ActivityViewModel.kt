@@ -1,6 +1,7 @@
 package com.example.progettolam.DB
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.coroutines.CoroutineScope
@@ -13,40 +14,63 @@ class ActivityViewModel(private val repository: ActivityRepository): ViewModel()
 
     var currentMonth: YearMonth = YearMonth.now()
 
+    private val _id = MutableLiveData<Long>().apply {
+        value = null
+    }
+
+    val id: LiveData<Long> = _id
+
+    private fun changeId(value: Long) {
+        _id.value = value
+    }
+
+    fun returnId(): Long? {
+        return _id.value
+    }
+
     private fun insertBaseActivity(baseActivity: BaseActivity): Long {
             return repository.insertBaseActivity(baseActivity)
     }
 
 
     fun insertWalkingActivity(baseActivity: BaseActivity, walkingActivity: WalkingActivity) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val id = insertBaseActivity(baseActivity)
-            walkingActivity.activityId = id
-            repository.insertWalkingActivity(walkingActivity)
+        if (baseActivity.activityType == ActivityType.WALKING) {
+            CoroutineScope(Dispatchers.IO).launch {
+                val id = insertBaseActivity(baseActivity)
+                walkingActivity.activityId = id
+                repository.insertWalkingActivity(walkingActivity)
+
+            }
         }
     }
 
     fun insertRunningActivity(baseActivity: BaseActivity, runningActivity: RunningActivity) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val id = insertBaseActivity(baseActivity)
-            runningActivity.activityId = id
-            repository.insertRunningActivity(runningActivity)
+        if(baseActivity.activityType == ActivityType.RUNNING) {
+            CoroutineScope(Dispatchers.IO).launch {
+                val id = insertBaseActivity(baseActivity)
+                runningActivity.activityId = id
+                repository.insertRunningActivity(runningActivity)
+            }
         }
     }
 
     fun insertDrivingActivity(baseActivity: BaseActivity, drivingActivity: DrivingActivity) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val id = insertBaseActivity(baseActivity)
-            drivingActivity.activityId = id
-            repository.insertDrivingActivity(drivingActivity)
+        if(baseActivity.activityType == ActivityType.DRIVING) {
+            CoroutineScope(Dispatchers.IO).launch {
+                val id = insertBaseActivity(baseActivity)
+                drivingActivity.activityId = id
+                repository.insertDrivingActivity(drivingActivity)
+            }
         }
     }
 
     fun insertSittingActivity(baseActivity: BaseActivity, sittingActivity: SittingActivity) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val id = insertBaseActivity(baseActivity)
-            sittingActivity.activityId = id
-            repository.insertSittingActivity(sittingActivity)
+        if (baseActivity.activityType == ActivityType.STILL) {
+            CoroutineScope(Dispatchers.IO).launch {
+                val id = insertBaseActivity(baseActivity)
+                sittingActivity.activityId = id
+                repository.insertSittingActivity(sittingActivity)
+            }
         }
     }
 

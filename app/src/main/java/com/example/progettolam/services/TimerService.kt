@@ -12,16 +12,11 @@ import android.graphics.Color
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
-import android.util.Log
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat
 import com.example.progettolam.MainActivity
-import com.example.progettolam.OnGoingActivity
 import com.example.progettolam.R
-import java.time.LocalTime
 import java.util.Timer
 import java.util.TimerTask
 

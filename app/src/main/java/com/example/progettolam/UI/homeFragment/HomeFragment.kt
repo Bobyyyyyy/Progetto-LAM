@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,10 +16,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.example.progettolam.DB.ActivityRepository
 import com.example.progettolam.DB.ActivityString
+import com.example.progettolam.DB.ActivityType
 import com.example.progettolam.DB.ActivityViewModel
 import com.example.progettolam.DB.ActivityViewModelFactory
-import com.example.progettolam.OnGoingActivity
+import com.example.progettolam.UI.Activities.OnGoingActivity
 import com.example.progettolam.R
+import com.example.progettolam.UI.Activities.OnGoingPlaceholder
 
 class HomeFragment: Fragment() {
 
@@ -94,20 +95,20 @@ class HomeFragment: Fragment() {
 
     private fun activityButtonListener(view: View) {
 
-        val intent = Intent(requireActivity(), OnGoingActivity::class.java)
+        val intent = Intent(requireActivity(), OnGoingPlaceholder::class.java)
 
         when(view.id) {
             R.id.walkButton -> {
-                intent.putExtra(ActivityString.ACTIVITY_TYPE, ActivityString.WALKING)
+                intent.putExtra(ActivityString.ACTIVITY_TYPE, ActivityType.WALKING.toString())
             }
             R.id.bikeButton -> {
-                intent.putExtra(ActivityString.ACTIVITY_TYPE, ActivityString.RUNNING)
+                intent.putExtra(ActivityString.ACTIVITY_TYPE, ActivityType.RUNNING.toString())
             }
             R.id.chairButton -> {
-                intent.putExtra(ActivityString.ACTIVITY_TYPE, ActivityString.STILL)
+                intent.putExtra(ActivityString.ACTIVITY_TYPE, ActivityType.STILL.toString())
             }
             R.id.driveButton -> {
-                intent.putExtra(ActivityString.ACTIVITY_TYPE, ActivityString.DRIVING)
+                intent.putExtra(ActivityString.ACTIVITY_TYPE, ActivityType.DRIVING.toString())
             }
         }
 

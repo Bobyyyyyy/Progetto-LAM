@@ -30,7 +30,6 @@ interface ActivityDao {
 
 
 
-
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertBaseActivity(activity: BaseActivity): Long
 

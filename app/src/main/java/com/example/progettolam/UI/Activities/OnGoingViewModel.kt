@@ -1,8 +1,9 @@
-package com.example.progettolam
+package com.example.progettolam.UI.Activities
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.progettolam.DB.ActivityType
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -13,7 +14,6 @@ class OnGoingViewModel: ViewModel() {
     var startDate: LocalDate? = null
     var endDate: LocalDate? = null
 
-    var steps: Float = 0f
 
     private val _timeElapsed = MutableLiveData<Int>().apply {
         value = 0
@@ -41,11 +41,26 @@ class OnGoingViewModel: ViewModel() {
     val totalSteps: LiveData<Float> = _totalSteps
 
     fun setTotalSteps(value: Float) {
-        steps = value
         _totalSteps.value = value
     }
 
+    fun getTotalSteps() : Float? {
+        return _totalSteps.value
+    }
 
+    private val _activityType = MutableLiveData<ActivityType>().apply {
+        value = null
+    }
+
+    val activityType : LiveData<ActivityType> = _activityType
+
+    fun setActivityType(value: ActivityType) {
+        _activityType.value = value
+    }
+
+    fun getActivityType(): ActivityType? {
+        return _activityType.value
+    }
 
 
 }

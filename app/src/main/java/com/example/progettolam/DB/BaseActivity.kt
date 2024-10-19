@@ -15,7 +15,7 @@ class BaseActivity(
     var id: Long?,
 
     @SerializedName("activityType")
-    var activityType: ActivityType,
+    var activityType: ActivityType?,
 
     @SerializedName("startTime")
     var startTime: LocalTime?,
