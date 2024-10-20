@@ -1,9 +1,12 @@
 package com.example.progettolam.UI.Activities
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.replace
 import androidx.lifecycle.ViewModelProvider
@@ -13,13 +16,21 @@ import com.example.progettolam.DB.RunningActivity
 import com.example.progettolam.MapsActivity
 import com.example.progettolam.R
 import com.example.progettolam.services.StepCounter
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.SupportMapFragment
 import java.time.LocalDate
 import java.time.LocalTime
+
 
 class OnGoingRunning : OnGoingActivity() {
 
     private lateinit var stepsCounter: TextView
     private lateinit var fragmentContainer: FragmentContainerView
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var locationCallback: LocationCallback
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +63,45 @@ class OnGoingRunning : OnGoingActivity() {
 
 
  */
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        val locationPermissionRequest = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            when {
+                permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
+                    // Precise location access granted.
+                }
+                permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
+                    // Only approximate location access granted.
+                } else -> {
+                // No location access granted.
+            }
+            }
+        }
+        locationPermissionRequest.launch(arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION))
+
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult?) {
+                locationResult ?: return
+                for (location in locationResult.locations){
+                    // Update UI with location data
+                    // ...
+                }
+            }
+        }
+    }
+
+    private fun startLocationUpdates() {
+        fusedLocationClient.requestLocationUpdates(locationPermissionRequest,
+            locationCallback,
+            Looper.getMainLooper())
+    }
+
+    private fun stopLocationUpdates() {
+        fusedLocationClient.removeLocationUpdates(locationCallback)
     }
 
     override fun initViews() {
@@ -66,6 +116,7 @@ class OnGoingRunning : OnGoingActivity() {
         if(isBound) {
             resumeStepsSensor()
         }
+        if (requestingLocationUpdates) startLocationUpdates()
     }
 
     override fun onPause() {

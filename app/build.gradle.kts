@@ -43,6 +43,7 @@ android {
 
 dependencies {
     implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
     coreLibraryDesugaring(libs.desugar.jdk.libs)
     implementation("com.kizitonwose.calendar:view:2.6.0")
     implementation("androidx.room:room-runtime:2.6.1")

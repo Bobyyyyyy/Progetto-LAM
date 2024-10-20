@@ -19,7 +19,6 @@ import com.example.progettolam.DB.ActivityString
 import com.example.progettolam.DB.ActivityType
 import com.example.progettolam.DB.ActivityViewModel
 import com.example.progettolam.DB.ActivityViewModelFactory
-import com.example.progettolam.UI.Activities.OnGoingActivity
 import com.example.progettolam.R
 import com.example.progettolam.UI.Activities.OnGoingPlaceholder
 
@@ -46,7 +45,7 @@ class HomeFragment: Fragment() {
         val storedName = defaultShared?.getString(getString(R.string.preferences_username), value)
 
         val walkButton: ImageButton = view.findViewById(R.id.walkButton)
-        val bikeButton: ImageButton = view.findViewById(R.id.bikeButton)
+        val bikeButton: ImageButton = view.findViewById(R.id.runButton)
         val driveButton: ImageButton = view.findViewById(R.id.driveButton)
         val chairButton: ImageButton = view.findViewById(R.id.chairButton)
 
@@ -101,7 +100,7 @@ class HomeFragment: Fragment() {
             R.id.walkButton -> {
                 intent.putExtra(ActivityString.ACTIVITY_TYPE, ActivityType.WALKING.toString())
             }
-            R.id.bikeButton -> {
+            R.id.runButton -> {
                 intent.putExtra(ActivityString.ACTIVITY_TYPE, ActivityType.RUNNING.toString())
             }
             R.id.chairButton -> {

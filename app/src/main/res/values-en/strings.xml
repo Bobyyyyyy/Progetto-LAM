@@ -13,7 +13,7 @@
     <string name="end_button">End</string>
 
     <string name="walk_tag">Walk</string>
-    <string name="bike_tag">Bike</string>
+    <string name="run_tag">Run</string>
     <string name="chilling_tag">Chill</string>
     <string name="drive_tag">Drive</string>
 

@@ -31,22 +31,22 @@
                     android:background="@drawable/border_custom_circle"
                     android:contentDescription="@string/walk_tag"
                     app:layout_constraintBottom_toTopOf="@+id/walkTextView"
-                    app:layout_constraintEnd_toStartOf="@+id/bikeButton"
+                    app:layout_constraintEnd_toStartOf="@+id/runButton"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/round_directions_walk_24" />
 
             <ImageButton
-                    android:id="@+id/bikeButton"
+                    android:id="@+id/runButton"
                     android:layout_width="@dimen/button_width"
                     android:layout_height="@dimen/button_height"
                     android:background="@drawable/border_custom_circle"
-                    android:contentDescription="@string/bike_tag"
-                    app:layout_constraintBottom_toTopOf="@+id/bikeTextView"
+                    android:contentDescription="@string/run_tag"
+                    app:layout_constraintBottom_toTopOf="@+id/runTextView"
                     app:layout_constraintEnd_toStartOf="@+id/chairButton"
                     app:layout_constraintStart_toEndOf="@+id/walkButton"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/baseline_directions_bike_24" />
+                    app:srcCompat="@drawable/baseline_directions_run_24" />
 
             <ImageButton
                     android:id="@+id/chairButton"
@@ -56,7 +56,7 @@
                     android:contentDescription="@string/chilling_tag"
                     app:layout_constraintBottom_toTopOf="@+id/chairTextView"
                     app:layout_constraintEnd_toStartOf="@+id/driveButton"
-                    app:layout_constraintStart_toEndOf="@+id/bikeButton"
+                    app:layout_constraintStart_toEndOf="@+id/runButton"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/baseline_chair_24" />
 
@@ -85,15 +85,15 @@
                     android:layout_marginTop="@dimen/space_between_imageBtn_textView" />
 
             <TextView
-                    android:id="@+id/bikeTextView"
+                    android:id="@+id/runTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/bike_tag"
+                    android:text="@string/run_tag"
                     android:textColor="@color/gray_light"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/bikeButton"
-                    app:layout_constraintStart_toStartOf="@+id/bikeButton"
-                    app:layout_constraintTop_toBottomOf="@+id/bikeButton"
+                    app:layout_constraintEnd_toEndOf="@+id/runButton"
+                    app:layout_constraintStart_toStartOf="@+id/runButton"
+                    app:layout_constraintTop_toBottomOf="@+id/runButton"
                     android:layout_marginTop="@dimen/space_between_imageBtn_textView" />
 
             <TextView
