@@ -25,7 +25,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 
-class OnGoingRunning : OnGoingActivity() {
+class OnGoingWalking : OnGoingActivity() {
 
     private lateinit var stepsCounter: TextView
     private lateinit var fragmentContainer: FragmentContainerView
@@ -37,7 +37,7 @@ class OnGoingRunning : OnGoingActivity() {
         setContentView(R.layout.recording_stats_with_map_activity)
 
         viewModel = ViewModelProvider(this)[OnGoingViewModel::class.java]
-        viewModel.setActivityType(ActivityType.RUNNING)
+        viewModel.setActivityType(ActivityType.WALKING)
 
         initViews()
         setupListeners()
@@ -54,15 +54,15 @@ class OnGoingRunning : OnGoingActivity() {
 
         }
 
-/*
-        supportFragmentManager.beginTransaction().run {
-            setReorderingAllowed(true)
-            replace(R.id.map,MapsActivity(),"ciao")
-            addToBackStack(null)
-            commit()
+        /*
+                supportFragmentManager.beginTransaction().run {
+                    setReorderingAllowed(true)
+                    replace(R.id.map,MapsActivity(),"ciao")
+                    addToBackStack(null)
+                    commit()
 
 
- */
+         */
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         //va messo prima o messo l'accesso nella onresult sennò crasha

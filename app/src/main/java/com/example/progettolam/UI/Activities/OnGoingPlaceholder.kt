@@ -17,6 +17,9 @@ class OnGoingPlaceholder: AppCompatActivity() {
         val type = receivingIntent.getStringExtra(ActivityString.ACTIVITY_TYPE)
         when(type) {
             ActivityType.WALKING.toString() -> {
+                val intent = Intent(this,OnGoingWalking::class.java)
+
+                startActivity(intent)
             }
 
             ActivityType.RUNNING.toString() -> {

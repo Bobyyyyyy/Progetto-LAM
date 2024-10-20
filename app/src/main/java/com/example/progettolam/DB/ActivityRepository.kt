@@ -40,6 +40,14 @@ class ActivityRepository(app: Application) {
         return activityDao.getListOfActivities(startDate)
     }
 
+    fun getAllStepsFromDay(date: LocalDate?): LiveData<Int> {
+        return activityDao.getAllStepsFromDay(date)
+    }
+
+    fun getActivitiesFromType(activityType: ActivityType?): LiveData<List<ActivityJoin>> {
+        return activityDao.getActivitiesFromType(activityType)
+    }
+
 
 }
 

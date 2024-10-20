@@ -5,13 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class ProfileViewModel: ViewModel() {
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is profile Fragment"
+
+
+    private val _username = MutableLiveData<String>().apply {
+        value = ""
     }
 
-    val text: LiveData<String> = _text
+    val username: LiveData<String> = _username
 
-    fun changeTest() {
-        _text.value = "Ciao"
+    fun changeUsername(value: String) {
+        _username.value = value
     }
 }

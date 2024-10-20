@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.progettolam.DB.ActivityRepository
@@ -32,7 +33,12 @@ class CalendarFragment: Fragment() {
     private lateinit var calendarView: com.kizitonwose.calendar.view.CalendarView
     private lateinit var recyclerActivity: RecyclerView
     private lateinit var monthView: TextView
-    private var selectedDate: LocalDate? = null
+
+
+    val activityViewModel by lazy {
+        val factory = ActivityViewModelFactory(ActivityRepository(requireActivity().application))
+        ViewModelProvider(this, factory)[ActivityViewModel::class.java]
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,11 +50,7 @@ class CalendarFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val activityViewModel: ActivityViewModel by viewModels {
-            ActivityViewModelFactory(
-                ActivityRepository(requireActivity().application)
-            )
-        }
+
         val activityAdapter = ActivityAdapter(listOf())
 
 
@@ -63,8 +65,11 @@ class CalendarFragment: Fragment() {
         val endMonth = currentMonth.plusMonths(100) // Adjust as needed
         val firstDayOfWeek = firstDayOfWeekFromLocale() // Available from the library
         calendarView.setup(startMonth, endMonth,firstDayOfWeek)
-        calendarView.scrollToMonth(currentMonth)
 
+        activityViewModel.selectedDate?.let {
+            calendarView.notifyDateChanged(it)
+
+        }
 
         calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
             // Called only when a new container is needed.
@@ -77,7 +82,7 @@ class CalendarFragment: Fragment() {
                 container.day = data
                 container.textView.text = data.date.dayOfMonth.toString()
                 if (data.position == DayPosition.MonthDate) {
-                    if(selectedDate == null && activityAdapter.activities != null) {
+                    if(activityViewModel.selectedDate == null && activityAdapter.activities != null) {
                         activityAdapter.apply {
                             activities = null
                             notifyDataSetChanged()
@@ -87,9 +92,9 @@ class CalendarFragment: Fragment() {
 
                     container.textView.visibility = View.VISIBLE
 
-                    if (data.date == selectedDate) {
+                    if (data.date == activityViewModel.selectedDate) {
 
-                        activityViewModel.getAllActivites(selectedDate).observe(requireActivity()) { newActivities ->
+                        activityViewModel.getAllActivites(activityViewModel.selectedDate).observe(requireActivity()) { newActivities ->
                             activityAdapter.apply {
                                 activities = newActivities
                                 notifyDataSetChanged()
@@ -150,12 +155,12 @@ class CalendarFragment: Fragment() {
 
     private fun onDateClicked(day: CalendarDay) {
         if (day.position == DayPosition.MonthDate) {
-            val currentSelection = selectedDate
+            val currentSelection = activityViewModel.selectedDate
             if (currentSelection == day.date) {
-                selectedDate = null
+                activityViewModel.selectedDate = null
                 calendarView.notifyDateChanged(currentSelection)
             } else {
-                selectedDate = day.date
+                activityViewModel.selectedDate = day.date
                 calendarView.notifyDateChanged(day.date)
                 if (currentSelection != null) {
                     calendarView.notifyDateChanged(currentSelection)

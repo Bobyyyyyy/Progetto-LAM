@@ -24,6 +24,19 @@ class PreferencesFragment: PreferenceFragmentCompat() {
                 true
             }
 
+        findPreference<EditTextPreference>(getString(R.string.preferences_height))
+            ?.setOnPreferenceChangeListener { _, newValue ->
+                newValue.toString().isNotBlank()
+            }
+
+
+        findPreference<EditTextPreference>(getString(R.string.preferences_weight))
+            ?.setOnPreferenceChangeListener { _, newValue ->
+                newValue.toString().isNotBlank()
+            }
+
+
+
 
     }
 

@@ -4,10 +4,11 @@
     <string name="save_button">Salva</string>
     <string name="greetings">Ciao</string>
 
+    <string name="settings">Impostazioni</string>
 
-    <string name="preferences_username" translatable="false" />
+    <string name="preferences_username" translatable="false">preferences_username</string>
     <string name="username_default">Inserisci nome utente</string>
-    <string name="username_tag"> Nome Utente </string>
+    <string name="username_tag"> Nome utente </string>
 
     <string name="start_button">Avvia</string>
     <string name="pause_button">Pausa</string>
@@ -35,5 +36,11 @@
     <string name="default_time" translatable="false">00:00</string>
 
     <string name="preferences_user" translatable="false">preferences_user</string>
-    <string name="title_activity_maps">MapsActivity</string>
+    <string name="title_activity_maps" translatable="false">MapsActivity</string>
+    <string name="preferences_height" translatable="false">preferences_height</string>
+    <string name="preferences_weight" translatable="false">preferences_height</string>
+    <string name="height_tag">Altezza (cm)</string>
+    <string name="enter_height">Inserisci altezza</string>
+    <string name="weight_tag">Peso (kg)</string>
+    <string name="enter_weight">Inserisci peso (kg)</string>
 </resources>

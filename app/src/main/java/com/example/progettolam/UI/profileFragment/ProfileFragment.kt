@@ -8,11 +8,26 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
+import com.example.progettolam.DB.ActivityRepository
+import com.example.progettolam.DB.ActivityViewModel
+import com.example.progettolam.DB.ActivityViewModelFactory
 import com.example.progettolam.R
 import com.example.progettolam.UI.preferencesActivity.PreferencesFragment
+import java.time.LocalDate
 
 class ProfileFragment: Fragment() {
     private lateinit var profileModel: ProfileViewModel
+    private lateinit var textView: TextView
+    private lateinit var settings: ImageView
+    private lateinit var todaySteps: TextView
+
+
+    private val activityViewModel by lazy {
+        val factory = ActivityViewModelFactory(ActivityRepository(requireActivity().application))
+        ViewModelProvider(this, factory)[ActivityViewModel::class.java]
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -24,29 +39,31 @@ class ProfileFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         profileModel = ViewModelProvider(this)[ProfileViewModel::class.java]
-        val textView: TextView = view.findViewById(R.id.profileText)
-        val settings: ImageView= view.findViewById(R.id.settings)
-        profileModel.text.observe(viewLifecycleOwner) {
+        textView = view.findViewById(R.id.username)
+        settings = view.findViewById(R.id.settings)
+        todaySteps = view.findViewById(R.id.todaySteps)
+
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(requireActivity())
+
+        val value = resources.getString(R.string.preferences_username)
+        val storedName = sharedPref?.getString(getString(R.string.preferences_username), value)
+
+        profileModel.changeUsername(storedName.toString())
+
+        profileModel.username.observe(viewLifecycleOwner) {
             textView.text = it
         }
 
-        textView.setOnClickListener {
-            profileModel.changeTest()
+        activityViewModel.getAllStepsFromDay(LocalDate.now()).observe(viewLifecycleOwner) {
+            todaySteps.text = it.toString()
         }
+
 
 
         settings.setOnClickListener{
             changeFragment(PreferencesFragment(), R.id.settings.toString())
         }
 
-
-        /*
-        settings.setOnClickListener{
-            val intent: Intent = Intent(activity,preferencesActivity::class.java)
-            startActivity(intent)
-        }
-
-         */
 
     }
 

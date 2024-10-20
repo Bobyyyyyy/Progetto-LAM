@@ -18,7 +18,7 @@ interface ActivityDao {
 
     @Transaction
     @Query("SELECT * FROM base_activity_table WHERE activityType = :activityType")
-    fun getActivitiesFromType(activityType: ActivityType): LiveData<List<ActivityJoin>>
+    fun getActivitiesFromType(activityType: ActivityType?): LiveData<List<ActivityJoin>>
 
     @Transaction
     @Query("""SELECT sum(tot_steps) FROM

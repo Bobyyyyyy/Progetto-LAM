@@ -14,6 +14,8 @@ class ActivityViewModel(private val repository: ActivityRepository): ViewModel()
 
     var currentMonth: YearMonth = YearMonth.now()
 
+    var selectedDate: LocalDate? = LocalDate.now()
+
     private val _id = MutableLiveData<Long>().apply {
         value = null
     }
@@ -75,10 +77,16 @@ class ActivityViewModel(private val repository: ActivityRepository): ViewModel()
     }
 
 
-
-
     fun getAllActivites(startDate: LocalDate?): LiveData<List<ActivityJoin>> {
         return repository.getAllActivities(startDate)
+    }
+
+    fun getAllStepsFromDay(date: LocalDate?): LiveData<Int> {
+        return repository.getAllStepsFromDay(date)
+    }
+
+    fun getAllActivities(activityType: ActivityType?): LiveData<List<ActivityJoin>> {
+        return repository.getActivitiesFromType(activityType)
     }
 
 
