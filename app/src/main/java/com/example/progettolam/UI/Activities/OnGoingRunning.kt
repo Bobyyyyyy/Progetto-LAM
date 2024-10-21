@@ -29,7 +29,6 @@ class OnGoingRunning : OnGoingActivity() {
 
     private lateinit var stepsCounter: TextView
     private lateinit var fragmentContainer: FragmentContainerView
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,32 +62,8 @@ class OnGoingRunning : OnGoingActivity() {
 
 
  */
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
-        //va messo prima o messo l'accesso nella onresult sennò crasha
-        val locationPermissionRequest = registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions()
-        ) { permissions ->
-            when {
-                permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
-                    // Precise location access granted.
-                }
-                permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
-                    // Only approximate location access granted.
-                } else -> {
-                // No location access granted.
-            }
-            }
-        }
-        locationPermissionRequest.launch(arrayOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION))
     }
 
-
-    private fun stopLocationUpdates() {
-        fusedLocationClient.removeLocationUpdates(locationCallback)
-    }
 
     override fun initViews() {
         super.initViews()

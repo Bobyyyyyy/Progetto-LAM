@@ -18,9 +18,9 @@
             android:padding="@dimen/padding_constraint_layout"
             android:id="@+id/constraintLayout">
 
-        <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/map"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
+        <fragment
+                android:id="@+id/map2"
+                android:name="com.example.progettolam.MapsFragment"
                 android:layout_width="379dp"
                 android:layout_height="409dp"
                 android:layout_marginEnd="8dp"

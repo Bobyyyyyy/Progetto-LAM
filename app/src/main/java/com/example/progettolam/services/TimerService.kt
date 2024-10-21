@@ -62,19 +62,6 @@ class TimerService: Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
-        val action = intent?.getStringExtra(TIMER_ACTION)!!
-
-        when (action) {
-            START -> startStopwatch()
-            PAUSE -> pauseStopwatch()
-            END -> deleteTimer()
-            GET_STATUS -> sendStatus()
-            MOVE_TO_FOREGROUND -> moveToForeground()
-            MOVE_TO_BACKGROUND -> moveToBackground()
-        }
-
-
         return START_STICKY
     }
 
@@ -97,9 +84,6 @@ class TimerService: Service() {
 
                 }
             }, 0, 1000)
-        }
-        else {
-            startForeground(1,buildNotification())
         }
     }
 

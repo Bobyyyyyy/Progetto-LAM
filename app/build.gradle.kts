@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.progettolam"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -45,6 +45,7 @@ dependencies {
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)
     coreLibraryDesugaring(libs.desugar.jdk.libs)
+
     implementation("com.kizitonwose.calendar:view:2.6.0")
     implementation("androidx.room:room-runtime:2.6.1")
     kapt(libs.androidx.room.compiler)

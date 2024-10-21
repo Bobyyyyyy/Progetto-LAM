@@ -60,7 +60,9 @@ open class OnGoingActivity: AppCompatActivity() {
             timerService.moveToBackground()
         }
         else {
-            bindService(Intent(this,TimerService::class.java), serviceConnection, BIND_AUTO_CREATE)
+            val service = Intent(this,TimerService::class.java)
+            startService(service)
+            bindService(service, serviceConnection, BIND_AUTO_CREATE)
         }
     }
 
@@ -132,7 +134,7 @@ open class OnGoingActivity: AppCompatActivity() {
                 viewModel.changeTime(intent?.getIntExtra(TimerService.TIME_ELAPSED,0)!!)
             }
         }
-        registerReceiver(timeReceiver,timeFilter)
+        registerReceiver(timeReceiver,timeFilter, RECEIVER_EXPORTED)
 
     }
 
@@ -145,7 +147,7 @@ open class OnGoingActivity: AppCompatActivity() {
             }
         }
 
-        registerReceiver(stepReceiver,stepFilter)
+        registerReceiver(stepReceiver,stepFilter,RECEIVER_EXPORTED)
     }
 
 

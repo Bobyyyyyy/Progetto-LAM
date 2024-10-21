@@ -70,10 +70,12 @@ class StepCounter : SensorEventListener, Service(){
     }
 
     private fun sendSteps() {
-        val stepsIntent = Intent()
-        stepsIntent.action = STEP_STATUS
-        stepsIntent.putExtra(TOTAL_STEPS,totalSteps)
-        sendBroadcast(stepsIntent)
+        if(stepCounterSensor != null) {
+            val stepsIntent = Intent()
+            stepsIntent.action = STEP_STATUS
+            stepsIntent.putExtra(TOTAL_STEPS, totalSteps)
+            sendBroadcast(stepsIntent)
+        }
 
     }
 
@@ -81,7 +83,6 @@ class StepCounter : SensorEventListener, Service(){
         if (event != null) {
             totalSteps++
             sendSteps()
-
         }
     }
 
@@ -102,7 +103,13 @@ class StepCounter : SensorEventListener, Service(){
     }
 
     private fun resumeSensor() {
-        sensorManager.registerListener(this,stepCounterSensor,SensorManager.SENSOR_DELAY_FASTEST)
+        if(stepCounterSensor != null) {
+            sensorManager.registerListener(
+                this,
+                stepCounterSensor,
+                SensorManager.SENSOR_DELAY_FASTEST
+            )
+        }
     }
 
 }
