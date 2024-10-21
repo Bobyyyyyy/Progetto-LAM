@@ -65,6 +65,7 @@ class CalendarFragment: Fragment() {
         val endMonth = currentMonth.plusMonths(100) // Adjust as needed
         val firstDayOfWeek = firstDayOfWeekFromLocale() // Available from the library
         calendarView.setup(startMonth, endMonth,firstDayOfWeek)
+        calendarView.scrollToMonth(currentMonth)
 
         activityViewModel.selectedDate?.let {
             calendarView.notifyDateChanged(it)

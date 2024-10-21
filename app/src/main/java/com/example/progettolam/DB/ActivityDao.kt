@@ -29,7 +29,6 @@ interface ActivityDao {
     fun getAllStepsFromDay(endDate: LocalDate?) : LiveData<Int>
 
 
-
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertBaseActivity(activity: BaseActivity): Long
 

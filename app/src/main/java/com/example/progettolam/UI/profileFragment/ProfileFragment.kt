@@ -55,15 +55,18 @@ class ProfileFragment: Fragment() {
         }
 
         activityViewModel.getAllStepsFromDay(LocalDate.now()).observe(viewLifecycleOwner) {
-            todaySteps.text = it.toString()
+            if(it != null) {
+                todaySteps.text = it.toString()
+            }
+            else {
+                todaySteps.text = getString(R.string.default_steps)
+            }
         }
-
 
 
         settings.setOnClickListener{
             changeFragment(PreferencesFragment(), R.id.settings.toString())
         }
-
 
     }
 
