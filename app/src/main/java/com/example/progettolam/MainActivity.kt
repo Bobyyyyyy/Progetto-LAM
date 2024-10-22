@@ -89,6 +89,9 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             R.id.addMenu -> {
+                if(!(menuItem.isChecked)) {
+                    changeFragment(GeofenceMapFragment(),id.toString())
+                }
             }
             else -> { false }
         }

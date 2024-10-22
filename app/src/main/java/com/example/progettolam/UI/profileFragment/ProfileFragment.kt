@@ -33,7 +33,7 @@ class ProfileFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.profile_fragment, container, false)
+        return inflater.inflate(R.layout.profile_fragment_effettivo, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,7 +41,7 @@ class ProfileFragment: Fragment() {
         profileModel = ViewModelProvider(this)[ProfileViewModel::class.java]
         textView = view.findViewById(R.id.username)
         settings = view.findViewById(R.id.settings)
-        todaySteps = view.findViewById(R.id.todaySteps)
+        //todaySteps = view.findViewById(R.id.todaySteps)
 
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(requireActivity())
 
@@ -54,6 +54,7 @@ class ProfileFragment: Fragment() {
             textView.text = it
         }
 
+        /*
         activityViewModel.getAllStepsFromDay(LocalDate.now()).observe(viewLifecycleOwner) {
             if(it != null) {
                 todaySteps.text = it.toString()
@@ -62,6 +63,8 @@ class ProfileFragment: Fragment() {
                 todaySteps.text = getString(R.string.default_steps)
             }
         }
+
+         */
 
 
         settings.setOnClickListener{
@@ -104,7 +107,5 @@ class ProfileFragment: Fragment() {
                 commit()
             }
         }
-
-
     }
 }
