@@ -3,6 +3,7 @@ package com.example.progettolam.DB
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.google.android.gms.common.internal.ShowFirstParty
 import com.google.gson.annotations.SerializedName
 
 
@@ -18,7 +19,10 @@ data class WalkingActivity (
     var activityId: Long?,
 
     @SerializedName("steps")
-    val steps: Int
+    val steps: Int?,
+
+    @SerializedName("avgSpeed")
+    val avgSpeed: Float
 
 )
 
@@ -34,7 +38,10 @@ data class RunningActivity (
     var activityId: Long?,
 
     @SerializedName("steps")
-    val steps: Int?
+    val steps: Int?,
+
+    @SerializedName("avgSpeed")
+    val avgSpeed: Float
 
 )
 
@@ -51,6 +58,8 @@ data class SittingActivity(
     @PrimaryKey(autoGenerate = false)
     var activityId: Long?,
 
+
+
     )
 
 
@@ -65,5 +74,8 @@ data class SittingActivity(
 data class DrivingActivity(
     @PrimaryKey(autoGenerate = false)
     var activityId: Long?,
+
+    @SerializedName("avgSpeed")
+    val avgSpeed: Float
 
     )

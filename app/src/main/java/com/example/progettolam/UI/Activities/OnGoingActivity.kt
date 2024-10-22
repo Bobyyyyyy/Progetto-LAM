@@ -108,12 +108,7 @@ open class OnGoingActivity: AppCompatActivity() {
     }
 
     private fun getTimerStatus() {
-        /*
-        val stopwatchService = Intent(this, TimerService::class.java)
-        stopwatchService.putExtra(TimerService.TIMER_ACTION, TimerService.GET_STATUS)
-        startService(stopwatchService)
 
-         */
     }
 
     private fun updateStopwatchValue(timeElapsed: Int) {
@@ -134,6 +129,7 @@ open class OnGoingActivity: AppCompatActivity() {
                 viewModel.changeTime(intent?.getIntExtra(TimerService.TIME_ELAPSED,0)!!)
             }
         }
+
         registerReceiver(timeReceiver,timeFilter, RECEIVER_EXPORTED)
 
     }
@@ -167,7 +163,7 @@ open class OnGoingActivity: AppCompatActivity() {
                         viewModel.endTime,
                         viewModel.endDate
                     ),
-                    RunningActivity(null, viewModel.getTotalSteps()?.toInt())
+                    RunningActivity(null, viewModel.getTotalSteps()?.toInt(), viewModel.getAverageSpeed())
                 )
 
             }

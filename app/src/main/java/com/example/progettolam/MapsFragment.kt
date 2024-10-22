@@ -11,6 +11,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.ViewModelProvider
+import com.example.progettolam.UI.Activities.OnGoingViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -25,15 +27,24 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.Priority
+import kotlin.math.roundToInt
 
 
 class MapsFragment : Fragment(), OnMapReadyCallback {
 
+    private lateinit var viewModel: OnGoingViewModel
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var mMap: GoogleMap
     private lateinit var locationCallback: LocationCallback
+    private lateinit var locationRequest: LocationRequest
     private var _binding: ActivityMapsBinding? = null
     private val binding get() = _binding!!
+    private var currentSpeed = 0.0f
+    private var previousPosition: LatLng = LatLng(0.0, 0.0)
+
+    companion object {
+        const val SPEED_THRESHOLD = 4.0f
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +56,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProvider(requireActivity())[OnGoingViewModel::class.java]
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = childFragmentManager
@@ -60,13 +73,34 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     return
                 }
                 for (location in p0.locations) {
-                    Log.i("ciao",location.speed.toString())
-                    // Update the camera position on location update
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                        LatLng(location.latitude, location.longitude), 40f))
+                    val speed = msTOkm(location.speed)
+                    if (roundCoordinates(location.latitude, location.longitude) != roundCoordinates(previousPosition.latitude,previousPosition.longitude)) {
+                        if (speed >= SPEED_THRESHOLD && speed != currentSpeed) {
+                            currentSpeed = speed
+                            viewModel.addSpeed(speed)
+                        }
+
+                        mMap.animateCamera(
+                            CameraUpdateFactory.newLatLngZoom(
+                                LatLng(location.latitude, location.longitude), 15f
+                            )
+                        )
+                    }
+                    else {
+                        if (currentSpeed != 0f) {
+                            currentSpeed = 0f
+                            viewModel.addSpeed(currentSpeed)
+                        }
+                    }
                 }
             }
         }
+
+        locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 10000)
+            .setWaitForAccurateLocation(true)
+            .setMinUpdateIntervalMillis(5000)
+            .build()
+
     }
 
     @SuppressLint("MissingPermission")
@@ -75,25 +109,11 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
         updateLocationUI()
 
-        mMap.setOnMapClickListener { latLng -> // When clicked on map
-
-            // Initialize marker options
-            val markerOptions = MarkerOptions()
-            // Set position of marker
-            markerOptions.position(latLng)
-            // Set title of marker
-            markerOptions.title(latLng.latitude.toString() + " : " + latLng.longitude)
-            // Remove all marker
-            mMap.clear()
-            // Animating to zoom the marker
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f))
-            // Add marker on map
-            mMap.addMarker(markerOptions)
-            }
-
         fusedLocationClient.lastLocation.addOnCompleteListener(requireActivity()) { task ->
             if (task.isSuccessful) {
                 val lastLocation = task.result
+                previousPosition = LatLng(lastLocation.latitude, lastLocation.longitude)
+                currentSpeed = msTOkm(lastLocation.speed)
                 if (lastLocation != null) {
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                         LatLng(lastLocation!!.latitude,
@@ -111,78 +131,61 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     151.0), 15.toFloat()))
                 }
             }
+    }
 
 
-
-
-                /*
-                try {
-        if (locationPermissionGranted) {
-            val locationResult = fusedLocationProviderClient.lastLocation
-            locationResult.addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Set the map's camera position to the current location of the device.
-                    lastKnownLocation = task.result
-                    if (lastKnownLocation != null) {
-                        map?.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                            LatLng(lastKnownLocation!!.latitude,
-                                lastKnownLocation!!.longitude), DEFAULT_ZOOM.toFloat()))
-                    }
-                } else {
-                    Log.d(TAG, "Current location is null. Using defaults.")
-                    Log.e(TAG, "Exception: %s", task.exception)
-                    map?.moveCamera(CameraUpdateFactory
-                        .newLatLngZoom(defaultLocation, DEFAULT_ZOOM.toFloat()))
-                    map?.uiSettings?.isMyLocationButtonEnabled = false
-                }
-            }
+    private fun updateLocationUI() {
+        if (mMap == null) {
+            return
         }
-    } catch (e: SecurityException) {
-        Log.e("Exception: %s", e.message, e)
-    }
-                 */
-
-        // Add a marker in Sydney and move the camera
+        try {
+            mMap?.isMyLocationEnabled = true
+            mMap?.uiSettings?.isMyLocationButtonEnabled = true
 
 
-/*
-        val mountainView = LatLng(37.4, -122.1)
-
-        // Construct a CameraPosition focusing on Mountain View and animate the camera to that position.
-        val cameraPositionFATAL EX = CameraPosition.Builder()
-            .target(mountainView) // Sets the center of the map to Mountain View
-            .zoom(17f)            // Sets the zoom
-            .bearing(90f)         // Sets the orientation of the camera to east
-            .tilt(30f)            // Sets the tilt of the camera to 30 degrees
-            .build()              // Creates a CameraPosition from the builder
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-
- */
+        } catch (e: SecurityException) {
+            Log.e("Exception: %s", e.message, e)
+        }
     }
 
-
-private fun updateLocationUI() {
-    if (mMap == null) {
-        return
+    private fun msTOkm (value: Float): Float {
+        val speedInKm = value * 3.6f
+        Log.i("SpeedViewModel", value.toString())
+        return (speedInKm * 10).roundToInt() / 10.0f
     }
-    try {
-        mMap?.isMyLocationEnabled = true
-        mMap?.uiSettings?.isMyLocationButtonEnabled = true
 
-        val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 10000)
-            .setWaitForAccurateLocation(false)
-            .setMinUpdateIntervalMillis(5000)
-            .build()
-
-        fusedLocationClient.requestLocationUpdates(locationRequest,locationCallback, null)
-
-    } catch (e: SecurityException) {
-        Log.e("Exception: %s", e.message, e)
+    private fun roundCoordinates(latitude: Double, longitude: Double): LatLng {
+        return LatLng(
+            ((latitude * 10000).roundToInt() / 10000.0f).toDouble(),
+            ((longitude * 10000).roundToInt() / 10000.0f).toDouble()
+        )
     }
-}
+
+    override fun onResume() {
+        super.onResume()
+        try {
+            if (ActivityCompat.checkSelfPermission(
+                    requireActivity(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    requireActivity(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return
+            }
+
+        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
+
+
+        } catch (e: Exception) {
+            Log.e("Exception: %s", e.message, e )
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        fusedLocationClient.removeLocationUpdates(locationCallback)
         _binding = null // Clean up binding when the view is destroyed
     }
 }

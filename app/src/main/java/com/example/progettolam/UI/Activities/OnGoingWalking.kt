@@ -169,7 +169,7 @@ class OnGoingWalking : OnGoingActivity() {
                 viewModel.endTime,
                 viewModel.endDate
             ),
-            RunningActivity(null, viewModel.getTotalSteps()?.toInt())
+            RunningActivity(null, viewModel.getTotalSteps()?.toInt(),viewModel.getAverageSpeed())
         )
     }
 

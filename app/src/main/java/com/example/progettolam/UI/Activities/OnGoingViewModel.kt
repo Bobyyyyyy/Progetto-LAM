@@ -1,11 +1,13 @@
 package com.example.progettolam.UI.Activities
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.progettolam.DB.ActivityType
 import java.time.LocalDate
 import java.time.LocalTime
+
 
 class OnGoingViewModel: ViewModel() {
 
@@ -61,6 +63,30 @@ class OnGoingViewModel: ViewModel() {
     fun getActivityType(): ActivityType? {
         return _activityType.value
     }
+
+
+
+    private val _speedList = MutableLiveData<MutableList<Float>>(mutableListOf())
+    val speedList: LiveData<MutableList<Float>> get() = _speedList
+
+    fun addSpeed(value: Float) {
+        val currentSpeedList = _speedList.value ?: mutableListOf()
+        currentSpeedList.add(value)
+        Log.d("SpeedViewModel", "Aggiungo velocità: $value")
+        _speedList.postValue(currentSpeedList)
+        Log.d("SpeedViewModel", "Nuova lista velocità: ${_speedList.value}")
+    }
+
+    fun getAverageSpeed(): Float {
+        val speedList = _speedList.value
+        if (speedList.isNullOrEmpty()) {
+            return 0f
+        }
+
+        val sum = speedList.sum()
+        return sum / speedList.size
+    }
+
 
 
 }

@@ -44,7 +44,7 @@ class TimerService: Service() {
 
     }
     private var timeElapsed: Int = 0
-    private var isStopWatchRunning = false
+    var isStopWatchRunning = false
     private lateinit var notificationManagerCompat: NotificationManagerCompat
 
     private var updateTimer = Timer()

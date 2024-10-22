@@ -28,8 +28,7 @@ import java.time.LocalTime
 class OnGoingRunning : OnGoingActivity() {
 
     private lateinit var stepsCounter: TextView
-    private lateinit var fragmentContainer: FragmentContainerView
-    private lateinit var locationCallback: LocationCallback
+    private lateinit var speedText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,24 +49,22 @@ class OnGoingRunning : OnGoingActivity() {
             endActivity()
 
             registerActivity()
-
         }
 
-/*
-        supportFragmentManager.beginTransaction().run {
-            setReorderingAllowed(true)
-            replace(R.id.map,MapsActivity(),"ciao")
-            addToBackStack(null)
-            commit()
+        viewModel.speedList.observe(this) {
+            if(it.isNotEmpty()) {
+                speedText.text = it.last().toString()
+            }
+        }
 
 
- */
     }
 
 
     override fun initViews() {
         super.initViews()
         stepsCounter = findViewById(R.id.stepsCounter)
+        speedText = findViewById(R.id.valueSpeedTextView)
     }
 
 
@@ -144,7 +141,7 @@ class OnGoingRunning : OnGoingActivity() {
                 viewModel.endTime,
                 viewModel.endDate
             ),
-            RunningActivity(null, viewModel.getTotalSteps()?.toInt())
+            RunningActivity(null, viewModel.getTotalSteps()?.toInt(), viewModel.getAverageSpeed())
         )
     }
 

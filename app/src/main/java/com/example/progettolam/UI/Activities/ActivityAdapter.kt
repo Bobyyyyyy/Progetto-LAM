@@ -53,7 +53,7 @@ class ActivityAdapter(var activities: List<ActivityJoin>?): RecyclerView.Adapter
             }
 
             activityTitle2.text = activities?.get(position)?.baseActivity?.activityType.toString()
-            activityTitle3.text = time
+            activityTitle3.text = activities?.get(position)?.runningActivity?.avgSpeed?.toString() ?: "0.0"
             activityTitle.text = activities?.get(position)?.runningActivity?.steps?.toString() ?: "Ciao"
 
         }
