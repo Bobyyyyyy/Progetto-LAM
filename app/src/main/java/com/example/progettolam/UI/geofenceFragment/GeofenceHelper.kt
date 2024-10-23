@@ -1,4 +1,4 @@
-package com.example.progettolam
+package com.example.progettolam.UI.geofenceFragment
 
 import android.app.PendingIntent
 import android.content.Context
@@ -11,7 +11,7 @@ import com.google.android.gms.location.GeofencingRequest
 import com.google.android.gms.maps.model.LatLng
 
 
-class GeoFenceHelper(base: Context?) : ContextWrapper(base) {
+class GeofenceHelper(base: Context?) : ContextWrapper(base) {
     private var pendingIntent: PendingIntent? = null
 
     fun getGeofencingRequest(geofence: Geofence?): GeofencingRequest {

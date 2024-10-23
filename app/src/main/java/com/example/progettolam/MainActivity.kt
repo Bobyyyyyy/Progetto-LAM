@@ -1,7 +1,6 @@
 package com.example.progettolam
 
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.preference.PreferenceManager
 import com.example.progettolam.UI.calendarFragment.CalendarFragment
+import com.example.progettolam.UI.geofenceFragment.GeofenceFragment
+import com.example.progettolam.UI.geofenceFragment.GeofenceMapFragment
 import com.example.progettolam.UI.homeFragment.HomeFragment
 import com.example.progettolam.UI.profileFragment.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -90,7 +91,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.addMenu -> {
                 if(!(menuItem.isChecked)) {
-                    changeFragment(GeofenceMapFragment(),id.toString())
+                    changeFragment(GeofenceFragment(),id.toString())
                 }
             }
             else -> { false }

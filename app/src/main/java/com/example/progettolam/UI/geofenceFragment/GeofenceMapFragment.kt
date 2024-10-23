@@ -1,7 +1,6 @@
-package com.example.progettolam
+package com.example.progettolam.UI.geofenceFragment
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -15,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.progettolam.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -26,11 +26,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
 import com.google.android.gms.location.GeofencingRequest
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.Priority
 import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.tasks.OnFailureListener
 
@@ -40,7 +36,7 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var geofencingClient: GeofencingClient
-    private lateinit var geoFenceHelper: GeoFenceHelper
+    private lateinit var geoFenceHelper: GeofenceHelper
 
     private var _binding: ActivityMapsBinding? = null
     private val binding get() = _binding!!
@@ -54,23 +50,32 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        //geofencingClient = LocationServices.getGeofencingClient(this)
+
         _binding = ActivityMapsBinding.inflate(inflater, container, false)
         return binding.root
+        //return inflater.inflate(R.layout.geofencing_map_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = childFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
 
+        /*
+        // Initialize the SupportMapFragment
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+            ?: SupportMapFragment.newInstance().also {
+                childFragmentManager.beginTransaction().replace(R.id.map, it).commit()
+            }
+        */
         mapFragment.getMapAsync(this)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         geofencingClient = LocationServices.getGeofencingClient(requireActivity())
-        geoFenceHelper = GeoFenceHelper(requireContext());
+        geoFenceHelper = GeofenceHelper(requireContext());
     }
 
     //@SuppressLint("MissingPermission")

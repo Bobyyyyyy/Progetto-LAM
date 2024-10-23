@@ -47,7 +47,7 @@ dependencies {
     coreLibraryDesugaring(libs.desugar.jdk.libs)
     implementation("com.google.android.gms:play-services-maps:18.1.0")
     implementation("com.google.android.gms:play-services-location:21.0.1")
-
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation("com.kizitonwose.calendar:view:2.6.0")
     implementation("androidx.room:room-runtime:2.6.1")
     kapt(libs.androidx.room.compiler)

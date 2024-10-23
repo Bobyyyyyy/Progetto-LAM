@@ -1,4 +1,4 @@
-package com.example.progettolam
+package com.example.progettolam.UI.geofenceFragment
 
 import android.Manifest
 import android.R
@@ -11,8 +11,6 @@ import android.content.ContextWrapper
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat

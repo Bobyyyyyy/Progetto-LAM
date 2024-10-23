@@ -1,4 +1,4 @@
-package com.example.progettolam
+package com.example.progettolam.UI.geofenceFragment
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -6,9 +6,9 @@ import android.content.Intent
 import android.os.Looper
 import android.util.Log
 import android.widget.Toast
+import com.example.progettolam.MapsActivity
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingEvent
-import java.util.logging.Handler
 
 
 class MyReceiver : BroadcastReceiver() {
