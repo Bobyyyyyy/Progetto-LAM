@@ -1,5 +1,6 @@
 package com.example.progettolam.UI.profileFragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,14 +15,29 @@ import com.example.progettolam.DB.ActivityViewModel
 import com.example.progettolam.DB.ActivityViewModelFactory
 import com.example.progettolam.R
 import com.example.progettolam.UI.preferencesActivity.PreferencesFragment
-import java.time.LocalDate
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+
 
 class ProfileFragment: Fragment() {
     private lateinit var profileModel: ProfileViewModel
     private lateinit var textView: TextView
     private lateinit var settings: ImageView
     private lateinit var todaySteps: TextView
-
+    private lateinit var chart: LineChart
+    private lateinit var barChart: BarChart
+    private lateinit var pieChart: PieChart
+    private lateinit var pieChart2: PieChart
 
     private val activityViewModel by lazy {
         val factory = ActivityViewModelFactory(ActivityRepository(requireActivity().application))
@@ -33,7 +49,7 @@ class ProfileFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.profile_fragment_effettivo, container, false)
+        return inflater.inflate(R.layout.profile_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,8 +59,35 @@ class ProfileFragment: Fragment() {
         settings = view.findViewById(R.id.settings)
         //todaySteps = view.findViewById(R.id.todaySteps)
 
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(requireActivity())
+        chart = view.findViewById(R.id.chart)
+        barChart = view.findViewById(R.id.chart2)
+        pieChart = view.findViewById(R.id.chart3)
+        pieChart2 = view.findViewById(R.id.chart4)
 
+        val lineData = createLineCharDate("Steps", Color.RED)
+        val barData = createBarCharDate("Calories", Color.MAGENTA)
+        val pieData = createPieCharDate()
+        val pieData2 = createPieCharDate()
+
+        // Assuming you have a LineChart instance named `lineChart`
+        chart.data = lineData
+        chart.animateX(1000)
+        chart.invalidate() // Refresh the chart
+
+        barChart.data = barData
+        barChart.animateY(1000)
+        barChart.setFitBars(true)
+        barChart.invalidate()
+
+        pieChart.setData(pieData)
+        pieChart.animateXY(1000, 1500)
+        pieChart.invalidate()
+
+        pieChart2.setData(pieData2)
+        pieChart2.invalidate()
+
+
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(requireActivity())
         val value = resources.getString(R.string.preferences_username)
         val storedName = sharedPref?.getString(getString(R.string.preferences_username), value)
 
@@ -107,5 +150,57 @@ class ProfileFragment: Fragment() {
                 commit()
             }
         }
+    }
+
+    private fun createLineCharDate(label: String, color: Int): LineData {
+        var dataObjects = arrayOf<DataExample>(
+            DataExample(0f, 5f),
+            DataExample(1f, 10f),
+            DataExample(2f, 7f),
+            DataExample(3f, 12f),
+            DataExample(4f, 6f),
+            DataExample(5f, 15f)
+        )
+        // Create an empty list of Entry objects
+        val entries = mutableListOf<Entry>()
+
+        // Convert DataExample objects to MPAndroidChart Entry objects
+        for (data in dataObjects) {
+            entries.add(Entry(data.valueX, data.valueY))
+        }
+
+        val dataSet = LineDataSet(entries, label)
+        dataSet.setColor(color)  //Color.parseColor("#304567")
+
+        return LineData(dataSet)
+    }
+
+    private fun createBarCharDate(label: String, color: Int): BarData {
+        val entries: MutableList<BarEntry> = ArrayList()
+        entries.add(BarEntry(0f, 30f))
+        entries.add(BarEntry(1f, 80f))
+        entries.add(BarEntry(2f, 60f))
+        entries.add(BarEntry(3f, 50f))
+        // gap of 2f
+        entries.add(BarEntry(5f, 70f))
+        entries.add(BarEntry(6f, 60f))
+        val set = BarDataSet(entries, label)
+        val data = BarData(set)
+        data.barWidth = 0.9f // set custom bar width
+
+        return data
+    }
+
+    private fun createPieCharDate(): PieData {
+        val entries: MutableList<PieEntry> = ArrayList()
+        entries.add(PieEntry(18.5f, "Green"))
+        entries.add(PieEntry(26.7f, "Yellow"))
+        entries.add(PieEntry(24.0f, "Red"))
+        entries.add(PieEntry(30.8f, "Blue"))
+        val set = PieDataSet(entries, "Election Results")
+
+        //set.setColors(arrayListOf(Color.parseColor("#304567"), Color.parseColor("#501567"));
+        set.setColors(arrayListOf(Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW))
+        return PieData(set)
     }
 }

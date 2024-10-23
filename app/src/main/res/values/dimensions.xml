@@ -20,6 +20,9 @@
     <dimen name="value_card_activity_stat">20sp</dimen>
     <dimen name="unit_card_activity_stat">16sp</dimen>
 
+    <!-- CHARTS -->
+    <dimen name="margin_chart">16dp</dimen>
+    <dimen name="chart_height">248dp</dimen>
 
 
 
