@@ -1,5 +1,6 @@
 package com.example.progettolam.UI.geofenceFragment
 
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -72,19 +73,16 @@ class GeofenceFragment : Fragment() {
         val colorPickerDialogue = AmbilWarnaDialog(requireContext(), mDefaultColor,
             object : AmbilWarnaDialog.OnAmbilWarnaListener {
                 override fun onCancel(dialog: AmbilWarnaDialog?) {
-                    // Leave this function body as
-                    // blank, as the dialog
-                    // automatically closes when
-                    // clicked on cancel button
+                    // Leave this function body as blank, as the dialog automatically closes when clicked on cancel button
                 }
-
                 override fun onOk(dialog: AmbilWarnaDialog?, color: Int) {
-                    // Change the mDefaultColor to
-                    // the selected color when OK is clicked
+                    // Change the mDefaultColor to the selected color when OK is clicked
                     mDefaultColor = color
-
-                    // Now change the picked color preview box to mDefaultColor
-                    mColorPreview?.setBackgroundColor(mDefaultColor)
+                    val background = mColorPreview?.background
+                    if (background is GradientDrawable) {
+                        // change the picked color preview box to mDefaultColor
+                        background.setColor(mDefaultColor)
+                    }
                 }
             })
         colorPickerDialogue.show()
