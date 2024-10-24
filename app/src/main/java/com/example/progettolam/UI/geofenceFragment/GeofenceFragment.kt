@@ -1,11 +1,16 @@
 package com.example.progettolam.UI.geofenceFragment
 
+import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
@@ -14,17 +19,18 @@ import com.example.progettolam.R
 import com.google.android.gms.maps.SupportMapFragment
 import yuku.ambilwarna.AmbilWarnaDialog;
 import android.widget.TextView;
-
+import androidx.fragment.app.activityViewModels
 
 
 class GeofenceFragment : Fragment() {
-
-    private val geofenceMapViewModel: GeofenceMapViewModel by viewModels()
-    lateinit var viewModel: ViewModel
+    private val geofenceMapViewModel: GeofenceMapViewModel by activityViewModels()
+    //private val geofenceMapViewModel: GeofenceMapViewModel by viewModels()
+    //lateinit var viewModel: ViewModel
 
     private lateinit var mPickColorButton: Button
     private var mColorPreview: View? = null
-    private var mDefaultColor = 0
+    private var mDefaultColor = Color.rgb(255, 0, 0)
+    private lateinit var radiusTextView: EditText
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,13 +60,30 @@ class GeofenceFragment : Fragment() {
         }
         */
         mPickColorButton = view.findViewById(R.id.button)
+        radiusTextView = view.findViewById(R.id.editTextNumberSigned)
         mColorPreview = view.findViewById(R.id.preview_selected_color)
-        mDefaultColor = 0
-
+        mDefaultColor = Color.rgb(255, 0, 0)
 
         mPickColorButton.setOnClickListener {
             openColorPickerDialogue()
         }
+
+        // Set up a listener for the radius input
+        radiusTextView.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                val radius = s?.toString()?.toIntOrNull()
+                if (radius != null && radius >= 100 && radius <= 2000) {  // Ensure it's a positive number
+                    geofenceMapViewModel.setSelectedRadius(radius)  // Update the ViewModel with selected radius
+                    Log.i("Raggio2", "raggio: $radius")
+                } else {
+                    // Handle invalid input (e.g., show an error message if needed)
+                    radiusTextView.error = "Please enter a value between 100 and 2000"
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
 
     }
 
@@ -83,6 +106,9 @@ class GeofenceFragment : Fragment() {
                         // change the picked color preview box to mDefaultColor
                         background.setColor(mDefaultColor)
                     }
+                    // Update the selected color in the ViewModel
+                    geofenceMapViewModel.setSelectedColor(mDefaultColor)
+                    Log.i("COLORE_GEO", "selectedColor: $mDefaultColor")
                 }
             })
         colorPickerDialogue.show()

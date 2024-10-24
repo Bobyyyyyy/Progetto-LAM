@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/sarala_regular</item>
+    </style>
+
+    <!-- Define styles for specific text elements like h1, h2 -->
+    <style name="Heading1">
+        <item name="android:fontFamily">@font/sarala_bold</item>
+        <item name="android:textSize">@dimen/font_size_h1</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Heading2">
+        <item name="android:fontFamily">@font/sarala_bold</item>
+        <item name="android:textSize">@dimen/font_size_h2</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Heading3">
+        <item name="android:fontFamily">@font/sarala_bold</item>
+        <item name="android:textSize">@dimen/font_size_h3</item>
+    </style>
+    <style name="Heading4">
+        <item name="android:fontFamily">@font/sarala_regular</item>
+        <item name="android:textSize">@dimen/font_size_h4</item>
+    </style>
+    <style name="Heading5">
+        <item name="android:fontFamily">@font/sarala_regular</item>
+        <item name="android:textSize">@dimen/font_size_h5</item>
+    </style>
+    <style name="Body">
+        <item name="android:fontFamily">@font/barlow_regular</item>
+        <item name="android:textSize">@dimen/font_size_small</item>
+        <item name="android:color">@color/text</item>
+    </style>
+</resources>

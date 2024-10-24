@@ -16,6 +16,12 @@ class GeofenceMapViewModel : ViewModel() {
     private val _geofenceError = MutableLiveData<String>()
     val geofenceError: LiveData<String> = _geofenceError
 
+    // MutableLiveData to hold the selected color
+    private val _selectedColor = MutableLiveData<Int>()
+    val selectedColor: LiveData<Int> get() = _selectedColor
+
+    private val _selectedRadius = MutableLiveData<Int>()
+    val selectedRadius: LiveData<Int> get() = _selectedRadius
 
     // Function to update geofence location (e.g. from user input)
     fun setGeofenceLocation(latLng: LatLng) {
@@ -25,5 +31,15 @@ class GeofenceMapViewModel : ViewModel() {
     // Function to handle and propagate geofence errors
     fun setGeofenceError(error: String) {
         _geofenceError.value = error
+    }
+
+
+    // Function to update the selected color
+    fun setSelectedColor(color: Int) {
+        _selectedColor.value = color
+    }
+
+    fun setSelectedRadius(radius: Int) {
+        _selectedRadius.value = radius
     }
 }

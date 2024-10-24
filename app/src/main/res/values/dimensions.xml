@@ -24,6 +24,13 @@
     <dimen name="margin_chart">16dp</dimen>
     <dimen name="chart_height">248dp</dimen>
 
+    <!-- TEXT SIZES FOR HEADINGS -->
+    <dimen name="font_size_h1">42.79sp</dimen>
+    <dimen name="font_size_h2">32sp</dimen>
+    <dimen name="font_size_h3">24sp</dimen>
+    <dimen name="font_size_h4">18.03sp</dimen>
+    <dimen name="font_size_h5">13.59sp</dimen>
+    <dimen name="font_size_small">7.62sp</dimen>
 
 
 </resources>

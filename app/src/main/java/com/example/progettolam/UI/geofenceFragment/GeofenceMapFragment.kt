@@ -14,6 +14,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.example.progettolam.R
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -41,10 +44,13 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
     private var _binding: ActivityMapsBinding? = null
     private val binding get() = _binding!!
 
+    private val geofenceMapViewModel: GeofenceMapViewModel by activityViewModels() // Shared ViewModel
+    private var selectedColor: Int = Color.rgb(255, 0, 0) // Default circle color
+    private var selectedRadius: Int = 500 // Default circle radius
+
     private val BACKGROUND_LOCATION_ACCESS_REQUEST_CODE: Int = 100
     private val FINE_LOCATION_ACCESS_REQUEST_CODE = 10001
     private val GEOFENCE_ID = "SOME_GEOFENCE_ID"
-    private val GEOFENCE_RADIUS = 500f
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,6 +82,16 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         geofencingClient = LocationServices.getGeofencingClient(requireActivity())
         geoFenceHelper = GeofenceHelper(requireContext());
+
+        geofenceMapViewModel.selectedColor.observe(viewLifecycleOwner) { color ->
+            selectedColor = color
+            Log.i("COLORE", "selectedColor: $selectedColor")
+        }
+
+        geofenceMapViewModel.selectedRadius.observe(viewLifecycleOwner) { radius ->
+            selectedRadius = radius
+            Log.i("Raggio", "raggio: $selectedRadius")
+        }
     }
 
     //@SuppressLint("MissingPermission")
@@ -177,15 +193,16 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
         Log.i("diocane", "entra in handleMapLongClick")
         //mMap.clear()
         addMarker(latLng)
-        addCircle(latLng, GEOFENCE_RADIUS)
-        addGeofence(latLng, GEOFENCE_RADIUS)
+        addCircle(latLng)
+        addGeofence(latLng)
     }
 // TODO : CAMBIARE IL GEOFENCE_ID DEVE ESSERE UNICO
-    private fun addGeofence(latLng: LatLng, radius: Float) {
+    private fun addGeofence(latLng: LatLng) {
+        Log.i("Raggio3", "raggio $selectedRadius")
         val geofence: Geofence = geoFenceHelper.getGeofence(
             GEOFENCE_ID,
             latLng,
-            radius,
+            selectedRadius.toFloat(),
             Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_DWELL or Geofence.GEOFENCE_TRANSITION_EXIT
         )
         val geofencingRequest: GeofencingRequest = geoFenceHelper.getGeofencingRequest(geofence)
@@ -218,13 +235,16 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
         mMap.addMarker(markerOptions)
     }
 
-    private fun addCircle(latLng: LatLng, radius: Float) {
+    private fun addCircle(latLng: LatLng) {
+
         val circleOptions = CircleOptions()
-        circleOptions.center(latLng)
-        circleOptions.radius(radius.toDouble())
-        circleOptions.strokeColor(Color.argb(255, 255, 0, 0))
-        circleOptions.fillColor(Color.argb(64, 255, 0, 0))
-        circleOptions.strokeWidth(4f)
+        .center(latLng)
+        .radius(selectedRadius.toDouble())
+        .strokeColor(ColorUtils.setAlphaComponent(selectedColor, 255)) // Use selected color for stroke
+        .fillColor(ColorUtils.setAlphaComponent(selectedColor, 64)) // Use selected color for fill
+        .strokeWidth(4f)
+        //circleOptions.strokeColor(Color.argb(255, 255, 0, 0))
+        //circleOptions.fillColor(Color.argb(64, 255, 0, 0))
         mMap.addCircle(circleOptions)
     }
 
