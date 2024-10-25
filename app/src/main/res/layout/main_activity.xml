@@ -27,7 +27,7 @@
                     android:background="@color/black">
 
                 <androidx.fragment.app.FragmentContainerView
-                        android:background="@color/white"
+                        android:background="@color/background"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:id="@+id/fragmentContainerView" />
@@ -40,14 +40,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:background="@color/white"
-                app:itemIconTint="@color/gray_light"
-                app:itemTextColor="@color/gray_dark"
+                android:background="@color/secondary"
+                app:itemIconTint="@color/primary"
+                app:itemTextColor="@color/text"
+                app:itemRippleColor="@color/accent"
                 app:labelVisibilityMode="labeled"
                 app:menu="@menu/home_navigation_menu"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                >
 
         </com.google.android.material.bottomnavigation.BottomNavigationView>
     </androidx.constraintlayout.widget.ConstraintLayout>

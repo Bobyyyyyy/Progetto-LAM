@@ -5,7 +5,8 @@
         android:layout_height="wrap_content"
         android:weightSum="7"
         android:orientation="horizontal"
-        android:layout_margin="15dp">
+        android:layout_margin="16dp"
+        >
 
     <include layout="@layout/calendar_day_title_text" />
 

@@ -143,6 +143,7 @@ class CalendarFragment: Fragment() {
 
         calendarView.monthScrollListener = object : MonthScrollListener {
             override fun invoke(p1: CalendarMonth) {
+                // TODO: METTERE LA SCRITTA IN ITALIANO O IN INGLESE in base alla lingua
                 // Listener per cambiare scritta di anno + mese
                 val yearMonth =  p1.yearMonth.month.toString() + ", " + p1.yearMonth.year.toString()
                 monthView.text = yearMonth

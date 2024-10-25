@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FFFFFFFF</color>
-    <color name="white">#FF000000</color>
-    <color name="gray_light">#B6B6BB</color>
-    <color name="gray_dark">#1E1E20</color>
-
-    <color name="text">#efecf9</color>
-    <color name="background">#070410</color>
+    <color name="text">#f9f8fc</color>
+    <color name="background">#030307</color>
     <color name="primary">#5838c2</color>
-    <color name="secondary">#6a204f</color>
-    <color name="accent">#956f83</color>
+    <color name="secondary">#311c78</color>
+    <color name="accent">#3d1da5</color>
 </resources>

@@ -7,7 +7,7 @@
 
     <!-- CARD CHOSE ACTIVITY 2 START -->
     <dimen name="space_between_imageBtn_textView">2dp</dimen>
-    <dimen name="space_between_title_value_card_activity">8dp</dimen>
+    <dimen name="space_between_title_value_card_activity">4dp</dimen>
     <dimen name="margin_card_view_chose_activity">16dp</dimen>
     <dimen name="padding_constraint_layout_chose_activity">16dp</dimen>
 
@@ -25,12 +25,11 @@
     <dimen name="chart_height">248dp</dimen>
 
     <!-- TEXT SIZES FOR HEADINGS -->
-    <dimen name="font_size_h1">42.79sp</dimen>
-    <dimen name="font_size_h2">32sp</dimen>
+    <dimen name="font_size_h1">32sp</dimen>
+    <dimen name="font_size_h2">28sp</dimen>
     <dimen name="font_size_h3">24sp</dimen>
-    <dimen name="font_size_h4">18.03sp</dimen>
-    <dimen name="font_size_h5">13.59sp</dimen>
-    <dimen name="font_size_small">7.62sp</dimen>
-
+    <dimen name="font_size_h4">20sp</dimen>
+    <dimen name="font_size_h5">16sp</dimen>
+    <dimen name="font_size_medium">18sp</dimen>
 
 </resources>

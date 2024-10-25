@@ -12,13 +12,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.example.progettolam.R
-import com.google.android.gms.maps.SupportMapFragment
 import yuku.ambilwarna.AmbilWarnaDialog;
-import android.widget.TextView;
 import androidx.fragment.app.activityViewModels
 
 
@@ -59,8 +54,8 @@ class GeofenceFragment : Fragment() {
             // Use the location data (update the UI, pass it to the map fragment, etc.)
         }
         */
-        mPickColorButton = view.findViewById(R.id.button)
-        radiusTextView = view.findViewById(R.id.editTextNumberSigned)
+        mPickColorButton = view.findViewById(R.id.changeColorButton)
+        radiusTextView = view.findViewById(R.id.radiusLengthEditTextNumberSigned)
         mColorPreview = view.findViewById(R.id.preview_selected_color)
         mDefaultColor = Color.rgb(255, 0, 0)
 

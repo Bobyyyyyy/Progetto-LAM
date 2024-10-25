@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">Physical Tracker</string>
+
+    <string name="home_button" translatable="false">Home</string>">
+    <string name="calendar_button" translatable="false">Calendar</string>">
+    <string name="profile_button" translatable="false">Profile</string>">
+    <string name="geofence_button" translatable="false">Geofence</string>">
+
     <string name="save_button">Salva</string>
     <string name="greetings">Ciao</string>
 
@@ -45,5 +51,9 @@
     <string name="enter_height">Inserisci altezza</string>
     <string name="weight_tag">Peso</string>
     <string name="enter_weight">Inserisci peso (kg)</string>
-    <string name="title_activity_geofence_maps">GeofenceMapsActivity</string>
+
+    <string name="geofence_top_description">Tieni premuto sulla mappa per aggiungere aree di controllo. Tocca sui markers per eliminarle</string>
+    <string name="radius_description">Inserisci il raggio in metri:</string>
+    <string name="color_circle_description">Colore cerchio:</string>
+    <string name="change_color_button">Cambia colore</string>
 </resources>

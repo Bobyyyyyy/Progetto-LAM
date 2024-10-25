@@ -27,4 +27,8 @@
     <string name="enter_weight">Enter weight (kg)</string>
     <string name="weight_tag">Weight</string>
 
+    <string name="geofence_top_description">Hold down on the map to add control areas. Tap on markers to delete them</string>
+    <string name="radius_description">Enter the radius in meters:</string>
+    <string name="color_circle_description">Circle color:</string>
+    <string name="change_color_button">Change color</string>
 </resources>

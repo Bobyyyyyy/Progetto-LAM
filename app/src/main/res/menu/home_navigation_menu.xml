@@ -4,17 +4,17 @@
     <item
         android:id="@+id/homeMenu"
         android:icon="@drawable/baseline_home_24"
-        android:title="@string/app_name" />
+        android:title="@string/home_button" />
     <item
         android:id="@+id/addMenu"
         android:icon="@drawable/baseline_add_24"
-        android:title="@string/app_name" />
+        android:title="@string/geofence_button" />
     <item
         android:id="@+id/calendarMenu"
         android:icon="@drawable/baseline_calendar_month_24"
-        android:title="@string/app_name" />
+        android:title="@string/calendar_button" />
     <item
         android:id="@+id/profileMenu"
         android:icon="@drawable/baseline_person_24"
-        android:title="@string/app_name" />
+        android:title="@string/profile_button" />
 </menu>

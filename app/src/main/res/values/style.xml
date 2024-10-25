@@ -5,7 +5,13 @@
         <item name="android:fontFamily">@font/sarala_regular</item>
     </style>
 
-    <!-- Define styles for specific text elements like h1, h2 -->
+    <style name="App_Title">
+        <item name="android:fontFamily">@font/airstrikeexpand</item>
+        <item name="android:textSize">@dimen/font_size_h2</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/primary</item>
+    </style>
+
     <style name="Heading1">
         <item name="android:fontFamily">@font/sarala_bold</item>
         <item name="android:textSize">@dimen/font_size_h1</item>
@@ -32,7 +38,43 @@
     </style>
     <style name="Body">
         <item name="android:fontFamily">@font/barlow_regular</item>
-        <item name="android:textSize">@dimen/font_size_small</item>
+        <item name="android:textSize">@dimen/font_size_h5</item>
+        <item name="android:color">@color/text</item>
+    </style>
+
+    <style name="card_activity_title">
+        <item name="android:fontFamily">@font/barlow_semibold</item>
+        <item name="android:textSize">@dimen/font_size_h5</item>
+        <item name="android:color">@color/text</item>
+    </style>
+
+    <style name="card_activity_stat">
+        <item name="android:fontFamily">@font/barlow_bold</item>
+        <item name="android:textSize">@dimen/font_size_h4</item>
+        <item name="android:color">@color/text</item>
+    </style>
+
+    <style name="profile_name">
+        <item name="android:fontFamily">@font/sarala_bold</item>
+        <item name="android:textSize">@dimen/font_size_h2</item>
+        <item name="android:color">@color/text</item>
+    </style>
+
+    <style name="description_text">
+        <item name="android:fontFamily">@font/barlow_semibold</item>
+        <item name="android:textSize">@dimen/font_size_medium</item>
+        <item name="android:color">@color/text</item>
+    </style>
+
+    <style name="insert_text_description">
+        <item name="android:fontFamily">@font/barlow_regular</item>
+        <item name="android:textSize">@dimen/font_size_h5</item>
+        <item name="android:color">@color/text</item>
+    </style>
+
+    <style name="month_text">
+        <item name="android:fontFamily">@font/sarala_regular</item>
+        <item name="android:textSize">@dimen/font_size_h3</item>
         <item name="android:color">@color/text</item>
     </style>
 </resources>
