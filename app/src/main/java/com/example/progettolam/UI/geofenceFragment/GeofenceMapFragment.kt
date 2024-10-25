@@ -5,7 +5,6 @@ import android.app.PendingIntent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Build
-import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,23 +14,26 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.example.progettolam.R
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.example.progettolam.databinding.ActivityMapsBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
 import com.google.android.gms.location.GeofencingRequest
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.Circle
 import com.google.android.gms.maps.model.CircleOptions
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.OnFailureListener
+import java.util.function.IntToDoubleFunction
 
 
 class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongClickListener {
@@ -51,6 +53,8 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
     private val BACKGROUND_LOCATION_ACCESS_REQUEST_CODE: Int = 100
     private val FINE_LOCATION_ACCESS_REQUEST_CODE = 10001
     private val GEOFENCE_ID = "SOME_GEOFENCE_ID"
+
+    private lateinit var circle2remove: Circle
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -231,8 +235,23 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
     }
 
     private fun addMarker(latLng: LatLng) {
-        val markerOptions = MarkerOptions().position(latLng).title("geo-fence")
+        val markerOptions = MarkerOptions()
+            .position(latLng)
+            .title("geo-fence")
+
         mMap.addMarker(markerOptions)
+        mMap.setOnMarkerClickListener{ marker ->
+
+            var idMarker = marker.id
+            marker.remove()
+            circle2remove.remove()
+            var geofenceList2remove = ArrayList<String>()
+            geofenceList2remove.add(GEOFENCE_ID)
+            geofencingClient.removeGeofences(geofenceList2remove)
+
+            true
+        }
+
     }
 
     private fun addCircle(latLng: LatLng) {
@@ -243,9 +262,10 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
         .strokeColor(ColorUtils.setAlphaComponent(selectedColor, 255)) // Use selected color for stroke
         .fillColor(ColorUtils.setAlphaComponent(selectedColor, 64)) // Use selected color for fill
         .strokeWidth(4f)
-        //circleOptions.strokeColor(Color.argb(255, 255, 0, 0))
-        //circleOptions.fillColor(Color.argb(64, 255, 0, 0))
-        mMap.addCircle(circleOptions)
+
+        circle2remove = mMap.addCircle(circleOptions)
+        // TODO: SALVARE GLI ID DEI CERCHI E USARLI PER RIMUOVERLI DALLA MAPPA
+        Log.i("cerchioID", "id: ${circle2remove.id}")
     }
 
 

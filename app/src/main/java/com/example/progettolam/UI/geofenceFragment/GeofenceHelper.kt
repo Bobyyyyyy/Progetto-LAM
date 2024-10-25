@@ -13,6 +13,7 @@ import com.google.android.gms.maps.model.LatLng
 
 class GeofenceHelper(base: Context?) : ContextWrapper(base) {
     private var pendingIntent: PendingIntent? = null
+    private val DURATION_FOR_DWELL = 1000
 
     fun getGeofencingRequest(geofence: Geofence?): GeofencingRequest {
         return GeofencingRequest.Builder()
@@ -26,7 +27,7 @@ class GeofenceHelper(base: Context?) : ContextWrapper(base) {
             .setCircularRegion(latLng.latitude, latLng.longitude, radius)
             .setRequestId(ID!!)
             .setTransitionTypes(transitionTypes)
-            .setLoiteringDelay(5000)
+            .setLoiteringDelay(DURATION_FOR_DWELL)
             .setExpirationDuration(Geofence.NEVER_EXPIRE)
             .build()
     }
