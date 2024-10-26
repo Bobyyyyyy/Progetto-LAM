@@ -22,10 +22,10 @@ class GeofenceHelper(base: Context?) : ContextWrapper(base) {
             .build()
     }
 
-    fun getGeofence(ID: String?, latLng: LatLng, radius: Float, transitionTypes: Int): Geofence {
+    fun getGeofence(geofenceId: String?, latLng: LatLng, radius: Float, transitionTypes: Int): Geofence {
         return Geofence.Builder()
             .setCircularRegion(latLng.latitude, latLng.longitude, radius)
-            .setRequestId(ID!!)
+            .setRequestId(geofenceId!!)
             .setTransitionTypes(transitionTypes)
             .setLoiteringDelay(DURATION_FOR_DWELL)
             .setExpirationDuration(Geofence.NEVER_EXPIRE)
@@ -38,8 +38,7 @@ class GeofenceHelper(base: Context?) : ContextWrapper(base) {
         }
 
         val intent = Intent(this, MyReceiver::class.java)
-        pendingIntent =
-            PendingIntent.getBroadcast(this, 2607, intent, PendingIntent.FLAG_MUTABLE)
+        pendingIntent = PendingIntent.getBroadcast(this, 2607, intent, PendingIntent.FLAG_MUTABLE)
         return pendingIntent!!
     }
 

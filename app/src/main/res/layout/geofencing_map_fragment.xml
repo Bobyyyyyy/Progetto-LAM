@@ -48,10 +48,12 @@
                     android:id="@+id/colorCircleTextView"
                     style="@style/insert_text_description"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/insertRadiusLengthTextView"
                     app:layout_constraintEnd_toStartOf="@+id/preview_selected_color"
-                    android:layout_marginTop="24dp" />
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="24dp"
+                    app:layout_constraintBottom_toTopOf="@+id/removingGeofenceTextView"
+                    app:layout_constraintHorizontal_bias="1.0" />
 
             <Button
                     android:text="@string/change_color_button"
@@ -88,6 +90,27 @@
                     app:layout_constraintBottom_toBottomOf="@+id/insertRadiusLengthTextView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/insertRadiusLengthTextView" />
+
+            <TextView
+                    android:id="@+id/removingGeofenceTextView"
+                    android:text="@string/switch_removing_geofence_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/insert_text_description"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/colorCircleTextView" />
+
+            <ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/toggleRemovingGeofenceButton"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/primary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/removingGeofenceTextView"
+                    app:layout_constraintBottom_toBottomOf="@+id/removingGeofenceTextView"
+                    app:layout_constraintStart_toEndOf="@+id/removingGeofenceTextView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

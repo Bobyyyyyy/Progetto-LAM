@@ -56,4 +56,7 @@
     <string name="radius_description">Inserisci il raggio in metri:</string>
     <string name="color_circle_description">Colore cerchio:</string>
     <string name="change_color_button">Cambia colore</string>
+    <string name="switch_removing_geofence_button">Attiva eliminazione aree di controllo:</string>
+    <string name="on_value_toggle_button">SI</string>
+    <string name="off_value_toggle_button">NO</string>
 </resources>

@@ -31,4 +31,7 @@
     <string name="radius_description">Enter the radius in meters:</string>
     <string name="color_circle_description">Circle color:</string>
     <string name="change_color_button">Change color</string>
+    <string name="switch_removing_geofence_button">Activate geofence removal:</string>
+    <string name="on_value_toggle_button">ON</string>
+    <string name="off_value_toggle_button">OFF</string>
 </resources>

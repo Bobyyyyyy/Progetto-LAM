@@ -23,6 +23,9 @@ class GeofenceMapViewModel : ViewModel() {
     private val _selectedRadius = MutableLiveData<Int>()
     val selectedRadius: LiveData<Int> get() = _selectedRadius
 
+    private val _selectedToggleRemove = MutableLiveData<Boolean>()
+    val selectedToggleRemove: LiveData<Boolean> get() = _selectedToggleRemove
+
     // Function to update geofence location (e.g. from user input)
     fun setGeofenceLocation(latLng: LatLng) {
         _geofenceLocation.value = latLng
@@ -41,5 +44,9 @@ class GeofenceMapViewModel : ViewModel() {
 
     fun setSelectedRadius(radius: Int) {
         _selectedRadius.value = radius
+    }
+
+    fun setSelectedToggleRemove(isRemoving: Boolean) {
+        _selectedToggleRemove.value = isRemoving
     }
 }

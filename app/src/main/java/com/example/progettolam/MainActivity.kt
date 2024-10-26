@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         navigationBar.setOnItemSelectedListener { menuItem ->
             navbarListener(menuItem)
         }
-
+        changeFragment(HomeFragment(),R.id.homeMenu.toString())
     }
 
 

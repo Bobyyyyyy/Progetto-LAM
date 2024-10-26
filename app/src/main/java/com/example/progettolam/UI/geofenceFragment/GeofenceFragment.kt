@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ToggleButton
 import androidx.fragment.app.Fragment
 import com.example.progettolam.R
 import yuku.ambilwarna.AmbilWarnaDialog;
@@ -19,13 +20,15 @@ import androidx.fragment.app.activityViewModels
 
 class GeofenceFragment : Fragment() {
     private val geofenceMapViewModel: GeofenceMapViewModel by activityViewModels()
-    //private val geofenceMapViewModel: GeofenceMapViewModel by viewModels()
-    //lateinit var viewModel: ViewModel
 
     private lateinit var mPickColorButton: Button
     private var mColorPreview: View? = null
     private var mDefaultColor = Color.rgb(255, 0, 0)
-    private lateinit var radiusTextView: EditText
+    private lateinit var radiusEditText: EditText
+    private lateinit var removeGeofenceToggleButton: ToggleButton
+
+    val MIN_RADIUS: Int = 100
+    val MAX_RADIUS: Int = 2000
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,27 +39,12 @@ class GeofenceFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        /*
-        // Dynamically load GeofenceMapFragment into the FrameLayout (R.id.map_container)
-        val geofenceMapFragment = GeofenceMapFragment()
 
-        childFragmentManager.beginTransaction()
-            .replace(R.id.map_container, geofenceMapFragment)
-            .commit()
-
-         */
-
-        /*
-        // ViewModel usage, etc.
-        viewModel = ViewModelProvider(this)[GeofenceMapViewModel::class.java]
-        // Now, you can observe any data or actions from the ViewModel shared with GeofenceMapFragment
-        geofenceMapViewModel.geofenceLocation.observe(viewLifecycleOwner) { latLng ->
-            // Use the location data (update the UI, pass it to the map fragment, etc.)
-        }
-        */
+        // Initialize the UI elements
         mPickColorButton = view.findViewById(R.id.changeColorButton)
-        radiusTextView = view.findViewById(R.id.radiusLengthEditTextNumberSigned)
+        radiusEditText = view.findViewById(R.id.radiusLengthEditTextNumberSigned)
         mColorPreview = view.findViewById(R.id.preview_selected_color)
+        removeGeofenceToggleButton = view.findViewById(R.id.toggleRemovingGeofenceButton)
         mDefaultColor = Color.rgb(255, 0, 0)
 
         mPickColorButton.setOnClickListener {
@@ -64,21 +52,22 @@ class GeofenceFragment : Fragment() {
         }
 
         // Set up a listener for the radius input
-        radiusTextView.addTextChangedListener(object : TextWatcher {
+        radiusEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 val radius = s?.toString()?.toIntOrNull()
-                if (radius != null && radius >= 100 && radius <= 2000) {  // Ensure it's a positive number
-                    geofenceMapViewModel.setSelectedRadius(radius)  // Update the ViewModel with selected radius
-                    Log.i("Raggio2", "raggio: $radius")
+                if (radius != null && radius >= MIN_RADIUS && radius <= MAX_RADIUS) {
+                    geofenceMapViewModel.setSelectedRadius(radius)
                 } else {
-                    // Handle invalid input (e.g., show an error message if needed)
-                    radiusTextView.error = "Please enter a value between 100 and 2000"
+                    radiusEditText.error = "Please enter a value between $MIN_RADIUS and $MAX_RADIUS"
                 }
             }
-
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
+
+        removeGeofenceToggleButton.setOnCheckedChangeListener { _, isChecked ->
+            geofenceMapViewModel.setSelectedToggleRemove(isChecked)
+        }
 
     }
 
@@ -98,7 +87,6 @@ class GeofenceFragment : Fragment() {
                     mDefaultColor = color
                     val background = mColorPreview?.background
                     if (background is GradientDrawable) {
-                        // change the picked color preview box to mDefaultColor
                         background.setColor(mDefaultColor)
                     }
                     // Update the selected color in the ViewModel
