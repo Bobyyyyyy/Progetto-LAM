@@ -1,11 +1,13 @@
 package com.example.progettolam.UI.calendarFragment
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -102,23 +104,20 @@ class CalendarFragment: Fragment() {
                             }
                         }
 
-
-
-                        container.textView.setTextColor(Color.WHITE)
-                        container.textView.setBackgroundColor(Color.BLACK)
+                        container.textView.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                        container.textView.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.accent))
+                        container.textView.setBackgroundResource(R.drawable.border_custom_circle)
                     } else if (data.date == LocalDate.now()) {
-                        container.textView.setTextColor(Color.RED)
+                        container.textView.setTextColor(ContextCompat.getColor(requireContext(), R.color.current_data))
                         container.textView.setBackgroundResource(R.drawable.border_custom_rectangle)
-                        }
-                        else {
-                            // If this is NOT the selected date, remove the background and reset the text color.
-                            container.textView.setTextColor(Color.BLACK)
-                            container.textView.setBackgroundResource(R.drawable.border_custom_rectangle)
-                        }
+                    } else {
+                        // If this is NOT the selected date, remove the background and reset the text color.
+                        container.textView.setTextColor(ContextCompat.getColor(requireContext(), R.color.text))
+                        container.textView.setBackgroundResource(R.drawable.border_custom_rectangle)
+                    }
                 } else {
                     container.textView.visibility = View.INVISIBLE
                 }
-
 
             }
         }
