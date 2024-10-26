@@ -19,7 +19,7 @@
     <string name="drive_tag">Drive</string>
 
     <string name="time_tag">Time</string>
-    <string name="speed_tag">Speed</string>
+    <string name="speed_tag">Speed km/h</string>
     <string name="calories_tag">Calories</string>
     <string name="steps_tag">Steps</string>
     <string name="height_tag">Height</string>

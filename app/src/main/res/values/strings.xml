@@ -31,13 +31,13 @@
     <string name="drive_tag">Guida</string>
 
     <string name="time_tag">Tempo</string>
-    <string name="speed_tag">Velocità</string>
+    <string name="speed_tag">Velocità km/h</string>
     <string name="calories_tag">Calorie</string>
     <string name="steps_tag">Passi</string>
 
     <string name="default_steps" translatable="false">0</string>
     <string name="default_distance" translatable="false">0 m</string>
-    <string name="default_speed" translatable="false">0,0 km/h</string>
+    <string name="default_speed" translatable="false">0,0</string>
     <string name="default_calories" translatable="false">0 kcal</string>
     <string name="default_time" translatable="false">00:00</string>
     <string name="default_height" translatable="false">0 cm</string>
@@ -53,10 +53,10 @@
     <string name="enter_weight">Inserisci peso (kg)</string>
 
     <string name="geofence_top_description">Tieni premuto sulla mappa per aggiungere aree di controllo. Tocca sui markers per eliminarle</string>
-    <string name="radius_description">Inserisci il raggio in metri:</string>
-    <string name="color_circle_description">Colore cerchio:</string>
+    <string name="radius_description">Inserisci il raggio in metri</string>
+    <string name="color_circle_description">Colore cerchio</string>
     <string name="change_color_button">Cambia colore</string>
-    <string name="switch_removing_geofence_button">Attiva eliminazione aree di controllo:</string>
+    <string name="switch_removing_geofence_button">Attiva rimozione geofence</string>
     <string name="on_value_toggle_button">SI</string>
     <string name="off_value_toggle_button">NO</string>
 </resources>
