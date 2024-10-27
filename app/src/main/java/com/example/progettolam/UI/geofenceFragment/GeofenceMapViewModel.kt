@@ -4,8 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.progettolam.DB.ActivityRepository
-import com.example.progettolam.DB.ActivityViewModel
 import com.example.progettolam.DB.GeofenceInfo
 import com.example.progettolam.DB.GeofenceRepository
 import com.google.android.gms.maps.model.LatLng
@@ -34,6 +32,11 @@ class GeofenceMapViewModel(private val repository: GeofenceRepository) : ViewMod
     private val _selectedToggleRemove = MutableLiveData<Boolean>()
     val selectedToggleRemove: LiveData<Boolean> get() = _selectedToggleRemove
 
+    private val _geofenceInfoList =  MutableLiveData<List<GeofenceInfo>>().apply {
+        value = getGeofences().value
+    }
+    val geofenceInfoList: LiveData<List<GeofenceInfo>> get() = _geofenceInfoList
+
     // Function to update geofence location (e.g. from user input)
     fun setGeofenceLocation(latLng: LatLng) {
         _geofenceLocation.value = latLng
@@ -56,6 +59,26 @@ class GeofenceMapViewModel(private val repository: GeofenceRepository) : ViewMod
 
     fun setSelectedToggleRemove(isRemoving: Boolean) {
         _selectedToggleRemove.value = isRemoving
+    }
+
+    fun setGeofenceInfoList(listGeofence: List<GeofenceInfo>) {
+        _geofenceInfoList.value = listGeofence
+    }
+
+    fun addGeofenceInfo(newGeofenceInfo: GeofenceInfo) {
+        _geofenceInfoList.value = _geofenceInfoList.value?.plus(newGeofenceInfo) ?: listOf(newGeofenceInfo)
+    }
+
+    fun removeGeofenceInfo(geofenceId2remove: String) {
+        // Get the current list of geofence
+        val currentList = _geofenceInfoList.value?.toMutableList() ?: return
+
+        val itemToRemove = currentList.find { it.id == geofenceId2remove }
+        itemToRemove?.let {
+            currentList.remove(it)
+            // Update the LiveData with the new list
+            _geofenceInfoList.value = currentList
+        }
     }
 
 

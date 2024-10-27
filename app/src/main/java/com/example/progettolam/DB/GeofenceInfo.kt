@@ -13,15 +13,15 @@ class GeofenceInfo(
     var id: String,
 
     @SerializedName("latitude")
-    var latitude: Double?,
+    var latitude: Double,
 
     @SerializedName("longitude")
-    var longitude: Double?,
+    var longitude: Double,
 
     @SerializedName("color")
-    var color: Int?,
+    var color: Int,
 
     @SerializedName("radius")
-    var radius: Int?,
+    var radius: Int,
 
 )
