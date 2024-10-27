@@ -9,11 +9,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 
 
-@Database(entities = [BaseActivity:: class,WalkingActivity::class,RunningActivity::class,SittingActivity::class,DrivingActivity::class], version = 2, exportSchema = false)
+@Database(entities = [BaseActivity:: class,WalkingActivity::class,RunningActivity::class,SittingActivity::class,DrivingActivity::class, GeofenceInfo::class], version = 2, exportSchema = false)
 @TypeConverters(TimeConverter::class)
 abstract class ActivityDatabase: RoomDatabase() {
 
     abstract fun activityDao(): ActivityDao
+    abstract fun geofenceDao(): GeofenceInfoDao
 
     companion object {
 

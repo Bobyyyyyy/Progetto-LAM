@@ -98,7 +98,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
         locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 10000)
             .setWaitForAccurateLocation(true)
-            .setMinUpdateIntervalMillis(5000)
+            .setMinUpdateIntervalMillis(2500)
             .build()
 
     }

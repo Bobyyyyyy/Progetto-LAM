@@ -16,6 +16,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
+import com.example.progettolam.DB.ActivityRepository
+import com.example.progettolam.DB.ActivityViewModel
+import com.example.progettolam.DB.ActivityViewModelFactory
+import com.example.progettolam.DB.GeofenceRepository
 import com.example.progettolam.R
 import com.example.progettolam.databinding.ActivityMapsBinding
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -47,7 +52,10 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
     private var _binding: ActivityMapsBinding? = null
     private val binding get() = _binding!!
 
-    private val geofenceMapViewModel: GeofenceMapViewModel by activityViewModels() // Shared ViewModel
+    private val geofenceMapViewModel by lazy {
+        val factory = GeofenceViewModelFactory(GeofenceRepository(requireActivity().application))
+        ViewModelProvider(requireActivity(),factory)[GeofenceMapViewModel::class.java]
+    }
     private var selectedColor: Int = Color.rgb(255, 0, 0) // Default circle color
     private var selectedRadius: Int = 500 // Default circle radius
     private var selectedToggleRemove: Boolean = false
