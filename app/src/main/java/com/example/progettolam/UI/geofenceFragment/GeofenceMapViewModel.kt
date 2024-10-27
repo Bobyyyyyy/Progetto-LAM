@@ -49,4 +49,8 @@ class GeofenceMapViewModel : ViewModel() {
     fun setSelectedToggleRemove(isRemoving: Boolean) {
         _selectedToggleRemove.value = isRemoving
     }
+
+    fun getGeofencesFromDb(): Any {
+        //TODO: recupera i geofence dal database
+    }
 }

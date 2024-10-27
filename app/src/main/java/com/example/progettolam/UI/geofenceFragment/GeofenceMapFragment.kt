@@ -27,14 +27,12 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.Circle
 import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.OnFailureListener
-import java.util.function.IntToDoubleFunction
 
 
 class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongClickListener {
@@ -52,9 +50,13 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
     private var selectedRadius: Int = 500 // Default circle radius
     private var selectedToggleRemove: Boolean = false
 
-    private val BACKGROUND_LOCATION_ACCESS_REQUEST_CODE: Int = 100
-    private val FINE_LOCATION_ACCESS_REQUEST_CODE = 10001
-    private val GEOFENCE_ID = "SOME_GEOFENCE_ID"
+    val existingGeofences: MutableMap<String, Triple<Geofence, Circle, Marker>> = mutableMapOf()
+
+    companion object {
+        const val BACKGROUND_LOCATION_ACCESS_REQUEST_CODE: Int = 100
+        const val FINE_LOCATION_ACCESS_REQUEST_CODE = 10001
+        const val GEOFENCE_ID = "SOME_GEOFENCE_ID"
+    }
 
     private lateinit var circle2remove: Circle
 
@@ -71,8 +73,7 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
         super.onViewCreated(view, savedInstanceState)
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = childFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
 
         mapFragment.getMapAsync(this)
 
@@ -91,7 +92,18 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
         geofenceMapViewModel.selectedToggleRemove.observe(viewLifecycleOwner) { isChecked ->
             selectedToggleRemove = isChecked
         }
+        populateMap()
+    }
 
+    private fun populateMap() {
+        val geofencesFromDb : List<GeofenceInfo> = geofenceMapViewModel.getGeofencesFromDb()
+        var position :LatLng
+
+        for (geofence in geofencesFromDb) {
+            position = LatLng(geofence.latitude, geofence.longitude)
+            addGeofence(position, geofence.radius)
+            displayGeofence(position, geofence.color, geofence.radius)
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -130,7 +142,13 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
         })
 
         enableUserLocation()
+
         mMap.setOnMapLongClickListener(this)
+        mMap.setOnMarkerClickListener{ marker ->
+            handleMarkerClick(marker)
+            selectedToggleRemove // false shows the info and relocate the camera, true does nothing
+        }
+        populateMap()
     }
 
     private fun enableUserLocation() {
@@ -189,34 +207,32 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
     }
 
     private fun handleMapLongClick(latLng: LatLng) {
-        addMarker(latLng)
-        addCircle(latLng)
-        addGeofence(latLng)
+        addGeofence(latLng, selectedRadius)
+        displayGeofence(latLng, selectedColor, selectedRadius)
+    }
+
+    private fun displayGeofence(latLng: LatLng, color2use: Int, radius2use: Int) {
+        val newMarker = addMarker(latLng)
+        val newCircle = addCircle(latLng, color2use, radius2use)
+        //existingGeofences[GEOFENCE_ID] = Triple(newMarker, newCircle, newMarker)]
+
     }
 
 // TODO : CAMBIARE IL GEOFENCE_ID DEVE ESSERE UNICO
-    private fun addGeofence(latLng: LatLng) {
+    private fun addGeofence(latLng: LatLng, radius2use: Int, existingId: String?) {
+        val id2use :String = if (existingId != null) existingId else newId.toString()
+
         val geofence: Geofence = geoFenceHelper.getGeofence(
-            GEOFENCE_ID,
+            id2use,
             latLng,
-            selectedRadius.toFloat(),
+            radius2use.toFloat(),
             Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_DWELL or Geofence.GEOFENCE_TRANSITION_EXIT
         )
         val geofencingRequest: GeofencingRequest = geoFenceHelper.getGeofencingRequest(geofence)
         val pendingIntent: PendingIntent = geoFenceHelper.getPendingIntent()
 
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling ActivityCompat#requestPermissions
             return
         }
         geofencingClient.addGeofences(geofencingRequest, pendingIntent)
@@ -231,12 +247,12 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
             }
     }
 
-    private fun addMarker(latLng: LatLng) {
+    private fun addMarker(latLng: LatLng): Marker? {
         val markerOptions = MarkerOptions()
             .position(latLng)
             .title("$latLng")
-
-        mMap.addMarker(markerOptions)
+        return mMap.addMarker(markerOptions)
+        /*
         mMap.setOnMarkerClickListener{ marker ->
             /*
             var idMarker = marker.id
@@ -249,27 +265,27 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
             handleMarkerClick(marker)
             selectedToggleRemove // false shows the info and relocate the camera, true does nothing
         }
-
+         */
     }
 
-    private fun addCircle(latLng: LatLng) {
+    private fun addCircle(latLng: LatLng, color2use: Int, radius2use: Int): Circle {
         val circleOptions = CircleOptions()
         .center(latLng)
-        .radius(selectedRadius.toDouble())
-        .strokeColor(ColorUtils.setAlphaComponent(selectedColor, 255)) // Use selected color for stroke
-        .fillColor(ColorUtils.setAlphaComponent(selectedColor, 64)) // Use selected color for fill
+        .radius(radius2use.toDouble())
+        .strokeColor(ColorUtils.setAlphaComponent(color2use, 255)) // Use selected color for stroke
+        .fillColor(ColorUtils.setAlphaComponent(color2use, 64)) // Use selected color for fill
         .strokeWidth(4f)
 
-        circle2remove = mMap.addCircle(circleOptions)
+        //circle2remove = mMap.addCircle(circleOptions)
+        return mMap.addCircle(circleOptions)
         // TODO: SALVARE GLI ID DEI CERCHI E USARLI PER RIMUOVERLI DALLA MAPPA
-        Log.i("cerchioID", "id: ${circle2remove.id}")
+        //Log.i("cerchioID", "id: ${circle2remove.id}")
     }
 
     private fun handleMarkerClick(marker: Marker) {
         if (selectedToggleRemove) {
             marker.remove()
             circle2remove.remove()
-            listOf(getGeofenceIdByMarkerId(marker.id))
             geofencingClient.removeGeofences(listOf(getGeofenceIdByMarkerId(marker.id)))
             Toast.makeText(requireContext(), "Geofence removed successfully", Toast.LENGTH_SHORT).show();
         }
