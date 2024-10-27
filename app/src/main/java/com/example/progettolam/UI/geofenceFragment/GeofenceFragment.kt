@@ -16,10 +16,16 @@ import androidx.fragment.app.Fragment
 import com.example.progettolam.R
 import yuku.ambilwarna.AmbilWarnaDialog;
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
+import com.example.progettolam.DB.GeofenceRepository
 
 
 class GeofenceFragment : Fragment() {
-    private val geofenceMapViewModel: GeofenceMapViewModel by activityViewModels()
+
+    private val geofenceMapViewModel by lazy {
+        val factory = GeofenceViewModelFactory(GeofenceRepository(requireActivity().application))
+        ViewModelProvider(requireActivity(),factory)[GeofenceMapViewModel::class.java]
+    }
 
     private lateinit var mPickColorButton: Button
     private var mColorPreview: View? = null

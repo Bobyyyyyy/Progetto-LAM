@@ -12,6 +12,7 @@ class ActivityRepository(app: Application) {
     init{
         val db = ActivityDatabase.getDB(app)
         activityDao = db.activityDao()
+
     }
 
 

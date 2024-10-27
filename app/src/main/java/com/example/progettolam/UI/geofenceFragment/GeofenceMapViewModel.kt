@@ -3,9 +3,17 @@ package com.example.progettolam.UI.geofenceFragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.example.progettolam.DB.ActivityRepository
+import com.example.progettolam.DB.ActivityViewModel
+import com.example.progettolam.DB.GeofenceInfo
+import com.example.progettolam.DB.GeofenceRepository
 import com.google.android.gms.maps.model.LatLng
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class GeofenceMapViewModel : ViewModel() {
+class GeofenceMapViewModel(private val repository: GeofenceRepository) : ViewModel() {
 
     // TODO : gestire il salvataggio e rimozione dei geofence
 
@@ -50,7 +58,34 @@ class GeofenceMapViewModel : ViewModel() {
         _selectedToggleRemove.value = isRemoving
     }
 
-    fun getGeofencesFromDb(): Any {
-        //TODO: recupera i geofence dal database
+
+    fun getGeofences(): LiveData<List<GeofenceInfo>> {
+        return repository.getListOfGeofences()
+    }
+
+    fun insertGeofence(geofenceInfo: GeofenceInfo?) {
+        CoroutineScope(Dispatchers.IO).launch {
+            insertGeofence(geofenceInfo)
+        }
+    }
+
+    fun deleteGeofence(id: String?) {
+        CoroutineScope(Dispatchers.IO).launch {
+            deleteGeofence(id)
+        }
+    }
+
+
+
+
+}
+
+class GeofenceViewModelFactory(private val repository: GeofenceRepository): ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if(modelClass.isAssignableFrom(GeofenceMapViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return GeofenceMapViewModel(repository) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel Class")
     }
 }
