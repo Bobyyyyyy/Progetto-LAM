@@ -8,6 +8,7 @@ import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.example.progettolam.MainActivity
 import com.example.progettolam.MapsActivity
 import com.example.progettolam.R
 import com.google.android.gms.location.Geofence
@@ -32,10 +33,14 @@ class MyReceiver : BroadcastReceiver() {
         when (transitionType) {
             Geofence.GEOFENCE_TRANSITION_ENTER -> {
                 android.os.Handler(Looper.getMainLooper()).post{
-                    Toast.makeText(context, ContextCompat.getString(context, R.string.success_add_geofence), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        ContextCompat.getString(context, R.string.geofence_enter),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     notificationHelper.sendHighPriorityNotification(
-                        ContextCompat.getString(context, R.string.success_add_geofence), "",
-                        MapsActivity::class.java
+                        ContextCompat.getString(context, R.string.geofence_enter), "",
+                        MainActivity::class.java
                     )
                 }
             }
@@ -45,7 +50,7 @@ class MyReceiver : BroadcastReceiver() {
                     Toast.makeText(context, ContextCompat.getString(context, R.string.geofence_dwell), Toast.LENGTH_SHORT).show()
                     notificationHelper.sendHighPriorityNotification(
                         ContextCompat.getString(context, R.string.geofence_dwell), "",
-                        MapsActivity::class.java
+                        MainActivity::class.java
                     )
                 }
             }
@@ -55,7 +60,7 @@ class MyReceiver : BroadcastReceiver() {
                     Toast.makeText(context, ContextCompat.getString(context, R.string.geofence_exit), Toast.LENGTH_SHORT).show()
                     notificationHelper.sendHighPriorityNotification(
                         ContextCompat.getString(context, R.string.geofence_exit), "",
-                        MapsActivity::class.java
+                        MainActivity::class.java
                     )
                 }
             }

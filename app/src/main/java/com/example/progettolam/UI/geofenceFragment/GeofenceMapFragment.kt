@@ -55,7 +55,6 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
     private var selectedRadius: Int = 500 // Default circle radius
     private var selectedToggleRemove: Boolean = false
 
-    private var geofenceInfoList: List<GeofenceInfo> = listOf()
     private var existingGeofence: MutableMap<String, Pair<Circle, Marker?>> = mutableMapOf()
 
     companion object {
@@ -78,8 +77,6 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
 
-        mapFragment.getMapAsync(this)
-
         // Initialize Google Maps, FusedLocationProviderClient, and GeofencingClient
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         geofencingClient = LocationServices.getGeofencingClient(requireActivity())
@@ -95,9 +92,8 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
         geofenceMapViewModel.selectedToggleRemove.observe(viewLifecycleOwner) { isChecked ->
             selectedToggleRemove = isChecked
         }
-        geofenceMapViewModel.geofenceInfoList.observe(viewLifecycleOwner) { listGeofence ->
-            geofenceInfoList = listGeofence
-        }
+
+        mapFragment.getMapAsync(this)
 
     }
     // Create a unique id using data class
@@ -160,7 +156,11 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
             handleMarkerClick(marker)
             selectedToggleRemove // false shows the info and relocate the camera, true does nothing
         }
-        populateMap(geofenceInfoList)
+
+        geofenceMapViewModel.getGeofencesDB().observe(requireActivity()) {
+            geofenceMapViewModel.setGeofenceInfoList(it)
+            populateMap(it)
+        }
     }
 
     private fun enableUserLocation() {
@@ -246,6 +246,7 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
             selectedRadius.toFloat(),
             Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_DWELL or Geofence.GEOFENCE_TRANSITION_EXIT
         )
+
         val geofencingRequest: GeofencingRequest = geoFenceHelper.getGeofencingRequest(geofence)
         val pendingIntent: PendingIntent = geoFenceHelper.getPendingIntent()
 

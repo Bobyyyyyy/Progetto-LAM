@@ -33,9 +33,8 @@ class GeofenceMapViewModel(private val repository: GeofenceRepository) : ViewMod
     val selectedToggleRemove: LiveData<Boolean> get() = _selectedToggleRemove
 
     private val _geofenceInfoList =  MutableLiveData<List<GeofenceInfo>>().apply {
-        value = getGeofences().value
+        value = null
     }
-    val geofenceInfoList: LiveData<List<GeofenceInfo>> get() = _geofenceInfoList
 
     // Function to update geofence location (e.g. from user input)
     fun setGeofenceLocation(latLng: LatLng) {
@@ -67,6 +66,7 @@ class GeofenceMapViewModel(private val repository: GeofenceRepository) : ViewMod
 
     fun addGeofenceInfo(newGeofenceInfo: GeofenceInfo) {
         _geofenceInfoList.value = _geofenceInfoList.value?.plus(newGeofenceInfo) ?: listOf(newGeofenceInfo)
+        insertGeofenceDB(newGeofenceInfo)
     }
 
     fun removeGeofenceInfo(geofenceId2remove: String) {
@@ -79,22 +79,27 @@ class GeofenceMapViewModel(private val repository: GeofenceRepository) : ViewMod
             // Update the LiveData with the new list
             _geofenceInfoList.value = currentList
         }
+        deleteGeofenceDB(geofenceId2remove)
     }
 
 
-    fun getGeofences(): LiveData<List<GeofenceInfo>> {
+    fun getGeofencesDB(): LiveData<List<GeofenceInfo>> {
         return repository.getListOfGeofences()
     }
 
-    fun insertGeofence(geofenceInfo: GeofenceInfo?) {
+    private fun insertGeofenceDB(geofenceInfo: GeofenceInfo?) {
         CoroutineScope(Dispatchers.IO).launch {
-            insertGeofence(geofenceInfo)
+            if (geofenceInfo != null) {
+                repository.insertGeofence(geofenceInfo)
+            }
         }
     }
 
-    fun deleteGeofence(id: String?) {
+    fun deleteGeofenceDB(id: String?) {
         CoroutineScope(Dispatchers.IO).launch {
-            deleteGeofence(id)
+            if (id != null) {
+                repository.deleteGeofence(id)
+            }
         }
     }
 
