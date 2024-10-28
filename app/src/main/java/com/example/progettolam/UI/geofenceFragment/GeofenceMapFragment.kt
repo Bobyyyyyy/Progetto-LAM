@@ -61,7 +61,6 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
     companion object {
         const val BACKGROUND_LOCATION_ACCESS_REQUEST_CODE: Int = 100
         const val FINE_LOCATION_ACCESS_REQUEST_CODE = 10001
-        const val GEOFENCE_ID = "SOME_GEOFENCE_ID"
     }
 
     override fun onCreateView(
@@ -146,12 +145,12 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
                 }
 
             } else {
-                Toast.makeText(requireContext(), "Can't Fetch your current location", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), ContextCompat.getString(requireContext(), R.string.error_fetch_location), Toast.LENGTH_SHORT).show();
             }
         }
 
         locationTask.addOnFailureListener(OnFailureListener {
-            Toast.makeText(requireContext(),"Can't Fetch your current location", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),ContextCompat.getString(requireContext(), R.string.error_fetch_location), Toast.LENGTH_SHORT).show()
         })
 
         enableUserLocation()
@@ -258,11 +257,11 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
         geofencingClient.addGeofences(geofencingRequest, pendingIntent)
             .addOnSuccessListener {
                 Log.i("funziona", "onSuccess: Geofence Added...")
-                Toast.makeText(requireContext(), "Geofence added successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), ContextCompat.getString(requireContext(), R.string.success_add_geofence), Toast.LENGTH_SHORT).show();
             }
             .addOnFailureListener { e ->
                 val errorMessage: String = geoFenceHelper.getErrorString(e)
-                Toast.makeText(requireContext(), "Can't add geofence", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), ContextCompat.getString(requireContext(), R.string.error_add_geofence), Toast.LENGTH_SHORT).show();
                 Log.d("errore", "onFailure: $errorMessage")
             }
     }
@@ -296,7 +295,7 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
         .strokeColor(ColorUtils.setAlphaComponent(color2use, 255)) // Use selected color for stroke
         .fillColor(ColorUtils.setAlphaComponent(color2use, 64)) // Use selected color for fill
         .strokeWidth(4f)
-        //.zIndex(2f)
+        //.zIndex(500000f)
 
         return mMap.addCircle(circleOptions)
     }
@@ -328,11 +327,11 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
                 existingGeofence.remove(geofenceId2remove)
 
                 // notify the user the successful removal
-                Toast.makeText(requireContext(), "Geofence removed successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), ContextCompat.getString(requireContext(), R.string.success_geofence_removal), Toast.LENGTH_SHORT).show();
             }
             .addOnFailureListener {
                 // notify the user the successful removal
-                Toast.makeText(requireContext(), "Error during removal of geofence", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), ContextCompat.getString(requireContext(), R.string.error_geofence_removal), Toast.LENGTH_SHORT).show();
             }
 
     }

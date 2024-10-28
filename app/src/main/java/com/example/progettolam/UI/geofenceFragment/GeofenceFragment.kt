@@ -33,8 +33,10 @@ class GeofenceFragment : Fragment() {
     private lateinit var radiusEditText: EditText
     private lateinit var removeGeofenceToggleButton: ToggleButton
 
-    val MIN_RADIUS: Int = 100
-    val MAX_RADIUS: Int = 2000
+    companion object {
+        const val MIN_RADIUS: Int = 100
+        const val MAX_RADIUS: Int = 2000
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

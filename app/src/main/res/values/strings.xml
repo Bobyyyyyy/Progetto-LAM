@@ -57,6 +57,13 @@
     <string name="color_circle_description">Colore cerchio</string>
     <string name="change_color_button">Cambia colore</string>
     <string name="switch_removing_geofence_button">Attiva rimozione geofence</string>
-    <string name="on_value_toggle_button">SI</string>
-    <string name="off_value_toggle_button">NO</string>
+
+    <string name="success_add_geofence">Geofence aggiunto correttamente</string>
+    <string name="error_add_geofence">Errore aggiunta geofence</string>
+    <string name="geofence_enter">Entrato nel geofence</string>
+    <string name="geofence_dwell">Permanenza nel geofence</string>
+    <string name="geofence_exit">Uscita dal geofence</string>
+    <string name="error_fetch_location">Errore caricamento posizione</string>
+    <string name="success_geofence_removal">Geofence rimosso correttamente</string>
+    <string name="error_geofence_removal">Errore rimozione geofence</string>
 </resources>

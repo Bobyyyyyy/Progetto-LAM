@@ -32,6 +32,13 @@
     <string name="color_circle_description">Circle color:</string>
     <string name="change_color_button">Change color</string>
     <string name="switch_removing_geofence_button">Activate geofence removal:</string>
-    <string name="on_value_toggle_button">ON</string>
-    <string name="off_value_toggle_button">OFF</string>
+
+    <string name="success_add_geofence">Geofence added successfully</string>
+    <string name="error_add_geofence">Error adding geofence</string>
+    <string name="geofence_enter">Enter geofence</string>
+    <string name="geofence_dwell">Dwell geofence</string>
+    <string name="geofence_exit">Exit geofence</string>
+    <string name="error_fetch_location">Error in fetching location</string>
+    <string name="success_geofence_removal">Geofence removal successful</string>
+    <string name="error_geofence_removal">Error geofence removal</string>
 </resources>
