@@ -26,7 +26,7 @@ class frontpageActivity: AppCompatActivity(){
 
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
 
-        val value = resources.getString(R.string.preferences_username)
+        val value = resources.getString(R.string.preferences_username_default)
         val storedName = sharedPref?.getString(getString(R.string.preferences_username), value)
 
         val storedTheme = sharedPref?.getBoolean(getString(R.string.preferences_theme),false)
@@ -38,7 +38,7 @@ class frontpageActivity: AppCompatActivity(){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
 
-        if (storedName.toString().isNotBlank()) {
+        if (storedName.toString().isNotBlank() && storedName.toString() != value) {
             val intent: Intent = Intent(this@frontpageActivity, MainActivity::class.java)
             startActivity(intent)
         }
