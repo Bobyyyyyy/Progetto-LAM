@@ -41,7 +41,7 @@ class ActivityRepository(app: Application) {
         return activityDao.getListOfActivities(startDate)
     }
 
-    fun getAllStepsFromDay(date: LocalDate?): LiveData<Int> {
+    fun getAllStepsFromDay(date: LocalDate?): LiveData<Int?> {
         return activityDao.getAllStepsFromDay(date)
     }
 

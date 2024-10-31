@@ -26,9 +26,32 @@ interface ActivityDao {
                 UNION
               SELECT sum(steps) as tot_steps FROM base_activity_table JOIN RunningActivity_table ON id=activityId WHERE endDate = :endDate)
             """)
-    fun getAllStepsFromDay(endDate: LocalDate?) : LiveData<Int>
+    fun getAllStepsFromDay(endDate: LocalDate?) : LiveData<Int?>
 
 
+    /*
+    @Transaction
+    @Query("""
+        SELECT endDate, SUM(tot_steps) AS daily_steps
+                FROM (
+                    SELECT endDate, SUM(steps) AS tot_steps
+                    FROM base_activity_table
+                    JOIN WalkingActivity_table ON id = activityId
+                    WHERE endDate >= DATE(? , '-6 days') AND endDate <= ?
+                    GROUP BY endDate
+                    UNION ALL
+                    SELECT endDate, SUM(steps) AS tot_steps
+                    FROM base_activity_table
+                    JOIN RunningActivity_table ON id = activityId
+                    WHERE endDate >= DATE(? , '-6 days') AND endDate <= ?
+                    GROUP BY endDate
+                ) AS steps_per_day
+                GROUP BY endDate
+                ORDER BY endDate ASC;
+                """)
+    fun getLastWeekSteps(today: LocalDate?) : LiveData<List<Map<String,Int>>>
+
+     */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertBaseActivity(activity: BaseActivity): Long
 

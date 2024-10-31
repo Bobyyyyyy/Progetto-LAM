@@ -13,7 +13,8 @@
 
     <string name="settings">Impostazioni</string>
 
-    <string name="preferences_username" translatable="false"></string>
+    <string name="preferences_username" translatable="false" >preferences_username</string>
+    <string name="preferences_username_default" translatable="false">user</string>
     <string name="username_default">Inserisci nome utente</string>
     <string name="username_tag"> Nome utente </string>
 
@@ -41,13 +42,16 @@
     <string name="default_speed" translatable="false">0,0</string>
     <string name="default_calories" translatable="false">0 kcal</string>
     <string name="default_time" translatable="false">00:00</string>
-    <string name="default_height" translatable="false">0 cm</string>
-    <string name="default_weight" translatable="false">0 kg</string>
+    <string name="default_height" translatable="false">-</string>
+    <string name="default_weight" translatable="false">-</string>
 
     <string name="preferences_user" translatable="false">preferences_user</string>
     <string name="title_activity_maps" translatable="false">MapsActivity</string>
     <string name="preferences_height" translatable="false">preferences_height</string>
-    <string name="preferences_weight" translatable="false">preferences_height</string>
+    <string name="preferences_height_default" translatable="false">--</string>
+    <string name="preferences_weight" translatable="false">preferences_weight</string>
+    <string name="preferences_weight_default" translatable="false">--</string>
+
     <string name="height_tag">Altezza</string>
     <string name="enter_height">Inserisci altezza</string>
     <string name="weight_tag">Peso</string>

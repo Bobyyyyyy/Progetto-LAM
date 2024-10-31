@@ -81,7 +81,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                            android:id="@+id/timer"
+                            android:id="@+id/heightValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/default_height"
@@ -118,7 +118,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                            android:id="@+id/valueSpeedTextView"
+                            android:id="@+id/weightValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/default_weight"

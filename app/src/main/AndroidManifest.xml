@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+
     <!--     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" /> -->
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -67,6 +69,10 @@
                 android:enabled="true"
                 android:foregroundServiceType="shortService" />
 
+        <service
+                android:name=".services.LocationForegroundService"
+                android:enabled="true"
+                android:foregroundServiceType="location" />
         <activity
                 android:name=".UI.frontpageActivity.frontpageActivity"
                 android:exported="true"

@@ -13,6 +13,7 @@ import com.example.progettolam.UI.geofenceFragment.GeofenceFragment
 import com.example.progettolam.UI.geofenceFragment.GeofenceMapFragment
 import com.example.progettolam.UI.homeFragment.HomeFragment
 import com.example.progettolam.UI.profileFragment.ProfileFragment
+import com.example.progettolam.services.LocationWorkerScheduler
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -64,6 +65,7 @@ class MainActivity : AppCompatActivity() {
 
                 supportFragmentManager.popBackStackImmediate()
             }
+
         }
 
         onBackPressedDispatcher.addCallback(this,callback)
@@ -71,6 +73,8 @@ class MainActivity : AppCompatActivity() {
             navbarListener(menuItem)
         }
         changeFragment(HomeFragment(),R.id.homeMenu.toString())
+
+        LocationWorkerScheduler(this,15)
     }
 
 

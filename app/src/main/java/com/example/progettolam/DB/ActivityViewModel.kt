@@ -81,7 +81,7 @@ class ActivityViewModel(private val repository: ActivityRepository): ViewModel()
         return repository.getAllActivities(startDate)
     }
 
-    fun getAllStepsFromDay(date: LocalDate?): LiveData<Int> {
+    fun getAllStepsFromDay(date: LocalDate?): LiveData<Int?> {
         return repository.getAllStepsFromDay(date)
     }
 

@@ -1,6 +1,8 @@
 package com.example.progettolam.UI.profileFragment
 
-class DataExample(var valueX: Float = 0f, var valueY: Float = 0f) {
+import java.time.LocalDate
+
+class DataExample(var date: Int, var steps: Float = 0f) {
 /*
     fun getValueX(): Float {
         return valueX

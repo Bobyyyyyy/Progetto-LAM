@@ -2,6 +2,7 @@ package com.example.progettolam.UI.profileFragment
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,13 +28,15 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import java.time.LocalDate
 
 
 class ProfileFragment: Fragment() {
     private lateinit var profileModel: ProfileViewModel
     private lateinit var textView: TextView
     private lateinit var settings: ImageView
-    private lateinit var todaySteps: TextView
+    private lateinit var heightView: TextView
+    private lateinit var weightView: TextView
     private lateinit var chart: LineChart
     private lateinit var barChart: BarChart
     private lateinit var pieChart: PieChart
@@ -55,6 +58,10 @@ class ProfileFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         profileModel = ViewModelProvider(this)[ProfileViewModel::class.java]
+
+        heightView = view.findViewById(R.id.heightValue)
+        weightView = view.findViewById(R.id.weightValue)
+
         textView = view.findViewById(R.id.username)
         settings = view.findViewById(R.id.settings)
         //todaySteps = view.findViewById(R.id.todaySteps)
@@ -88,8 +95,16 @@ class ProfileFragment: Fragment() {
 
 
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(requireActivity())
-        val value = resources.getString(R.string.preferences_username)
+
+        val value = resources.getString(R.string.preferences_username_default)
         val storedName = sharedPref?.getString(getString(R.string.preferences_username), value)
+
+        val storedHeight = sharedPref?.getString(getString(R.string.preferences_height),resources.getString(R.string.preferences_height_default))
+        val storedWeight = sharedPref?.getString(getString(R.string.preferences_weight),resources.getString(R.string.preferences_weight_default))
+
+
+        heightView.text = storedHeight.toString()
+        weightView.text = storedWeight.toString()
 
         profileModel.changeUsername(storedName.toString())
 
@@ -97,18 +112,8 @@ class ProfileFragment: Fragment() {
             textView.text = it
         }
 
-        /*
         activityViewModel.getAllStepsFromDay(LocalDate.now()).observe(viewLifecycleOwner) {
-            if(it != null) {
-                todaySteps.text = it.toString()
-            }
-            else {
-                todaySteps.text = getString(R.string.default_steps)
-            }
         }
-
-         */
-
 
         settings.setOnClickListener{
             changeFragment(PreferencesFragment(), R.id.settings.toString())
@@ -154,19 +159,20 @@ class ProfileFragment: Fragment() {
 
     private fun createLineCharDate(label: String, color: Int): LineData {
         var dataObjects = arrayOf<DataExample>(
-            DataExample(0f, 5f),
-            DataExample(1f, 10f),
-            DataExample(2f, 7f),
-            DataExample(3f, 12f),
-            DataExample(4f, 6f),
-            DataExample(5f, 15f)
+            DataExample(1, 5f),
+            DataExample(2, 10f),
+            DataExample(3, 7f),
+            DataExample(4, 12f),
+            DataExample(5, 6f),
+            DataExample(6, 15f) ,
+            DataExample(7, 10f)
         )
         // Create an empty list of Entry objects
         val entries = mutableListOf<Entry>()
 
         // Convert DataExample objects to MPAndroidChart Entry objects
         for (data in dataObjects) {
-            entries.add(Entry(data.valueX, data.valueY))
+            entries.add(Entry(data.date.toFloat(), data.steps))
         }
 
         val dataSet = LineDataSet(entries, label)
