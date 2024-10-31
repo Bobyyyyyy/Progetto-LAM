@@ -188,8 +188,8 @@ class OldActivityInsertFragment: Fragment() {
 
     private fun saveNewActivity() {
         val typeActivity = getTypeActivity()
-        var a = getString(R.string.run_tag)
-        if (typeActivity != "" && getDate() != "" && getStartTime() != "" && getEndTime() != "" /*&& TODO: controllare isIntervalTimeCorrect()*/) {
+
+        if (typeActivity != "" && getDate() != "" && getStartTime() != "" && getEndTime() != "" && isIntervalTimeCorrect()) {
             val startTime = getLocalTimeFromString(txtStartTime)
             val endTime = getLocalTimeFromString(txtEndTime)
             val date = getLocalDateFromString(txtDate)
