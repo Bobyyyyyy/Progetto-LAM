@@ -1,7 +1,5 @@
 package com.example.progettolam.UI.calendarFragment
 
-import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +8,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +16,8 @@ import com.example.progettolam.DB.ActivityViewModel
 import com.example.progettolam.DB.ActivityViewModelFactory
 import com.example.progettolam.R
 import com.example.progettolam.UI.Activities.ActivityAdapter
+import com.example.progettolam.UI.Activities.OldActivityInsertFragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.CalendarMonth
 import com.kizitonwose.calendar.core.DayPosition
@@ -35,11 +34,15 @@ class CalendarFragment: Fragment() {
     private lateinit var calendarView: com.kizitonwose.calendar.view.CalendarView
     private lateinit var recyclerActivity: RecyclerView
     private lateinit var monthView: TextView
-
+    private lateinit var addActivityButton: FloatingActionButton
 
     val activityViewModel by lazy {
         val factory = ActivityViewModelFactory(ActivityRepository(requireActivity().application))
         ViewModelProvider(this, factory)[ActivityViewModel::class.java]
+    }
+
+    companion object {
+        const val NEW_ACTIVITY_PAGE_INSERT = "newActivityPage"
     }
 
     override fun onCreateView(
@@ -58,6 +61,7 @@ class CalendarFragment: Fragment() {
 
         calendarView = view.findViewById(R.id.calendarView)
         monthView = view.findViewById(R.id.monthView)
+        addActivityButton = view.findViewById(R.id.floatingActionButton)
         recyclerActivity = view.findViewById(R.id.recyclerActivity)
         recyclerActivity.adapter = activityAdapter
         recyclerActivity.layoutManager = LinearLayoutManager(requireActivity())
@@ -150,7 +154,9 @@ class CalendarFragment: Fragment() {
             }
         }
 
-
+        addActivityButton.setOnClickListener {
+            changeFragment(OldActivityInsertFragment(), NEW_ACTIVITY_PAGE_INSERT)
+        }
 
     }
 
@@ -170,4 +176,31 @@ class CalendarFragment: Fragment() {
         }
     }
 
+
+    private fun changeFragment(fragment: Fragment, tag: String) {
+        val currentFragment = parentFragmentManager.findFragmentById(R.id.fragmentContainerView)
+        if (currentFragment != null && currentFragment.tag == tag) {
+            return
+        }
+        val storedFragment = parentFragmentManager.findFragmentByTag(tag)
+        if ( storedFragment != null ) {
+            parentFragmentManager.beginTransaction().run {
+                if (currentFragment != null) {
+                    detach(currentFragment)
+                }
+                attach(storedFragment)
+                commit()
+            }
+        } else {
+            parentFragmentManager.beginTransaction().run {
+                setReorderingAllowed(true)
+                if (currentFragment != null) {
+                    detach(currentFragment)
+                }
+                add(R.id.fragmentContainerView,fragment,tag)
+                addToBackStack(null)
+                commit()
+            }
+        }
+    }
 }

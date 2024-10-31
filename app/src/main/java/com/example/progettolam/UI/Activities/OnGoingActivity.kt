@@ -147,48 +147,6 @@ open class OnGoingActivity: AppCompatActivity() {
     }
 
 
-    private fun registerActivity(activityType: ActivityType?) {
-
-        when(activityType) {
-            ActivityType.WALKING -> {
-                viewModel.setActivityType(ActivityType.WALKING)
-                setContentView(R.layout.recording_stats_with_map_activity)
-
-                activityViewModel.insertRunningActivity(
-                    BaseActivity(
-                        null,
-                        viewModel.getActivityType(),
-                        viewModel.startTime,
-                        viewModel.startDate,
-                        viewModel.endTime,
-                        viewModel.endDate
-                    ),
-                    RunningActivity(null, viewModel.getTotalSteps()?.toInt(), viewModel.getAverageSpeed())
-                )
-
-            }
-
-            ActivityType.RUNNING -> {
-
-
-            }
-
-            ActivityType.DRIVING -> {
-                viewModel.setActivityType(ActivityType.DRIVING)
-                setContentView(R.layout.recording_stats_with_map_activity)
-                //da cambiare con altri layout
-            }
-
-            ActivityType.STILL -> {
-                viewModel.setActivityType(ActivityType.STILL)
-                setContentView(R.layout.recording_stats_with_map_activity)
-                //da cambiare con altri layout
-            }
-
-            null -> return
-        }
-    }
-
     protected open fun initViews() {
         startButton = findViewById(R.id.startButton)
         pauseButton = findViewById(R.id.pauseButton)

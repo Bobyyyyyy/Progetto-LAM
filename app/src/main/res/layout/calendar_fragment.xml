@@ -55,5 +55,18 @@
             tools:layout_editor_absoluteX="16dp"
             app:layout_constraintTop_toBottomOf="@+id/cardView2"
             app:layout_constraintBottom_toBottomOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:backgroundTint="@color/primary"
+            app:srcCompat="@drawable/baseline_add_24"
+            android:tint="@color/white"
+            android:id="@+id/floatingActionButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="32dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

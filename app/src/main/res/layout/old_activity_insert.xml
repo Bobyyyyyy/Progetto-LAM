@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <!-- Select Start Time -->
+
+    <TextView
+            android:text="@string/insert_new_activity_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/titleTextView"
+            style="@style/profile_name"
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/margin_card_view_chose_activity"
+            android:paddingHorizontal="@dimen/padding_constraint_layout_chose_activity" />
+
+    <TextView
+            android:text="@string/insert_new_activity_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/descriptionTextView"
+            style="@style/insert_text_description"
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/margin_card_view_chose_activity"
+            android:paddingHorizontal="@dimen/padding_constraint_layout_chose_activity"
+            app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_card_view_chose_activity"
+            app:cardCornerRadius="@dimen/radius_card_view"
+            android:layout_marginEnd="@dimen/padding_constraint_layout_chose_activity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="@dimen/padding_constraint_layout_chose_activity"
+            android:id="@+id/newActivityCardView"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionTextView">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_constraint_layout"
+                android:background="@color/secondary">
+
+            <Button
+                    android:id="@+id/selectDateButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/select_date"
+                    style="@style/insert_text_description"
+                    android:backgroundTint="@color/accent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/selectStartTimeButton" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="DD/MM/YYYY"
+                    style="@style/insert_text_description"
+                    android:id="@+id/selectDateTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/selectDateButton"
+                    app:layout_constraintTop_toTopOf="@+id/selectDateButton"
+                    app:layout_constraintBottom_toBottomOf="@+id/selectDateButton"
+                     />
+
+            <Button
+                    android:id="@+id/selectStartTimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/select_start_time"
+                    style="@style/insert_text_description"
+                    android:backgroundTint="@color/accent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/selectDateButton"
+                    app:layout_constraintBottom_toTopOf="@+id/selectEndTimeButton"
+                    android:layout_marginTop="@dimen/margin_card_view_chose_activity"
+                    android:layout_marginBottom="@dimen/margin_card_view_chose_activity" />
+
+            <TextView
+                    android:id="@+id/selectStartTimeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="HH:MM"
+                    style="@style/insert_text_description"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/selectStartTimeButton"
+                    app:layout_constraintBottom_toBottomOf="@+id/selectStartTimeButton"
+                    app:layout_constraintStart_toEndOf="@+id/selectStartTimeButton" />
+
+            <Button
+                    android:id="@+id/selectEndTimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/select_end_time"
+                    style="@style/insert_text_description"
+                    android:backgroundTint="@color/accent"
+                    app:layout_constraintTop_toBottomOf="@+id/selectStartTimeButton"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                    android:id="@+id/selectEndTimeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="HH:MM"
+                    style="@style/insert_text_description"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/selectEndTimeButton"
+                    app:layout_constraintBottom_toBottomOf="@+id/selectEndTimeButton"
+                    app:layout_constraintStart_toEndOf="@+id/selectEndTimeButton" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_card_view_chose_activity"
+            app:cardCornerRadius="@dimen/radius_card_view"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/newActivityCardView"
+            android:id="@+id/choseActivityCardView">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_constraint_layout"
+
+                android:background="@color/secondary">
+
+            <TextView
+                    android:id="@+id/selectTypeActivityTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/select_type_activity"
+                    style="@style/insert_text_description"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            <Spinner
+                    android:id="@+id/selectTypeActivitySpinnerActivity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:popupBackground="@color/secondary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/selectTypeActivityTextView"
+                    app:layout_constraintTop_toTopOf="@+id/selectTypeActivityTextView"
+                    app:layout_constraintStart_toEndOf="@+id/selectTypeActivityTextView"
+                    android:layout_marginStart="24dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <Button
+            android:text="@string/save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/saveButton"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cancelButton"
+            app:layout_constraintTop_toTopOf="@+id/cancelButton"
+            app:layout_constraintBottom_toBottomOf="@+id/cancelButton" />
+
+    <Button
+            android:text="@string/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cancelButton"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/primary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/saveButton"
+            android:layout_marginEnd="115dp"
+            app:layout_constraintTop_toBottomOf="@+id/choseActivityCardView"
+            android:layout_marginTop="24dp" />
+
+    <!-- Select End Time -->
+
+    <!-- Multiple Choice Selection -->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

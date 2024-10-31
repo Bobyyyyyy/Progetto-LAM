@@ -8,6 +8,7 @@
     <string name="geofence_button" translatable="false">Geofence</string>">
 
     <string name="save_button">Salva</string>
+    <string name="cancel_button">Annulla</string>
     <string name="greetings">Ciao</string>
 
     <string name="settings">Impostazioni</string>
@@ -66,4 +67,18 @@
     <string name="error_fetch_location">Errore caricamento posizione</string>
     <string name="success_geofence_removal">Geofence rimosso correttamente</string>
     <string name="error_geofence_removal">Errore rimozione geofence</string>
+
+    <string name="insert_new_activity_title">NUOVA ATTIVITÀ</string>
+    <string name="insert_new_activity_description">Le attività aggiunte a posteriori non godranno dei dati registrati dai sensori, come ad esempio i passi e la velocità</string>
+    <string name="select_date">Seleziona data</string>
+    <string name="select_start_time">Seleziona ora di inizio</string>
+    <string name="select_end_time">Seleziona ora di fine</string>
+    <string name="select_type_activity">Seleziona tipo attività</string>
+
+    <string-array name="activities_array">
+        <item>@string/walk_tag</item>
+        <item>@string/run_tag</item>
+        <item>@string/chilling_tag</item>
+        <item>@string/drive_tag</item>
+    </string-array>
 </resources>

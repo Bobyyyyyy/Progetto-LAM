@@ -11,6 +11,7 @@
             android:id="@+id/topDescriptionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             android:text="@string/geofence_top_description"
             style="@style/description_text"
             android:layout_marginHorizontal="16dp"
