@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.progettolam.DB.ActivityType
 import com.example.progettolam.DB.BaseActivity
 import com.example.progettolam.DB.RunningActivity
+import com.example.progettolam.DB.WalkingActivity
 import com.example.progettolam.MapsActivity
 import com.example.progettolam.R
 import com.example.progettolam.services.StepCounter
@@ -28,7 +29,6 @@ import java.time.LocalTime
 class OnGoingWalking : OnGoingActivity() {
 
     private lateinit var stepsCounter: TextView
-    private lateinit var fragmentContainer: FragmentContainerView
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
 
@@ -160,7 +160,7 @@ class OnGoingWalking : OnGoingActivity() {
 
 
     private fun registerActivity() {
-        activityViewModel.insertRunningActivity(
+        activityViewModel.insertWalkingActivity(
             BaseActivity(
                 null,
                 viewModel.getActivityType(),
@@ -169,7 +169,8 @@ class OnGoingWalking : OnGoingActivity() {
                 viewModel.endTime,
                 viewModel.endDate
             ),
-            RunningActivity(null, viewModel.getTotalSteps()?.toInt(),viewModel.getAverageSpeed())
+            WalkingActivity(null, viewModel.getTotalSteps()?.toInt() ,viewModel.getAverageSpeed())
+
         )
     }
 

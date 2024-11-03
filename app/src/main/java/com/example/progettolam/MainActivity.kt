@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
         }
         changeFragment(HomeFragment(),R.id.homeMenu.toString())
 
-        LocationWorkerScheduler(this,15)
+        //LocationWorkerScheduler(this,15)
     }
 
 

@@ -27,7 +27,6 @@ import java.time.LocalTime
 
 open class OnGoingActivity: AppCompatActivity() {
 
-    protected lateinit var statusReceiver: BroadcastReceiver
     protected lateinit var timeReceiver: BroadcastReceiver
     protected lateinit var stepReceiver: BroadcastReceiver
     protected lateinit var timerService: TimerService
@@ -90,7 +89,6 @@ open class OnGoingActivity: AppCompatActivity() {
             unbindService(serviceConnection)
         }
     }
-
 
 
     protected open fun startActivity() {

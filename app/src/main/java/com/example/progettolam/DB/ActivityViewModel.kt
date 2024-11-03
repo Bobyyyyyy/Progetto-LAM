@@ -1,9 +1,13 @@
 package com.example.progettolam.DB
 
+import android.content.Context
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.progettolam.UI.profileFragment.ActivitiesGraphData
+import com.example.progettolam.UI.profileFragment.StepsData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -89,6 +93,21 @@ class ActivityViewModel(private val repository: ActivityRepository): ViewModel()
         return repository.getActivitiesFromType(activityType)
     }
 
+    fun getCurrentWeekSteps(today: LocalDate?) : LiveData<Array<StepsData>> {
+        return repository.getCurrentWeekSpinner(today)
+    }
+
+    fun getCurrentWeekActivities(today: LocalDate?): LiveData<Array<ActivitiesGraphData>> {
+        return repository.getCurrentWeekActivities(today)
+    }
+
+    fun exportDBtoCSV(context: Context, uri: Uri) {
+        return repository.exportActivitiesToCSV(uri,context)
+    }
+
+    fun importCSVtoDB(context: Context, uri: Uri) {
+        return repository.importActivitiesFromCSV(uri,context)
+    }
 
 
 }

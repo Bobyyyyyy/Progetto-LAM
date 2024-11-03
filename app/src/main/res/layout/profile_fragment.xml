@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:background="@color/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -133,17 +134,6 @@
 
         </LinearLayout>
 
-        <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/chart"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/chart_height"
-                android:layout_margin="@dimen/margin_chart"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" >
-
-        </com.github.mikephil.charting.charts.LineChart>
-
         <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/chart2"
                 android:layout_width="match_parent"
@@ -151,7 +141,8 @@
                 android:layout_margin="@dimen/margin_chart"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/chart" >
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+                android:layout_marginTop="50dp">
 
         </com.github.mikephil.charting.charts.BarChart>
 
@@ -168,17 +159,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/chart4" />
+                    app:layout_constraintEnd_toEndOf="parent" />
 
-            <com.github.mikephil.charting.charts.PieChart
-                    android:id="@+id/chart4"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/chart_height"
-                    android:layout_margin="@dimen/margin_chart"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/chart3" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,14 +1,20 @@
 package com.example.progettolam.UI.calendarFragment
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.progettolam.DB.ActivityRepository
@@ -25,9 +31,14 @@ import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import com.kizitonwose.calendar.view.MonthDayBinder
 import com.kizitonwose.calendar.view.MonthHeaderFooterBinder
 import com.kizitonwose.calendar.view.MonthScrollListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.nio.channels.FileLock
 import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.Locale
+
 
 class CalendarFragment: Fragment() {
     private lateinit var viewModel: ActivityViewModel
@@ -35,6 +46,12 @@ class CalendarFragment: Fragment() {
     private lateinit var recyclerActivity: RecyclerView
     private lateinit var monthView: TextView
     private lateinit var addActivityButton: FloatingActionButton
+
+    private lateinit var createFileLauncher: ActivityResultLauncher<String>
+    private lateinit var getFileLauncher: ActivityResultLauncher<String>
+
+
+
 
     val activityViewModel by lazy {
         val factory = ActivityViewModelFactory(ActivityRepository(requireActivity().application))
@@ -57,6 +74,25 @@ class CalendarFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val activityAdapter = ActivityAdapter(listOf())
+
+
+        createFileLauncher = registerForActivityResult(ActivityResultContracts.CreateDocument("text/csv")) { uri: Uri? ->
+            uri?.let {
+                // Chiamata alla funzione di esportazione dei dati
+                CoroutineScope(Dispatchers.IO).launch {
+                    activityViewModel.exportDBtoCSV(requireContext(),it) // Passa l'uri corretto
+                }
+            }
+        }
+
+
+        getFileLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                CoroutineScope(Dispatchers.IO).launch {
+                    activityViewModel.importCSVtoDB(requireContext(),it)
+                }
+            }
+        }
 
 
         calendarView = view.findViewById(R.id.calendarView)
@@ -158,6 +194,9 @@ class CalendarFragment: Fragment() {
             changeFragment(OldActivityInsertFragment(), NEW_ACTIVITY_PAGE_INSERT)
         }
 
+     //   showSaveFileDialog()
+      //  getFileLauncher.launch("*/*")
+
     }
 
     private fun onDateClicked(day: CalendarDay) {
@@ -203,4 +242,14 @@ class CalendarFragment: Fragment() {
             }
         }
     }
+
+
+
+    private fun showSaveFileDialog() {
+        createFileLauncher.launch("exported_activities.csv")
+    }
+
+
+
+
 }

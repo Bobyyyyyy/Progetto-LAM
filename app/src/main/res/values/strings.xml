@@ -89,4 +89,7 @@
         <item>@string/chilling_tag</item>
         <item>@string/drive_tag</item>
     </string-array>
+
+
+
 </resources>
