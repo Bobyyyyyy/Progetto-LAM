@@ -67,6 +67,8 @@ interface ActivityDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertSittingActivity(activity: SittingActivity)
 
-
+    @Transaction
+    @Query("SELECT * FROM base_activity_table WHERE id = :id")
+    fun getInfoActivityByID(id: Long?): LiveData<ActivityJoin>
 
 }

@@ -44,6 +44,7 @@
     <string name="default_time" translatable="false">00:00:00</string>
     <string name="default_height" translatable="false">-</string>
     <string name="default_weight" translatable="false">-</string>
+    <string name="no_info" translatable="false">--</string>
 
     <string name="preferences_user" translatable="false">preferences_user</string>
     <string name="title_activity_maps" translatable="false">MapsActivity</string>
@@ -89,4 +90,12 @@
         <item>@string/chilling_tag</item>
         <item>@string/drive_tag</item>
     </string-array>
+
+    <string name="detail_activity_title">Dettagli attività</string>
+    <string name="average_speed">Velocità media</string>
+    <string name="duration_activity">Durata totale</string>
+    <string name="total_steps">Passi</string>
+    <string name="total_calories">Calorie totali</string>
+    <string name="open_details">Apri</string>
+
 </resources>

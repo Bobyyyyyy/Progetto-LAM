@@ -1,18 +1,16 @@
 package com.example.progettolam.UI.Activities
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.progettolam.DB.ActivityJoin
-import com.example.progettolam.DB.BaseActivity
 import com.example.progettolam.R
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.time.LocalTime
-import java.time.LocalDate
 
-class ActivityAdapter(var activities: List<ActivityJoin>?): RecyclerView.Adapter<ActivityViewHolder>() {
+class ActivityAdapter(var activities: List<ActivityJoin>?, var listener: (String) -> Unit): RecyclerView.Adapter<ActivityViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivityViewHolder {
         return ActivityViewHolder(
             LayoutInflater.from(parent.context)
@@ -29,9 +27,7 @@ class ActivityAdapter(var activities: List<ActivityJoin>?): RecyclerView.Adapter
         holder.apply {
             val timeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("k:m:s")
 
-
             val startTime = activities?.get(position)?.baseActivity?.startTime
-
             val endTime = activities?.get(position)?.baseActivity?.endTime
             val startDate = activities?.get(position)?.baseActivity?.startDate
             val endDate = activities?.get(position)?.baseActivity?.endDate
@@ -40,22 +36,26 @@ class ActivityAdapter(var activities: List<ActivityJoin>?): RecyclerView.Adapter
             val start: LocalDateTime = LocalDateTime.of(startDate,startTime)
             val end: LocalDateTime = LocalDateTime.of(endDate,endTime)
             var duration = Duration.between(start,end)
-            val days = duration.toDays()
             val time: String
 
-            if(days.toInt() != 0) {
-                duration = duration.minusDays(days)
-                time = "${"%2d".format(days)}:${"%02d".format(duration.toDays())}:${"%02d".format(duration.toMinutes())}:${"%02d".format(duration.seconds)}"
+            val days = duration.toDays().toInt()
+            val hours = (duration.toHours() % 24).toInt()
+            val minutes = (duration.toMinutes() % 60).toInt()
+            val seconds = (duration.seconds % 60).toInt()
+
+            time = if (days != 0) {
+                "${"%02d".format(days)}:${"%02d".format(hours)}:${"%02d".format(minutes)}:${"%02d".format(seconds)}"
+            } else {
+                // If days are zero, exclude them
+                "${"%02d".format(hours)}:${"%02d".format(minutes)}:${"%02d".format(seconds)}"
             }
 
-            else {
-                time = "${"%02d".format(duration.toDays())}:${"%02d".format(duration.toMinutes())}:${"%02d".format(duration.seconds)}"
+            typeActivity.text = activities?.get(position)?.baseActivity?.activityType.toString()
+            durationActivity.text = time
+
+            btnOpenDetails.setOnClickListener{
+                listener(activities?.get(position)?.baseActivity?.id.toString())
             }
-
-            activityTitle2.text = activities?.get(position)?.baseActivity?.activityType.toString()
-            activityTitle3.text = activities?.get(position)?.runningActivity?.avgSpeed?.toString() ?: "0.0"
-            activityTitle.text = activities?.get(position)?.runningActivity?.steps?.toString() ?: "Ciao"
-
         }
     }
 }

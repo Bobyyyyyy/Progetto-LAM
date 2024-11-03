@@ -89,6 +89,9 @@ class ActivityViewModel(private val repository: ActivityRepository): ViewModel()
         return repository.getActivitiesFromType(activityType)
     }
 
+    fun getInfoActivityByID(id: Long?): LiveData<ActivityJoin> {
+        return repository.getInfoActivityByID(id)
+    }
 
 
 }

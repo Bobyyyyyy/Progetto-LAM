@@ -12,7 +12,6 @@ class ActivityRepository(app: Application) {
     init{
         val db = ActivityDatabase.getDB(app)
         activityDao = db.activityDao()
-
     }
 
 
@@ -47,6 +46,10 @@ class ActivityRepository(app: Application) {
 
     fun getActivitiesFromType(activityType: ActivityType?): LiveData<List<ActivityJoin>> {
         return activityDao.getActivitiesFromType(activityType)
+    }
+
+    fun getInfoActivityByID(id: Long?): LiveData<ActivityJoin> {
+        return activityDao.getInfoActivityByID(id)
     }
 
 

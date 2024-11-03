@@ -26,7 +26,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/pauseButton"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_margin="6dp" />
+                android:layout_margin="6dp"
+                app:layout_constraintStart_toStartOf="parent" />
 
         <Button
                 android:text="@string/start_button"

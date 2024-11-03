@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.ServiceConnection
-import android.os.Bundle
 import android.os.IBinder
 import android.view.View
 import android.widget.Button
@@ -14,11 +13,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.progettolam.DB.ActivityRepository
-import com.example.progettolam.DB.ActivityType
 import com.example.progettolam.DB.ActivityViewModel
 import com.example.progettolam.DB.ActivityViewModelFactory
-import com.example.progettolam.DB.BaseActivity
-import com.example.progettolam.DB.RunningActivity
 import com.example.progettolam.R
 import com.example.progettolam.services.StepCounter
 import com.example.progettolam.services.TimerService
@@ -46,10 +42,10 @@ open class OnGoingActivity: AppCompatActivity() {
     private val serviceConnection = object: ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             timerService = (service as TimerService.TimerBinder).getService()
-            viewModel.setisBound(true)
+            viewModel.setIsBound(true)
         }
         override fun onServiceDisconnected(name: ComponentName?) {
-            viewModel.setisBound(false)
+            viewModel.setIsBound(false)
         }
     }
 

@@ -54,4 +54,10 @@
     <string name="error_date">Activity must be completed before this time</string>
     <string name="add_old_activity_success">Activity added successfully</string>
 
+    <string name="detail_activity_title">Activity details</string>
+    <string name="average_speed">Average speed</string>
+    <string name="duration_activity">Total time</string>
+    <string name="total_steps">Steps</string>
+    <string name="total_calories">Total calories</string>
+    <string name="open_details">Open</string>
 </resources>

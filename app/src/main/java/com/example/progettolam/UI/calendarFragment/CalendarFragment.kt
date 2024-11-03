@@ -1,6 +1,7 @@
 package com.example.progettolam.UI.calendarFragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import com.example.progettolam.DB.ActivityViewModelFactory
 import com.example.progettolam.R
 import com.example.progettolam.UI.Activities.ActivityAdapter
 import com.example.progettolam.UI.Activities.OldActivityInsertFragment
+import com.example.progettolam.UI.Activities.ResumeActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.CalendarMonth
@@ -56,7 +58,7 @@ class CalendarFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val activityAdapter = ActivityAdapter(listOf())
+        val activityAdapter = ActivityAdapter(listOf()) { id -> handleOpenDetailActivity(id) }
 
 
         calendarView = view.findViewById(R.id.calendarView)
@@ -202,5 +204,18 @@ class CalendarFragment: Fragment() {
                 commit()
             }
         }
+    }
+
+    private fun handleOpenDetailActivity(id: String) {
+        val resumeActivity = ResumeActivity()
+
+        // Create a bundle to hold the id
+        val bundle = Bundle()
+        bundle.putString("idActivity", id)
+
+        // Set the arguments for ResumeActivity
+        resumeActivity.arguments = bundle
+
+        changeFragment(resumeActivity,  "resumeActivity")
     }
 }

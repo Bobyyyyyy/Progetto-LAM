@@ -95,7 +95,7 @@ class GeofenceMapViewModel(private val repository: GeofenceRepository) : ViewMod
         }
     }
 
-    fun deleteGeofenceDB(id: String?) {
+    private fun deleteGeofenceDB(id: String?) {
         CoroutineScope(Dispatchers.IO).launch {
             if (id != null) {
                 repository.deleteGeofence(id)

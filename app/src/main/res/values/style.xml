@@ -78,4 +78,41 @@
         <item name="android:textSize">@dimen/font_size_h3</item>
         <item name="android:textColor">@color/text</item>
     </style>
+
+    <style name="detail_activity_type_title">
+        <item name="android:fontFamily">@font/sarala_bold</item>
+        <item name="android:textSize">@dimen/font_size_h1</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <style name="detail_activity_title">
+        <item name="android:fontFamily">@font/barlow_semibold</item>
+        <item name="android:textSize">@dimen/font_size_h3</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <style name="detail_activity_stats_title">
+        <item name="android:fontFamily">@font/barlow_semibold</item>
+        <item name="android:textSize">@dimen/font_size_h4</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <style name="detail_activity_time_date">
+        <item name="android:fontFamily">@font/barlow_semibold</item>
+        <item name="android:textSize">@dimen/font_size_h4</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <style name="detail_activity_stats_value">
+        <item name="android:fontFamily">@font/barlow_regular</item>
+        <item name="android:textSize">@dimen/font_size_h5</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <style name="preview_detail_activity">
+        <item name="android:fontFamily">@font/barlow_regular</item>
+        <item name="android:textSize">@dimen/font_size_h4</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+
 </resources>

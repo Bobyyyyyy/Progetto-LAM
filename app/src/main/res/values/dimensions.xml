@@ -32,4 +32,9 @@
     <dimen name="font_size_h5">16sp</dimen>
     <dimen name="font_size_medium">18sp</dimen>
 
+    <!-- RESUME ACTIVITY -->
+    <dimen name="space_between_title_value">8dp</dimen>
+    <dimen name="space_between_type_time">24dp</dimen>
+    <dimen name="space_between_detail_card">20dp</dimen>
+
 </resources>

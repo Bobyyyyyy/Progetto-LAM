@@ -136,23 +136,23 @@ class OldActivityInsertFragment: Fragment() {
         timePickerDialog.show()
     }
 
-    private fun getTypeActivity(): String {
+    private fun getTypeActivity() : String {
         return spinnerActivity.selectedItem.toString()
     }
 
-    private fun getDate(): String {
+    private fun getDate() : String {
         return txtDate.text.toString()
     }
 
-    private fun getStartTime(): String {
+    private fun getStartTime() : String {
         return txtStartTime.text.toString()
     }
 
-    private fun getEndTime(): String {
+    private fun getEndTime() : String {
         return txtEndTime.text.toString()
     }
 
-    private fun isIntervalTimeCorrect(): Boolean {
+    private fun isIntervalTimeCorrect() : Boolean {
         var isCorrectTime : Boolean = false
         try {
             val startTime = getLocalTimeFromString(txtStartTime)
@@ -168,7 +168,7 @@ class OldActivityInsertFragment: Fragment() {
         return isCorrectTime
     }
 
-    private fun getLocalTimeFromString(textView: TextView): LocalTime? {
+    private fun getLocalTimeFromString(textView: TextView) : LocalTime? {
         val timeFormatter = DateTimeFormatter.ofPattern("H:mm")
         var localTime: LocalTime? = null
         try {
@@ -180,7 +180,7 @@ class OldActivityInsertFragment: Fragment() {
         return localTime
     }
 
-    private fun getLocalDateFromString(textView: TextView): LocalDate? {
+    private fun getLocalDateFromString(textView: TextView) : LocalDate? {
         val dateFormatter = DateTimeFormatter.ofPattern("d-M-yyyy")
         var localDate: LocalDate? = null
         try {
@@ -210,7 +210,7 @@ class OldActivityInsertFragment: Fragment() {
     }
 
     // Checks if the data is valid: the data inserted is before today and if it is today than it has to check the current time
-    private fun isDateAndTimeValid():Boolean {
+    private fun isDateAndTimeValid() : Boolean {
         val date = getLocalDateFromString(txtDate)
         val today = LocalDate.now()
         var isDataCorrect: Boolean = false
@@ -239,7 +239,7 @@ class OldActivityInsertFragment: Fragment() {
                 activityViewModel.insertWalkingActivity(
                     BaseActivity(
                         null,
-                        ActivityType.RUNNING,
+                        ActivityType.WALKING,
                         startTime,
                         date,
                         endTime,
