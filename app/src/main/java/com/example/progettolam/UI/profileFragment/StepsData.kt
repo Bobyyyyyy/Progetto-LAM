@@ -2,7 +2,7 @@ package com.example.progettolam.UI.profileFragment
 
 import java.time.LocalDate
 
-class DataExample(var date: Int, var steps: Float = 0f) {
+class DataExample(var day_of_week: Int, var daily_steps: Int = 0) {
 /*
     fun getValueX(): Float {
         return valueX
