@@ -12,11 +12,11 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.progettolam.DB.ActivityRepository
-import com.example.progettolam.DB.ActivityString
 import com.example.progettolam.DB.ActivityType
 import com.example.progettolam.DB.ActivityViewModel
 import com.example.progettolam.DB.ActivityViewModelFactory
@@ -24,7 +24,6 @@ import com.example.progettolam.DB.BaseActivity
 import com.example.progettolam.DB.RunningActivity
 import com.example.progettolam.DB.WalkingActivity
 import com.example.progettolam.R
-import com.example.progettolam.UI.homeFragment.HomeViewModel
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -80,17 +79,20 @@ class OldActivityInsertFragment: Fragment() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinnerActivity.adapter = adapter
         }
-        btnDatePicker.setOnClickListener{
+        btnDatePicker.setOnClickListener {
             chooseDate()
         }
-        btnStartTimePicker.setOnClickListener{
+        btnStartTimePicker.setOnClickListener {
             chooseTime(txtStartTime)
         }
-        btnEndTimePicker.setOnClickListener{
+        btnEndTimePicker.setOnClickListener {
             chooseTime(txtEndTime)
         }
-        saveBtn.setOnClickListener{
-            saveNewActivity()
+        saveBtn.setOnClickListener {
+            handleSaveOldActivity()
+        }
+        cancelBtn.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
         }
     }
 
@@ -121,7 +123,11 @@ class OldActivityInsertFragment: Fragment() {
         val timePickerDialog = TimePickerDialog(
             requireContext(),
             { _, hourOfDay, minute ->
-                textView.text = "$hourOfDay:$minute"
+                if (minute < 10) {
+                    textView.text = "$hourOfDay:0$minute"
+                } else {
+                    textView.text = "$hourOfDay:$minute"
+                }
             },
             mHour,
             mMinute,
@@ -186,51 +192,93 @@ class OldActivityInsertFragment: Fragment() {
         return localDate
     }
 
-    private fun saveNewActivity() {
+    // Checks if there are any errors and shows a toast if there are
+    private fun areFieldsCorrect() : Boolean {
+        var isCorrectTime : Boolean = true
         val typeActivity = getTypeActivity()
+        if (typeActivity == "" || getDate() == "" || getStartTime() == "" || getEndTime() == "") {
+            isCorrectTime = false
+            Toast.makeText(requireContext(), ContextCompat.getString(requireContext(), R.string.error_empty_fields), Toast.LENGTH_LONG).show();
+        } else if (!isIntervalTimeCorrect()) {
+            isCorrectTime = false
+            Toast.makeText(requireContext(), ContextCompat.getString(requireContext(), R.string.error_time_interval), Toast.LENGTH_LONG).show();
+        } else if (!isDateAndTimeValid()) {
+            isCorrectTime = false
+            Toast.makeText(requireContext(), ContextCompat.getString(requireContext(), R.string.error_date), Toast.LENGTH_LONG).show();
+        }
+        return isCorrectTime
+    }
 
-        if (typeActivity != "" && getDate() != "" && getStartTime() != "" && getEndTime() != "" && isIntervalTimeCorrect()) {
-            val startTime = getLocalTimeFromString(txtStartTime)
-            val endTime = getLocalTimeFromString(txtEndTime)
-            val date = getLocalDateFromString(txtDate)
+    // Checks if the data is valid: the data inserted is before today and if it is today than it has to check the current time
+    private fun isDateAndTimeValid():Boolean {
+        val date = getLocalDateFromString(txtDate)
+        val today = LocalDate.now()
+        var isDataCorrect: Boolean = false
 
-            when (typeActivity) {
-                getString(R.string.walk_tag) -> {
-                    activityViewModel.insertWalkingActivity(
-                        BaseActivity(
-                            null,
-                            ActivityType.RUNNING,
-                            startTime,
-                            date,
-                            endTime,
-                            date
-                        ),
-                        WalkingActivity(null, null, 0f)
-                    )
-                }
-
-                getString(R.string.run_tag) -> {
-                    activityViewModel.insertRunningActivity(
-                        BaseActivity(
-                            null,
-                            ActivityType.RUNNING,
-                            startTime,
-                            date,
-                            endTime,
-                            date
-                        ),
-                        RunningActivity(null, null, 0f)
-                    )
-                }
-
-                getString(R.string.chilling_tag) -> {
-                    //TODO: Insert Chilling Activity
-                }
-
-                getString(R.string.drive_tag) -> {
-                    // TODO: Insert Driving Activity
+        if (date != null) {
+            isDataCorrect = date.isBefore(today)
+            if (date.isEqual(today)) {
+                val endTime = getLocalTimeFromString(txtEndTime)
+                val currentTime = LocalTime.now()
+                if (endTime != null) {
+                    isDataCorrect = endTime.isBefore(currentTime)
                 }
             }
         }
+        return isDataCorrect
     }
+
+    private fun saveNewActivity() {
+        val typeActivity = getTypeActivity()
+        val startTime = getLocalTimeFromString(txtStartTime)
+        val endTime = getLocalTimeFromString(txtEndTime)
+        val date = getLocalDateFromString(txtDate)
+
+        when (typeActivity) {
+            getString(R.string.walk_tag) -> {
+                activityViewModel.insertWalkingActivity(
+                    BaseActivity(
+                        null,
+                        ActivityType.RUNNING,
+                        startTime,
+                        date,
+                        endTime,
+                        date
+                    ),
+                    WalkingActivity(null, null, 0f)
+                )
+            }
+
+            getString(R.string.run_tag) -> {
+                activityViewModel.insertRunningActivity(
+                    BaseActivity(
+                        null,
+                        ActivityType.RUNNING,
+                        startTime,
+                        date,
+                        endTime,
+                        date
+                    ),
+                    RunningActivity(null, null, 0f)
+                )
+            }
+
+            getString(R.string.chilling_tag) -> {
+                //TODO: Insert Chilling Activity
+            }
+
+            getString(R.string.drive_tag) -> {
+                // TODO: Insert Driving Activity
+            }
+        }
+    }
+
+    private fun handleSaveOldActivity() {
+        if (areFieldsCorrect()) {
+            saveNewActivity()
+            Toast.makeText(requireContext(), ContextCompat.getString(requireContext(), R.string.add_old_activity_success), Toast.LENGTH_SHORT).show();
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+    }
+
 }

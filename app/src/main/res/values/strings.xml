@@ -78,6 +78,10 @@
     <string name="select_start_time">Seleziona ora di inizio</string>
     <string name="select_end_time">Seleziona ora di fine</string>
     <string name="select_type_activity">Seleziona tipo attività</string>
+    <string name="error_empty_fields">Compila tutti i campi</string>
+    <string name="error_time_interval">Orari inizio e fine non validi</string>
+    <string name="error_date">L\'attività deve essere completata prima di questo momento</string>
+    <string name="add_old_activity_success">Attività aggiunta correttamente</string>
 
     <string-array name="activities_array">
         <item>@string/walk_tag</item>

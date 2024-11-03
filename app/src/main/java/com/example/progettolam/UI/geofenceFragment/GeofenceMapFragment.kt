@@ -234,7 +234,6 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
         existingGeofence[geofenceId] = Pair(newCircle, newMarker)
     }
 
-    // TODO : CAMBIARE IL GEOFENCE_ID DEVE ESSERE UNICO
     private fun addGeofence(latLng: LatLng, geofenceId: String) {
         // adding the new geofence to the list in the view model
         geofenceMapViewModel.addGeofenceInfo(GeofenceInfo(geofenceId, latLng.latitude, latLng.longitude, selectedColor, selectedRadius))

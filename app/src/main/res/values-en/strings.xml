@@ -49,5 +49,9 @@
     <string name="select_start_time">Select start time</string>
     <string name="select_end_time">Select end time</string>
     <string name="select_type_activity">Select type activity</string>
+    <string name="error_empty_fields">Fill all fields</string>
+    <string name="error_time_interval">Start and end time invalid</string>
+    <string name="error_date">Activity must be completed before this time</string>
+    <string name="add_old_activity_success">Activity added successfully</string>
 
 </resources>
