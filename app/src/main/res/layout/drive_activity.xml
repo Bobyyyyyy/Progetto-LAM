@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="@color/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <include
+            layout="@layout/recording_drive_stats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/padding_constraint_layout"
+            android:id="@+id/constraintLayout">
+
+        <fragment
+                android:id="@+id/map2"
+                android:name="com.example.progettolam.MapsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/pauseButton"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="6dp" />
+
+        <Button
+                android:text="@string/start_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/startButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/pauseButton"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/primary" />
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/endButton"
+                android:text="@string/end_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/pauseButton"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/primary" />
+
+        <Button
+                android:text="@string/pause_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/pauseButton"
+                app:layout_constraintEnd_toStartOf="@+id/endButton"
+                app:layout_constraintStart_toEndOf="@+id/startButton"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:backgroundTint="@color/primary" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
