@@ -38,6 +38,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.nio.channels.FileLock
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.Locale
 
@@ -183,10 +184,14 @@ class CalendarFragment: Fragment() {
 
         calendarView.monthScrollListener = object : MonthScrollListener {
             override fun invoke(p1: CalendarMonth) {
-                // TODO: METTERE LA SCRITTA IN ITALIANO O IN INGLESE in base alla lingua
-                // Listener per cambiare scritta di anno + mese
+                /*
                 val yearMonth =  p1.yearMonth.month.toString() + ", " + p1.yearMonth.year.toString()
                 monthView.text = yearMonth
+                activityViewModel.currentMonth = p1.yearMonth
+                 */
+                val formatter = DateTimeFormatter.ofPattern("MMMM yyyy", Locale.getDefault())
+                val yearMonth = p1.yearMonth.format(formatter)
+                monthView.text = yearMonth.toString().uppercase()
                 activityViewModel.currentMonth = p1.yearMonth
             }
         }
