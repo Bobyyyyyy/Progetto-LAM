@@ -246,15 +246,13 @@ class CalendarFragment: Fragment() {
 
     private fun handleOpenDetailActivity(id: String) {
         val resumeActivity = ResumeActivity()
-
         // Create a bundle to hold the id
         val bundle = Bundle()
         bundle.putString("idActivity", id)
-
         // Set the arguments for ResumeActivity
         resumeActivity.arguments = bundle
-
-        changeFragment(resumeActivity,  "resumeActivity")
+        // Using a different tag each time to avoid the use of a fragment which is already in the backstack but refers to a different activity
+        changeFragment(resumeActivity,  "resumeActivity_$id")
     }
 
 
