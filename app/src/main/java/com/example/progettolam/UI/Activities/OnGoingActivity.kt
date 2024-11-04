@@ -6,12 +6,15 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.ServiceConnection
+import android.content.SharedPreferences
+import android.os.Bundle
 import android.os.IBinder
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
 import com.example.progettolam.DB.ActivityRepository
 import com.example.progettolam.DB.ActivityViewModel
 import com.example.progettolam.DB.ActivityViewModelFactory
@@ -35,6 +38,8 @@ open class OnGoingActivity: AppCompatActivity() {
     protected var isStarted: Boolean = false
     protected var isPaused: Boolean = false
 
+    protected lateinit var storedName: String
+
 
     val activityViewModel by lazy {
         val factory = ActivityViewModelFactory(ActivityRepository(this.application))
@@ -51,6 +56,13 @@ open class OnGoingActivity: AppCompatActivity() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        var sharedPref: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+
+        var value = resources.getString(R.string.preferences_username_default)
+        storedName = sharedPref.getString(getString(R.string.preferences_username), value).toString()
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onStart() {
         super.onStart()

@@ -44,8 +44,8 @@ class ActivityRepository(app: Application) {
     }
 
 
-    fun getAllActivities(startDate: LocalDate?): LiveData<List<ActivityJoin>> {
-        return activityDao.getListOfActivities(startDate)
+    fun getAllActivities(startDate: LocalDate?, imported: Boolean): LiveData<List<ActivityJoin>> {
+        return activityDao.getListOfActivities(startDate, imported)
     }
 
     fun getAllStepsFromDay(date: LocalDate?): LiveData<Int?> {
@@ -76,9 +76,9 @@ class ActivityRepository(app: Application) {
         val baseActivities = activityDao.getAllBaseActivities()
 
         if(baseActivities.isNotEmpty()) {
-            csvBuilder.append("id,activityType,startTime,startDate,endTime,endDate\n")
+            csvBuilder.append("id,imported,author,activityType,startTime,startDate,endTime,endDate\n")
             baseActivities.forEach { activity ->
-                csvBuilder.append("${activity.id},${activity.activityType},${activity.startTime},${activity.startDate},${activity.endTime},${activity.endDate}")
+                csvBuilder.append("${activity.id},${activity.imported},${activity.author},${activity.activityType},${activity.startTime},${activity.startDate},${activity.endTime},${activity.endDate}")
                 csvBuilder.append("\n")
             }
             csvBuilder.append("\n")
@@ -124,7 +124,6 @@ class ActivityRepository(app: Application) {
         }
 
 
-
         val drivingActivities = activityDao.getAllDrivingActivities()
 
 
@@ -164,11 +163,13 @@ class ActivityRepository(app: Application) {
                     // Assumendo che i campi siano nell'ordine corretto
                     val activity = BaseActivity(
                         id = parts[0].toLong(),
-                        activityType = parts[1].toActivityType(),
-                        startTime = LocalTime.parse(parts[2]),
-                        startDate = LocalDate.parse(parts[3]),
-                        endTime = LocalTime.parse(parts[4]),
-                        endDate = LocalDate.parse(parts[5])
+                        imported = true,
+                        author = parts[2],
+                        activityType = parts[2].toActivityType(),
+                        startTime = LocalTime.parse(parts[3]),
+                        startDate = LocalDate.parse(parts[4]),
+                        endTime = LocalTime.parse(parts[5]),
+                        endDate = LocalDate.parse(parts[6])
                     )
                     activityDao.insertBaseActivity(activity) // Inserisci nel database
                     line = reader.readLine()

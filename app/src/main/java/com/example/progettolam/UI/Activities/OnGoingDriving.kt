@@ -49,6 +49,8 @@ class OnGoingDriving: OnGoingActivity() {
         activityViewModel.insertDrivingActivity(
             BaseActivity(
                 null,
+                false,
+                storedName,
                 viewModel.getActivityType(),
                 viewModel.startTime,
                 viewModel.startDate,

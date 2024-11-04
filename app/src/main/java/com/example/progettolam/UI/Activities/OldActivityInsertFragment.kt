@@ -2,6 +2,7 @@ package com.example.progettolam.UI.Activities
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.SharedPreferences
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
 import com.example.progettolam.DB.ActivityRepository
 import com.example.progettolam.DB.ActivityType
 import com.example.progettolam.DB.ActivityViewModel
@@ -46,6 +48,7 @@ class OldActivityInsertFragment: Fragment() {
     private var mDay: Int = 0
     private var mHour: Int = 0
     private var mMinute: Int = 0
+    private lateinit var storedName: String
 
     private val activityViewModel by lazy {
         val factory = ActivityViewModelFactory(ActivityRepository(requireActivity().application))
@@ -62,6 +65,11 @@ class OldActivityInsertFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        var sharedPref: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireActivity())
+
+        var value = resources.getString(R.string.preferences_username_default)
+        storedName = sharedPref.getString(getString(R.string.preferences_username), value).toString()
 
         btnStartTimePicker = view.findViewById(R.id.selectStartTimeButton)
         btnEndTimePicker = view.findViewById(R.id.selectEndTimeButton)
@@ -241,6 +249,8 @@ class OldActivityInsertFragment: Fragment() {
                 activityViewModel.insertWalkingActivity(
                     BaseActivity(
                         null,
+                        false,
+                        storedName,
                         ActivityType.WALKING,
                         startTime,
                         date,
@@ -255,6 +265,8 @@ class OldActivityInsertFragment: Fragment() {
                 activityViewModel.insertRunningActivity(
                     BaseActivity(
                         null,
+                        false,
+                        storedName,
                         ActivityType.RUNNING,
                         startTime,
                         date,
@@ -269,6 +281,8 @@ class OldActivityInsertFragment: Fragment() {
                 activityViewModel.insertSittingActivity(
                     BaseActivity(
                         null,
+                        false,
+                        storedName,
                         ActivityType.STILL,
                         startTime,
                         date,
@@ -283,6 +297,8 @@ class OldActivityInsertFragment: Fragment() {
                 activityViewModel.insertDrivingActivity(
                     BaseActivity(
                         null,
+                        false,
+                        storedName,
                         ActivityType.DRIVING,
                         startTime,
                         date,

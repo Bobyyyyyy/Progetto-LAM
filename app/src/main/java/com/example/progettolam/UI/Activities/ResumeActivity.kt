@@ -127,7 +127,7 @@ class ResumeActivity(): Fragment() {
             ActivityType.WALKING -> {
                 if (infoActivity?.walkingActivity?.avgSpeed != null) {
                     valueAvSpeed.text = getFormattedAvgSpeed(infoActivity?.walkingActivity?.avgSpeed!!)
-                    getCalories(ActivityType.WALKING, duration, infoActivity?.runningActivity?.avgSpeed!!)
+                    getCalories(ActivityType.WALKING, duration, infoActivity?.walkingActivity?.avgSpeed!!)
                 }
                 if (infoActivity?.walkingActivity?.steps != null) {
                     valueTotalSteps.text = infoActivity?.walkingActivity?.steps.toString()

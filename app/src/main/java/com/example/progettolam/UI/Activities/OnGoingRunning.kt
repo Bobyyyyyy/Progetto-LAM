@@ -136,6 +136,8 @@ class OnGoingRunning : OnGoingActivity() {
         activityViewModel.insertRunningActivity(
             BaseActivity(
                 null,
+                false,
+                storedName,
                 viewModel.getActivityType(),
                 viewModel.startTime,
                 viewModel.startDate,

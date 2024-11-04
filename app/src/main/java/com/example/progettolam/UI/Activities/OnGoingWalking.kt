@@ -162,6 +162,8 @@ class OnGoingWalking : OnGoingActivity() {
         activityViewModel.insertWalkingActivity(
             BaseActivity(
                 null,
+                false,
+                storedName,
                 viewModel.getActivityType(),
                 viewModel.startTime,
                 viewModel.startDate,
