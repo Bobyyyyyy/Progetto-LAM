@@ -299,7 +299,7 @@ class OldActivityInsertFragment: Fragment() {
         if (areFieldsCorrect()) {
             saveNewActivity()
             Toast.makeText(requireContext(), ContextCompat.getString(requireContext(), R.string.add_old_activity_success), Toast.LENGTH_SHORT).show();
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+            requireActivity().supportFragmentManager.popBackStackImmediate()
         }
     }
 
