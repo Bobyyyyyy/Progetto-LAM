@@ -59,6 +59,9 @@
     <string name="duration_activity">Total time</string>
     <string name="total_steps">Steps</string>
     <string name="total_calories">Total calories</string>
+    <string name="total_distance">Total distance</string>
+    <string name="user">User</string>
+
     <string name="open_details">Open</string>
 
     <string name="name_update">Name updated</string>
@@ -66,4 +69,13 @@
     <string name="success_add_height">Height inserted successfully</string>
     <string name="error_add_weight">Error: weight inserted invalid</string>
     <string name="error_add_height">Error: height inserted invalid</string>
+
+    <string name="monday">Mon</string>
+    <string name="tuesday">Tue</string>
+    <string name="wednesday">Wed</string>
+    <string name="thursday">Thu</string>
+    <string name="friday">Fri</string>
+    <string name="saturday">Sat</string>
+    <string name="sunday">Sun</string>
+
 </resources>

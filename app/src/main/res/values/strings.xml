@@ -96,6 +96,9 @@
     <string name="duration_activity">Durata totale</string>
     <string name="total_steps">Passi</string>
     <string name="total_calories">Calorie totali</string>
+    <string name="total_distance">Distanza totale</string>
+    <string name="user">Utente</string>
+
     <string name="open_details">Apri</string>
 
     <string name="name_update">Nome aggiornato</string>
@@ -103,4 +106,12 @@
     <string name="success_add_height">Altezza inserita correttamente</string>
     <string name="error_add_weight">Errore: peso inserito non valido</string>
     <string name="error_add_height">Errore: altezza inserita non valida</string>
+
+    <string name="monday">Lun</string>
+    <string name="tuesday">Mar</string>
+    <string name="wednesday">Mer</string>
+    <string name="thursday">Gio</string>
+    <string name="friday">Ven</string>
+    <string name="saturday">San</string>
+    <string name="sunday">Dom</string>
 </resources>

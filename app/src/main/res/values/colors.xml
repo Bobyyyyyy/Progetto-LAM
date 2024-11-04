@@ -5,6 +5,7 @@
     <color name="gray_light">#F0F0F3</color>
     <color name="gray_dark">#616166</color>
     <color name="circle_background_default">#FF0000</color>
+    <color name="background_chart">#f8f8fc</color>
 
     <color name="current_data">#FF0000</color>
 

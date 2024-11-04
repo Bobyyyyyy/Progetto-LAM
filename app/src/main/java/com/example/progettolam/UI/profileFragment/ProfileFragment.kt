@@ -11,14 +11,14 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
+import com.example.progettolam.DB.ActivityDao
 import com.example.progettolam.DB.ActivityRepository
+import com.example.progettolam.DB.ActivityType
 import com.example.progettolam.DB.ActivityViewModel
 import com.example.progettolam.DB.ActivityViewModelFactory
 import com.example.progettolam.R
 import com.example.progettolam.UI.preferencesActivity.PreferencesFragment
-import com.example.progettolam.services.LocationWorkerScheduler
 import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.YAxis
@@ -66,11 +66,9 @@ class ProfileFragment: Fragment() {
 
         textView = view.findViewById(R.id.username)
         settings = view.findViewById(R.id.settings)
-        //todaySteps = view.findViewById(R.id.todaySteps)
 
         barChart = view.findViewById(R.id.chart2)
         pieChart = view.findViewById(R.id.chart3)
-
 
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(requireActivity())
 
@@ -88,27 +86,21 @@ class ProfileFragment: Fragment() {
             textView.text = it
         }
 
-
-
         activityViewModel.getCurrentWeekActivities(LocalDate.now()).observe(viewLifecycleOwner) {
             for (data in it) {
                 Log.i("Attività", data.type.toString() + " " + data.number.toString())
             }
-
             val pieData = createPieCharDate(it)
 
             pieChart.setData(pieData)
             pieChart.description = null
             pieChart.animateXY(1000, 1500)
             pieChart.invalidate()
-
         }
 
         activityViewModel.getCurrentWeekSteps(LocalDate.now()).observe(viewLifecycleOwner) {
-
             if(it != null) {
-
-                val barData = createBarCharDate("Steps", Color.MAGENTA,it)
+                val barData = createBarCharDate("Steps", it)
 
                 setupChart(barChart)
 
@@ -116,21 +108,15 @@ class ProfileFragment: Fragment() {
                 barChart.animateY(1000)
                 barChart.setFitBars(true)
                 barChart.invalidate()
-
-
             }
-
         }
-
         settings.setOnClickListener{
             changeFragment(PreferencesFragment(), R.id.settings.toString())
         }
-
     }
 
 
     private fun createLineCharDate(label: String, color: Int, dataObjects: Array<StepsData>): LineData {
-
         // Create an empty list of Entry objects
         val entries = mutableListOf<Entry>()
 
@@ -162,18 +148,17 @@ class ProfileFragment: Fragment() {
         return LineData(dataSet)
     }
 
-
     private fun setupChart(chart: BarChart) {
         chart.xAxis.valueFormatter = object : ValueFormatter() {
             override fun getAxisLabel(value: Float, axis: AxisBase?): String {
                 return when (value.toInt()) {
-                    0 -> "Lun"
-                    1 -> "Mar"
-                    2 -> "Mer"
-                    3 -> "Gio"
-                    4 -> "Ven"
-                    5 -> "Sab"
-                    6 -> "Dom"
+                    0 -> getString(R.string.monday)
+                    1 -> getString(R.string.tuesday)
+                    2 -> getString(R.string.wednesday)
+                    3 -> getString(R.string.thursday)
+                    4 -> getString(R.string.friday)
+                    5 -> getString(R.string.saturday)
+                    6 -> getString(R.string.sunday)
                     else -> ""
                 }
             }
@@ -189,9 +174,7 @@ class ProfileFragment: Fragment() {
         chart.invalidate() // Refresh the chart
     }
 
-
-    private fun createBarCharDate(label: String, color: Int, dataObjects: Array<StepsData>): BarData {
-
+    private fun createBarCharDate(label: String, dataObjects: Array<StepsData>): BarData {
         val entries: MutableList<BarEntry> = ArrayList()
 
         for (data in dataObjects) {
@@ -212,43 +195,40 @@ class ProfileFragment: Fragment() {
         val set = BarDataSet(entries, label)
         val data = BarData(set)
         data.barWidth = 0.7f
-
         return data
     }
 
+    private fun getFormattedTypeActivity(type: ActivityType): String {
+        val formattedType = when (type) {
+            ActivityType.WALKING -> getString(R.string.walk_tag)
+            ActivityType.RUNNING -> getString(R.string.run_tag)
+            ActivityType.DRIVING -> getString(R.string.drive_tag)
+            ActivityType.STILL -> getString(R.string.chilling_tag)
+        }
+        return formattedType
+    }
+
     private fun createPieCharDate(data: Array<ActivitiesGraphData>): PieData {
-
-
         val entries: MutableList<PieEntry> = ArrayList()
-
         val sumActivities = data.sumOf { it.number }
 
-
-
         for ( entry in data ) {
-
-            entries.add(PieEntry(((entry.number.toFloat() / sumActivities.toFloat()) * 100), entry.type))
+            entries.add(PieEntry(((entry.number.toFloat() / sumActivities.toFloat()) * 100), getFormattedTypeActivity(entry.type)))
         }
-        val set = PieDataSet(entries, "Activity Types")
-
-        set.colors = arrayListOf(Color.GREEN, Color.YELLOW, Color.WHITE, Color.GRAY)
-
-
+        val set = PieDataSet(entries, "")
+        set.colors = arrayListOf(Color.GREEN, Color.RED, Color.BLUE, Color.MAGENTA)
+        set.valueTextSize = 15f
+        set.valueTextColor = Color.WHITE
         return PieData(set)
     }
 
 
     private fun changeFragment(fragment: Fragment, tag: String) {
-
         val currentFragment = parentFragmentManager.findFragmentById(R.id.fragmentContainerView)
-
         if (currentFragment != null && currentFragment.tag == tag) {
             return
         }
-
-
         val storedFragment = parentFragmentManager.findFragmentByTag(tag)
-
         if ( storedFragment != null ) {
             parentFragmentManager.beginTransaction().run {
                 if (currentFragment != null) {
@@ -257,10 +237,7 @@ class ProfileFragment: Fragment() {
                 attach(storedFragment)
                 commit()
             }
-        }
-
-        else {
-
+        } else {
             parentFragmentManager.beginTransaction().run {
                 setReorderingAllowed(true)
                 if (currentFragment != null) {

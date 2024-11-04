@@ -30,6 +30,8 @@ class ResumeActivity(): Fragment() {
     private lateinit var valueTotalCalories: TextView
     private lateinit var valueTotalSteps: TextView
     private lateinit var valueTotalTime: TextView
+    private lateinit var valueTotalDistance: TextView
+    private lateinit var valueUser: TextView
     private var infoActivity: ActivityJoin? = null
 
     private val activityViewModel by lazy {
@@ -56,6 +58,8 @@ class ResumeActivity(): Fragment() {
         valueTotalCalories = view.findViewById(R.id.totalCaloriesValueTextView)
         valueTotalSteps = view.findViewById(R.id.totalStepsValueTextView)
         valueTotalTime = view.findViewById(R.id.totalTimeValueTextView)
+        valueTotalDistance = view.findViewById(R.id.valueTotalDistanceTextView)
+        valueUser = view.findViewById(R.id.valueUserTextView)
 
         val timeIntervalFormatter = DateTimeFormatter.ofPattern("H:mm")
         val dateFormatter = DateTimeFormatter.ofPattern("EEEE d MMMM yyyy", Locale.getDefault())
@@ -127,7 +131,8 @@ class ResumeActivity(): Fragment() {
             ActivityType.WALKING -> {
                 if (infoActivity?.walkingActivity?.avgSpeed != null) {
                     valueAvSpeed.text = getFormattedAvgSpeed(infoActivity?.walkingActivity?.avgSpeed!!)
-                    getCalories(ActivityType.WALKING, duration, infoActivity?.runningActivity?.avgSpeed!!)
+                    valueTotalDistance.text = getFormattedDistance(getDistanceInKm(infoActivity?.walkingActivity?.avgSpeed!!, duration))
+                    getCalories(ActivityType.WALKING, duration, infoActivity?.walkingActivity?.avgSpeed!!)
                 }
                 if (infoActivity?.walkingActivity?.steps != null) {
                     valueTotalSteps.text = infoActivity?.walkingActivity?.steps.toString()
@@ -136,6 +141,7 @@ class ResumeActivity(): Fragment() {
             ActivityType.RUNNING -> {
                 if (infoActivity?.runningActivity?.avgSpeed != null) {
                     valueAvSpeed.text = getFormattedAvgSpeed(infoActivity?.runningActivity?.avgSpeed!!)
+                    valueTotalDistance.text = getFormattedDistance(getDistanceInKm(infoActivity?.runningActivity?.avgSpeed!!, duration))
                     getCalories(ActivityType.RUNNING, duration, infoActivity?.runningActivity?.avgSpeed!!)
                 }
                 if (infoActivity?.runningActivity?.steps != null) {
@@ -144,11 +150,20 @@ class ResumeActivity(): Fragment() {
             }
             ActivityType.DRIVING -> {
                 if (infoActivity?.drivingActivity?.avgSpeed != null) {
+                    valueTotalDistance.text = getFormattedDistance(getDistanceInKm(infoActivity?.drivingActivity?.avgSpeed!!, duration))
                     valueAvSpeed.text = getFormattedAvgSpeed(infoActivity?.drivingActivity?.avgSpeed!!)
                 }
             }
             else -> {}
         }
+    }
+
+    private fun getFormattedDistance(distance: Double): String {
+        return "${"%.3f".format(distance)} km/h"
+    }
+
+    private fun getDistanceInKm(avgSpeed: Float, duration: Duration): Double {
+        return (avgSpeed.toDouble())*duration.toHours()
     }
 
     private fun getFormattedAvgSpeed(avgSpeed: Float): String {
@@ -166,7 +181,8 @@ class ResumeActivity(): Fragment() {
 
     private fun calculateCaloriesBurnt(type: ActivityType, weight: Int, duration: Duration, avgSpeed: Float) : Int {
         val coefficient = if (type == ActivityType.RUNNING) { 0.9 } else { 0.48 }
-        val distance : Double = (avgSpeed.toDouble())*duration.toHours()
+        // Distance in km
+        val distance : Double = getDistanceInKm(avgSpeed, duration)
         val calories = coefficient*distance*weight.toDouble()
         return calories.toInt()
     }

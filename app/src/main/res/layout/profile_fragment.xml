@@ -2,10 +2,10 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:background="@color/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        >
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -134,32 +134,59 @@
 
         </LinearLayout>
 
-        <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/chart2"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/chart_height"
-                android:layout_margin="@dimen/margin_chart"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-                android:layout_marginTop="50dp">
-
-        </com.github.mikephil.charting.charts.BarChart>
-
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintTop_toBottomOf="@+id/chart2">
+                android:layout_height="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+                android:paddingBottom="64dp"
+                >
 
-            <com.github.mikephil.charting.charts.PieChart
-                    android:id="@+id/chart3"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/chart_height"
-                    android:layout_margin="@dimen/margin_chart"
+            <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cardView4"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:cardCornerRadius="@dimen/radius_card_view"
+                    android:padding="@dimen/padding_linear_layout"
+                    android:layout_margin="@dimen/margin_card_view_chose_activity"
+                    android:backgroundTint="@color/background_chart"
+                    >
+
+                <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/chart3"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/chart_height"
+                        >
+
+                </com.github.mikephil.charting.charts.PieChart>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/radius_card_view"
+                    android:padding="@dimen/padding_linear_layout"
+                    android:layout_margin="@dimen/margin_card_view_chose_activity"
+                    android:backgroundTint="@color/background_chart"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/cardView4">
+
+                <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/chart2"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/chart_height"
+                        android:layout_margin="@dimen/margin_chart"
+                        android:layout_marginTop="16dp">
+
+                </com.github.mikephil.charting.charts.BarChart>
+            </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
