@@ -67,6 +67,7 @@ class ResumeActivity(): Fragment() {
         activityViewModel.getInfoActivityByID(idActivity?.toLong()).observe(requireActivity()) {
             infoActivity = it
 
+            valueUser.text = infoActivity?.baseActivity?.author
             typeActivity.text = getFormattedTypeActivity(infoActivity?.baseActivity?.activityType!!)
 
             val startTime = infoActivity?.baseActivity?.startTime
