@@ -31,7 +31,7 @@ class StepCounter : SensorEventListener, Service(){
         fun getService(): StepCounter {return this@StepCounter}
     }
 
-    private var totalSteps = 0f
+    private var totalSteps = -1f
 
     private val binder = StepBinder()
 

@@ -43,7 +43,7 @@ class TimerService: Service() {
         const val STOPWATCH_STATUS = "STOPWATCH_STATUS"
 
     }
-    private var timeElapsed: Int = 0
+    private var timeElapsed: Int = -1
     var isStopWatchRunning = false
     private lateinit var notificationManagerCompat: NotificationManagerCompat
 

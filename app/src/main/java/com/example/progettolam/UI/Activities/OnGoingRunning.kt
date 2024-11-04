@@ -48,7 +48,9 @@ class OnGoingRunning : OnGoingActivity() {
             viewModel.endTime = LocalTime.now()
             endActivity()
 
-            registerActivity()
+            if(timeElapsed != 0) {
+                registerActivity()
+            }
             finish()
         }
 

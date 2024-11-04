@@ -37,6 +37,7 @@ open class OnGoingActivity: AppCompatActivity() {
     protected var isBound: Boolean = false
     protected var isStarted: Boolean = false
     protected var isPaused: Boolean = false
+    protected var timeElapsed: Int = -1
 
     protected lateinit var storedName: String
 
@@ -208,6 +209,7 @@ open class OnGoingActivity: AppCompatActivity() {
         }
 
         viewModel.timeElapsed.observe(this) {
+            timeElapsed = it
             updateStopwatchValue(it)
         }
     }

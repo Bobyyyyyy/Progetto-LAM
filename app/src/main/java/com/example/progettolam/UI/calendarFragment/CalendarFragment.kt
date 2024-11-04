@@ -1,6 +1,7 @@
 package com.example.progettolam.UI.calendarFragment
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -44,10 +45,10 @@ class CalendarFragment: Fragment() {
     private lateinit var recyclerActivity: RecyclerView
     private lateinit var monthView: TextView
     private lateinit var addActivityButton: FloatingActionButton
-
+    private lateinit var importedButton: FloatingActionButton
     private lateinit var createFileLauncher: ActivityResultLauncher<String>
     private lateinit var getFileLauncher: ActivityResultLauncher<String>
-
+    private var imported = false
 
 
 
@@ -100,6 +101,7 @@ class CalendarFragment: Fragment() {
         }
 
 
+        importedButton = view.findViewById(R.id.importedButton)
         calendarView = view.findViewById(R.id.calendarView)
         monthView = view.findViewById(R.id.monthView)
         addActivityButton = view.findViewById(R.id.floatingActionButton)
@@ -117,6 +119,15 @@ class CalendarFragment: Fragment() {
         activityViewModel.selectedDate?.let {
             calendarView.notifyDateChanged(it)
 
+        }
+
+        activityViewModel.imported.observe(requireActivity()) {
+            imported = it
+            calendarView.notifyCalendarChanged()
+        }
+
+        importedButton.setOnClickListener {
+            activityViewModel.setImported(!imported)
         }
 
         calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
@@ -142,7 +153,7 @@ class CalendarFragment: Fragment() {
 
                     if (data.date == activityViewModel.selectedDate) {
 
-                        activityViewModel.getAllActivities(activityViewModel.selectedDate).observe(requireActivity()) { newActivities ->
+                        activityViewModel.getAllActivities(activityViewModel.selectedDate, imported).observe(requireActivity()) { newActivities ->
                             activityAdapter.apply {
                                 activities = newActivities
                                 notifyDataSetChanged()
@@ -198,7 +209,7 @@ class CalendarFragment: Fragment() {
             changeFragment(OldActivityInsertFragment(), NEW_ACTIVITY_PAGE_INSERT)
         }
 
-       // showSaveFileDialog()
+       //showSaveFileDialog()
        // getFileLauncher.launch("*/*")
 
     }
