@@ -53,7 +53,18 @@ class PeriodicalNotificationWorker(context: Context, param: WorkerParameters) :
         val lastActivity  = activityDao.getLastActivity()
 
 
-        if(lastActivity.baseActivity.endTime?.isBefore(LocalTime.now().minusMinutes(15)) == true) {
+
+        if(lastActivity == null ) {
+            val notification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
+                .setContentTitle("Non hai registrato ancora attività")
+                .setContentText("Registra la tua prima attività")
+                .setSmallIcon(R.drawable.baseline_person_24)
+                .build()
+
+            notificationManager.notify(1001, notification)
+        }
+
+        else if(lastActivity.baseActivity.endTime?.isBefore(LocalTime.now().minusMinutes(15)) == true ) {
             val notification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
                 .setContentTitle("Sei fermo da un po'!")
                 .setContentText("Registra delle attività")
@@ -62,6 +73,9 @@ class PeriodicalNotificationWorker(context: Context, param: WorkerParameters) :
 
             notificationManager.notify(1001, notification)
         }
+
+
+
 
 
         return Result.success()

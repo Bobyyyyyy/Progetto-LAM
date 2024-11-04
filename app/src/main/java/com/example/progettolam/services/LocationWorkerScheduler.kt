@@ -8,8 +8,7 @@ import java.util.concurrent.TimeUnit
 
 fun LocationWorkerScheduler(context: Context, start: Boolean) {
 
-
-    val workRequest = OneTimeWorkRequestBuilder<PeriodicalNotificationWorker>()
+    val workRequest = OneTimeWorkRequestBuilder<LocationWorker>()
         .build()
     WorkManager.getInstance(context).enqueue(workRequest)
 

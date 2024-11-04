@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import java.util.concurrent.TimeUnit
@@ -20,8 +21,10 @@ fun PeriodicalNotificationScheduler(context: Context, intervalMinutes: Long) {
 
     // Programma il worker
     WorkManager.getInstance(context).enqueueUniquePeriodicWork(
-        LocationWorker.workName,
+        PeriodicalNotificationWorker.workName,
         ExistingPeriodicWorkPolicy.KEEP,
         workRequest
     )
+
+
 }

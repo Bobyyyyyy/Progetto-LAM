@@ -87,7 +87,7 @@ ORDER BY steps_per_day.endDate ASC;
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertSittingActivity(activity: SittingActivity)
 
-    @Query("SELECT * FROM base_activity_table")
+    @Query("SELECT * FROM base_activity_table WHERE imported = false")
     fun getAllBaseActivities(): List<BaseActivity>
 
     @Query("SELECT * FROM walkingactivity_table")
@@ -109,5 +109,5 @@ ORDER BY steps_per_day.endDate ASC;
 
     @Transaction
     @Query("SELECT * FROM base_activity_table WHERE imported = false ORDER BY id DESC LIMIT 1")
-    fun getLastActivity(): ActivityJoin
+    fun getLastActivity(): ActivityJoin?
 }
