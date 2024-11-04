@@ -102,7 +102,7 @@ class OldActivityInsertFragment: Fragment() {
             handleSaveOldActivity()
         }
         cancelBtn.setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+            requireActivity().supportFragmentManager.popBackStackImmediate()
         }
     }
 

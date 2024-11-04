@@ -6,19 +6,6 @@
         android:layout_height="match_parent">
 
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:backgroundTint="@color/primary"
-            app:srcCompat="@drawable/baseline_person_24"
-            android:tint="@color/white"
-            android:id="@+id/importedButton"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="100dp"
-            android:layout_marginBottom="32dp" />
-
     <TextView
             android:textColor="@color/text"
             android:layout_width="match_parent"
@@ -66,11 +53,12 @@
             android:id="@+id/recyclerActivity"
             android:layout_margin="@dimen/margin_card_view_chose_activity"
             app:layout_constraintTop_toBottomOf="@+id/cardView2"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/importedButton" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <Button
+            android:text="aggiungi attivita"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -78,10 +66,24 @@
             app:srcCompat="@drawable/baseline_add_24"
             android:tint="@color/white"
             android:id="@+id/floatingActionButton"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="32dp" />
+            app:layout_constraintStart_toEndOf="@+id/importedButton"
+            app:layout_constraintTop_toTopOf="@+id/importedButton"
+            app:layout_constraintBottom_toBottomOf="@+id/importedButton" />
+
+    <Button
+            android:text="show other activities"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:backgroundTint="@color/primary"
+            app:srcCompat="@drawable/baseline_person_24"
+            android:tint="@color/white"
+            android:id="@+id/importedButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/floatingActionButton"
+            android:layout_marginBottom="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

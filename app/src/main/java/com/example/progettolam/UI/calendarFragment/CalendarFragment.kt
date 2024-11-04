@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
@@ -36,8 +37,10 @@ class CalendarFragment: Fragment() {
     private lateinit var calendarView: com.kizitonwose.calendar.view.CalendarView
     private lateinit var recyclerActivity: RecyclerView
     private lateinit var monthView: TextView
-    private lateinit var addActivityButton: FloatingActionButton
-    private lateinit var importedButton: FloatingActionButton
+    //private lateinit var addActivityButton: FloatingActionButton
+    //private lateinit var importedButton: FloatingActionButton
+    private lateinit var addActivityButton: Button
+    private lateinit var importedButton: Button
     private var imported = false
 
     val activityViewModel by lazy {
@@ -54,7 +57,7 @@ class CalendarFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.calendar_fragment, container, false)
+        return inflater.inflate(R.layout.prova, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
