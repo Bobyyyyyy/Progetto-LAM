@@ -41,6 +41,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     private val binding get() = _binding!!
     private var currentSpeed = 0.0f
     private var previousPosition: LatLng = LatLng(0.0, 0.0)
+    private var isStarted = false
 
     companion object {
         const val SPEED_THRESHOLD = 4.0f
@@ -57,7 +58,12 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         viewModel = ViewModelProvider(requireActivity())[OnGoingViewModel::class.java]
+
+        viewModel.isStarted.observe(requireActivity()) {
+            isStarted = it
+        }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = childFragmentManager
@@ -77,7 +83,9 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     if (roundCoordinates(location.latitude, location.longitude) != roundCoordinates(previousPosition.latitude,previousPosition.longitude)) {
                         if (speed >= SPEED_THRESHOLD && speed != currentSpeed) {
                             currentSpeed = speed
-                            viewModel.addSpeed(speed)
+                            if(isStarted) {
+                                viewModel.addSpeed(currentSpeed)
+                            }
                         }
 
                         mMap.animateCamera(
@@ -89,7 +97,9 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     else {
                         if (currentSpeed != 0f) {
                             currentSpeed = 0f
-                            viewModel.addSpeed(currentSpeed)
+                            if(isStarted) {
+                                viewModel.addSpeed(currentSpeed)
+                            }
                         }
                     }
                 }

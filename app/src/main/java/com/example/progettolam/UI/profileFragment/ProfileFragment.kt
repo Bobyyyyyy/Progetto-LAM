@@ -174,13 +174,13 @@ class ProfileFragment: Fragment() {
         chart.xAxis.valueFormatter = object : ValueFormatter() {
             override fun getAxisLabel(value: Float, axis: AxisBase?): String {
                 return when (value.toInt()) {
-                    0 -> "Dom"
-                    1 -> "Lun"
-                    2 -> "Mar"
-                    3 -> "Mer"
-                    4 -> "Gio"
-                    5 -> "Ven"
-                    6 -> "Sab"
+                    0 -> "Lun"
+                    1 -> "Mar"
+                    2 -> "Mer"
+                    3 -> "Gio"
+                    4 -> "Ven"
+                    5 -> "Sab"
+                    6 -> "Dom"
                     else -> ""
                 }
             }
@@ -196,8 +196,6 @@ class ProfileFragment: Fragment() {
 
 
     private fun createBarCharDate(label: String, color: Int, dataObjects: Array<StepsData>): BarData {
-
-
 
         val entries: MutableList<BarEntry> = ArrayList()
 

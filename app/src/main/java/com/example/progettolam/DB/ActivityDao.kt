@@ -34,23 +34,29 @@ interface ActivityDao {
     @Transaction
     @Query("""
 SELECT 
-    (strftime('%w', steps_per_day.endDate)) AS day_of_week, 
+    (CASE 
+        WHEN strftime('%w', steps_per_day.endDate) = '0' THEN 6
+        ELSE CAST(strftime('%w', steps_per_day.endDate) AS INTEGER) - 1 
+    END) AS day_of_week, 
     SUM(steps_per_day.tot_steps) AS daily_steps
 FROM (
     SELECT endDate, SUM(steps) AS tot_steps
     FROM base_activity_table
     JOIN WalkingActivity_table ON id = activityId
-    WHERE endDate >= DATE(:today, 'weekday 0') AND endDate <= DATE(:today, '+6 days')
+    WHERE endDate >= DATE(:today, '-6 days', 'weekday 0') 
+      AND endDate <= DATE(:today, 'weekday 6')
     GROUP BY endDate
     UNION ALL
     SELECT endDate, SUM(steps) AS tot_steps
     FROM base_activity_table
     JOIN RunningActivity_table ON id = activityId
-    WHERE endDate >= DATE(:today, 'weekday 0') AND endDate <= DATE(:today, '+6 days')
+    WHERE endDate >= DATE(:today, '-6 days', 'weekday 0') 
+      AND endDate <= DATE(:today, 'weekday 6')
     GROUP BY endDate
 ) AS steps_per_day
 GROUP BY steps_per_day.endDate
-ORDER BY steps_per_day.endDate ASC
+ORDER BY steps_per_day.endDate ASC;
+
 """)
     fun getCurrentWeekSteps(today: LocalDate?) : LiveData<Array<StepsData>>
 
@@ -60,7 +66,7 @@ ORDER BY steps_per_day.endDate ASC
 @Query("""
     SELECT activityType as type, COUNT(*) AS number
     FROM base_activity_table
-     WHERE endDate >= DATE(:today, 'weekday 0') AND endDate <= DATE(:today, '+6 days')
+     WHERE endDate >= DATE(:today, '-6 days', 'weekday 0') AND endDate <= DATE(:today, 'weekday 6')
     GROUP BY activityType;
 """)
     fun getCurrentWeekActivities(today: LocalDate?): LiveData<Array<ActivitiesGraphData>>

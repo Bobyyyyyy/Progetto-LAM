@@ -32,6 +32,9 @@ open class OnGoingActivity: AppCompatActivity() {
     protected lateinit var endButton: Button
     protected lateinit var viewModel: OnGoingViewModel
     protected var isBound: Boolean = false
+    protected var isStarted: Boolean = false
+    protected var isPaused: Boolean = false
+
 
     val activityViewModel by lazy {
         val factory = ActivityViewModelFactory(ActivityRepository(this.application))
@@ -63,7 +66,6 @@ open class OnGoingActivity: AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-     //   getTimerStatus()
         registerTimeReceiver()
     }
 
@@ -99,10 +101,6 @@ open class OnGoingActivity: AppCompatActivity() {
     protected open fun endActivity() {
         stopActivity()
         timerService.deleteTimer()
-    }
-
-    private fun getTimerStatus() {
-
     }
 
     private fun updateStopwatchValue(timeElapsed: Int) {
@@ -149,18 +147,49 @@ open class OnGoingActivity: AppCompatActivity() {
     }
 
     protected fun setupListeners() {
+
+        viewModel.isStarted.observe(this) {
+            isStarted = it
+
+            if (it == false) {
+                startButton.visibility = View.VISIBLE
+                pauseButton.visibility = View.INVISIBLE
+            }
+
+            else {
+                startButton.visibility = View.INVISIBLE
+                endButton.visibility = View.VISIBLE
+                pauseButton.visibility = View.VISIBLE
+            }
+        }
+
+        viewModel.isPaused.observe(this) {
+            isPaused = it
+
+            if(it == true) {
+                endButton.visibility = View.VISIBLE
+            }
+        }
+
         startButton.setOnClickListener {
-            viewModel.startTime = LocalTime.now()
-            viewModel.startDate = LocalDate.now()
-            startActivity()
-            startButton.visibility = View.INVISIBLE
+            if(!isStarted) {
+                if(!isPaused) {
+                    viewModel.startTime = LocalTime.now()
+                    viewModel.startDate = LocalDate.now()
+                }
+                viewModel.setStarted(true)
+                startActivity()
+            }
+
         }
 
         pauseButton.setOnClickListener {
-            stopActivity()
-            startButton.visibility = View.VISIBLE
+            if(isStarted) {
+                stopActivity()
+                viewModel.setPaused(true)
+                viewModel.setStarted(false)
+            }
         }
-
 
         viewModel.isBound.observe(this) {
             isBound = it

@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.progettolam.DB.ActivityString
 import com.example.progettolam.DB.ActivityType
-import com.example.progettolam.R
 
 class OnGoingPlaceholder: AppCompatActivity() {
 
@@ -29,9 +28,17 @@ class OnGoingPlaceholder: AppCompatActivity() {
             }
 
             ActivityType.DRIVING.toString() -> {
+
+                val intent = Intent(this, OnGoingDriving::class.java)
+
+                startActivity(intent)
             }
 
             ActivityType.STILL.toString() -> {
+
+                val intent = Intent(this, OnGoingResting::class.java)
+
+                startActivity(intent)
             }
 
         }
