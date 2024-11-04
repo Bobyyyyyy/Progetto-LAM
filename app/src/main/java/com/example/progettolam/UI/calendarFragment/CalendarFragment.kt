@@ -1,10 +1,8 @@
 package com.example.progettolam.UI.calendarFragment
 
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +13,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.progettolam.DB.ActivityRepository
@@ -36,7 +33,6 @@ import com.kizitonwose.calendar.view.MonthScrollListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.nio.channels.FileLock
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
@@ -146,7 +142,7 @@ class CalendarFragment: Fragment() {
 
                     if (data.date == activityViewModel.selectedDate) {
 
-                        activityViewModel.getAllActivites(activityViewModel.selectedDate).observe(requireActivity()) { newActivities ->
+                        activityViewModel.getAllActivities(activityViewModel.selectedDate).observe(requireActivity()) { newActivities ->
                             activityAdapter.apply {
                                 activities = newActivities
                                 notifyDataSetChanged()

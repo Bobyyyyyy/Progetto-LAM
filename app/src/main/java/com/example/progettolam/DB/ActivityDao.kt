@@ -15,8 +15,8 @@ interface ActivityDao {
 
 
     @Transaction
-    @Query("SELECT * FROM base_activity_table WHERE startDate = :startDate")
-    fun getListOfActivities(startDate: LocalDate?): LiveData<List<ActivityJoin>>
+    @Query("SELECT * FROM base_activity_table WHERE startDate = :startDate AND imported = :imported")
+    fun getListOfActivities(startDate: LocalDate?, imported: Boolean): LiveData<List<ActivityJoin>>
 
     @Transaction
     @Query("SELECT * FROM base_activity_table WHERE activityType = :activityType")
