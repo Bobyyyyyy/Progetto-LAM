@@ -10,10 +10,8 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.preference.PreferenceManager
 import com.example.progettolam.UI.calendarFragment.CalendarFragment
 import com.example.progettolam.UI.geofenceFragment.GeofenceFragment
-import com.example.progettolam.UI.geofenceFragment.GeofenceMapFragment
 import com.example.progettolam.UI.homeFragment.HomeFragment
 import com.example.progettolam.UI.profileFragment.ProfileFragment
-import com.example.progettolam.services.LocationWorkerScheduler
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -40,63 +38,42 @@ class MainActivity : AppCompatActivity() {
         fragmentContainer = findViewById(R.id.fragmentContainerView)
         navigationBar = findViewById(R.id.homeNavigation)
 
+        navigationBar.setOnItemSelectedListener { menuItem ->
+            navbarListener(menuItem)
+        }
+
+        // Carica il fragment di default all'avvio
+        if (savedInstanceState == null) {
+            changeFragment(HomeFragment(), R.id.homeMenu.toString())
+        }
+
+    }
+
+
+    override fun onResume() {
+        super.onResume()
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                /*
-                val currentFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
-                val backstackCount = supportFragmentManager.backStackEntryCount
-                if(backstackCount > 0 ) {
-                    val lastBackStackEntry = supportFragmentManager.getBackStackEntryAt(backstackCount-1)
-                    val lastFragment = supportFragmentManager.findFragmentByTag(lastBackStackEntry.name)
-
-                    if(lastFragment != null) {
-                        supportFragmentManager.beginTransaction().run {
-                            if (currentFragment != null) {
-                                detach(currentFragment)
-                            }
-                            attach(lastFragment)
-                            commit()
-                        }
-                    }
-
-                }
-
-                 */
-
-                supportFragmentManager.popBackStackImmediate()
             }
 
         }
 
         onBackPressedDispatcher.addCallback(this,callback)
-        navigationBar.setOnItemSelectedListener { menuItem ->
-            navbarListener(menuItem)
-        }
-        changeFragment(HomeFragment(),R.id.homeMenu.toString())
-
-        //LocationWorkerScheduler(this,15)
     }
-
 
     private fun navbarListener(menuItem: MenuItem): Boolean {
         when (val id: Int = menuItem.itemId) {
             R.id.homeMenu -> {
-                if(!(menuItem.isChecked)) {
-                    changeFragment(HomeFragment(),id.toString())
-                }
+                changeFragment(HomeFragment(),id.toString())
             }
             R.id.calendarMenu -> {
-                    changeFragment(CalendarFragment(),id.toString())
+                changeFragment(CalendarFragment(),id.toString())
             }
             R.id.profileMenu -> {
-                if(!(menuItem.isChecked)) {
-                    changeFragment(ProfileFragment(),id.toString())
-                }
+                changeFragment(ProfileFragment(),id.toString())
             }
             R.id.addMenu -> {
-                if(!(menuItem.isChecked)) {
-                    changeFragment(GeofenceFragment(),id.toString())
-                }
+                changeFragment(GeofenceFragment(),id.toString())
             }
             else -> { false }
         }

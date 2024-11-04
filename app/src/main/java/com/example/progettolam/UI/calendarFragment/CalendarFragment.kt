@@ -84,6 +84,13 @@ class CalendarFragment: Fragment() {
                 CoroutineScope(Dispatchers.IO).launch {
                     activityViewModel.exportDBtoCSV(requireContext(),it) // Passa l'uri corretto
                 }
+
+                val shareIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_STREAM, uri)
+                    type = "text/csv"
+                }
+                startActivity(Intent.createChooser(shareIntent, null))
             }
         }
 
@@ -95,6 +102,8 @@ class CalendarFragment: Fragment() {
                 }
             }
         }
+
+
 
 
         calendarView = view.findViewById(R.id.calendarView)
@@ -200,8 +209,8 @@ class CalendarFragment: Fragment() {
             changeFragment(OldActivityInsertFragment(), NEW_ACTIVITY_PAGE_INSERT)
         }
 
-     //   showSaveFileDialog()
-      //  getFileLauncher.launch("*/*")
+       // showSaveFileDialog()
+       // getFileLauncher.launch("*/*")
 
     }
 

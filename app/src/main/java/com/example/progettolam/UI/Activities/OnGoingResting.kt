@@ -27,6 +27,7 @@ class OnGoingResting: OnGoingActivity() {
             endActivity()
 
             registerActivity()
+            finish()
         }
 
 

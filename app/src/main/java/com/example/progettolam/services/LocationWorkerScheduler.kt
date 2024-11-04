@@ -6,14 +6,14 @@ import android.os.Build
 import androidx.work.*
 import java.util.concurrent.TimeUnit
 
-fun LocationWorkerScheduler(context: Context, intervalMinutes: Long) {
+fun LocationWorkerScheduler(context: Context, start: Boolean) {
 
 
     val workRequest = OneTimeWorkRequestBuilder<LocationWorker>()
-        .setInitialDelay(10, TimeUnit.SECONDS) // Imposta un ritardo di 10 secondi per il test
         .build()
 
     WorkManager.getInstance(context).enqueue(workRequest)
+
 
     /*
     // Crea un oggetto PeriodicWorkRequest

@@ -49,6 +49,7 @@ class OnGoingRunning : OnGoingActivity() {
             endActivity()
 
             registerActivity()
+            finish()
         }
 
         viewModel.speedList.observe(this) {

@@ -16,10 +16,12 @@ import com.example.progettolam.DB.ActivityViewModel
 import com.example.progettolam.DB.ActivityViewModelFactory
 import com.example.progettolam.R
 import com.example.progettolam.UI.preferencesActivity.PreferencesFragment
+import com.example.progettolam.services.LocationWorkerScheduler
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
@@ -39,10 +41,8 @@ class ProfileFragment: Fragment() {
     private lateinit var settings: ImageView
     private lateinit var heightView: TextView
     private lateinit var weightView: TextView
-    private lateinit var chart: LineChart
     private lateinit var barChart: BarChart
     private lateinit var pieChart: PieChart
-    private lateinit var pieChart2: PieChart
 
     private val activityViewModel by lazy {
         val factory = ActivityViewModelFactory(ActivityRepository(requireActivity().application))
@@ -108,12 +108,6 @@ class ProfileFragment: Fragment() {
         activityViewModel.getCurrentWeekSteps(LocalDate.now()).observe(viewLifecycleOwner) {
 
             if(it != null) {
-                /*
-                val lineData = createLineCharDate("Steps", Color.RED, it)
-                chart.data = lineData
-                setupChart(chart)
-
-                 */
 
                 val barData = createBarCharDate("Steps", Color.MAGENTA,it)
 
@@ -188,8 +182,10 @@ class ProfileFragment: Fragment() {
         chart.description = null
         chart.xAxis.granularity = 1f // Imposta la granularità a 1 per visualizzare solo i valori interi
         chart.xAxis.isGranularityEnabled = true // Abilita la granularità
+        chart.getAxis(YAxis.AxisDependency.LEFT).axisMinimum = 0f
+        chart.getAxis(YAxis.AxisDependency.LEFT).granularity = 1f
         chart.axisLeft.isEnabled = true // Disabilita l'asse Y sinistro se non serve
-        chart.axisRight.isEnabled = true // Disabilita l'asse Y destro se non serve
+        chart.axisRight.isEnabled = false // Disabilita l'asse Y destro se non serve
         chart.animateX(1000)
         chart.invalidate() // Refresh the chart
     }

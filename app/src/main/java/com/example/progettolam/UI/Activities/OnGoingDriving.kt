@@ -32,6 +32,7 @@ class OnGoingDriving: OnGoingActivity() {
             endActivity()
 
             registerActivity()
+            finish()
         }
 
 
