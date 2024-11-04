@@ -25,7 +25,7 @@ class LocationForegroundService : Service() {
     companion object {
         private const val TAG = "LocationForegroundService"
         private const val CHANNEL_ID = "LocationServiceChannel"
-        private const val NOTIFICATION_ID = 1
+        private const val NOTIFICATION_ID = 2
     }
 
     private val locationClient by lazy { LocationServices.getFusedLocationProviderClient(this) }
@@ -42,7 +42,6 @@ class LocationForegroundService : Service() {
                 p0?.let {
                     for (location in it.locations) {
                         Log.i(TAG, location.toString())
-                        // Here you can also send the location to a database, server, or handle it as needed
                     }
                 } ?: Log.i(TAG, "No location result")
             }
@@ -67,16 +66,18 @@ class LocationForegroundService : Service() {
     }
 
     private fun createNotification(): Notification {
-        val intent = Intent(this, MainActivity::class.java) // Change to your main activity
+        val intent = Intent(this, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("Location Service")
+            .setContentTitle("Geofence Tracking")
             .setContentText("Tracking your location...")
-            .setSmallIcon(R.drawable.baseline_person_24) // Use your own icon
+            .setSmallIcon(R.drawable.baseline_person_24)
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .build()
+
+
     }
 
     private fun createNotificationChannel() {

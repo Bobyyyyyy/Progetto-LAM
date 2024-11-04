@@ -165,11 +165,11 @@ class ActivityRepository(app: Application) {
                         id = parts[0].toLong(),
                         imported = true,
                         author = parts[2],
-                        activityType = parts[2].toActivityType(),
-                        startTime = LocalTime.parse(parts[3]),
-                        startDate = LocalDate.parse(parts[4]),
-                        endTime = LocalTime.parse(parts[5]),
-                        endDate = LocalDate.parse(parts[6])
+                        activityType = parts[3].toActivityType(),
+                        startTime = LocalTime.parse(parts[4]),
+                        startDate = LocalDate.parse(parts[5]),
+                        endTime = LocalTime.parse(parts[6]),
+                        endDate = LocalDate.parse(parts[7])
                     )
                     activityDao.insertBaseActivity(activity) // Inserisci nel database
                     line = reader.readLine()

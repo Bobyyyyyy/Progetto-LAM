@@ -12,6 +12,7 @@ import com.example.progettolam.UI.calendarFragment.CalendarFragment
 import com.example.progettolam.UI.geofenceFragment.GeofenceFragment
 import com.example.progettolam.UI.homeFragment.HomeFragment
 import com.example.progettolam.UI.profileFragment.ProfileFragment
+import com.example.progettolam.services.PeriodicalNotificationScheduler
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -42,10 +43,12 @@ class MainActivity : AppCompatActivity() {
             navbarListener(menuItem)
         }
 
-        // Carica il fragment di default all'avvio
         if (savedInstanceState == null) {
+            PeriodicalNotificationScheduler(this,15)
             changeFragment(HomeFragment(), R.id.homeMenu.toString())
         }
+
+
 
     }
 

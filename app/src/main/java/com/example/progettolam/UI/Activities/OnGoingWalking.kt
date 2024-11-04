@@ -50,21 +50,14 @@ class OnGoingWalking : OnGoingActivity() {
             viewModel.endTime = LocalTime.now()
             endActivity()
 
-            registerActivity()
+            if(timeElapsed != 0) {
+                registerActivity()
+            }
 
             finish()
 
         }
 
-        /*
-                supportFragmentManager.beginTransaction().run {
-                    setReorderingAllowed(true)
-                    replace(R.id.map,MapsActivity(),"ciao")
-                    addToBackStack(null)
-                    commit()
-
-
-         */
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         //va messo prima o messo l'accesso nella onresult sennò crasha

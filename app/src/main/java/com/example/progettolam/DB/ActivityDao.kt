@@ -1,5 +1,6 @@
 package com.example.progettolam.DB
 
+import android.app.Activity
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
@@ -105,4 +106,8 @@ ORDER BY steps_per_day.endDate ASC;
     @Query("SELECT * FROM base_activity_table WHERE id = :id")
     fun getInfoActivityByID(id: Long?): LiveData<ActivityJoin>
 
+
+    @Transaction
+    @Query("SELECT * FROM base_activity_table WHERE imported = false ORDER BY id DESC LIMIT 1")
+    fun getLastActivity(): ActivityJoin
 }

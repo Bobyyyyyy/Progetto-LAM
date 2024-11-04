@@ -9,28 +9,8 @@ import java.util.concurrent.TimeUnit
 fun LocationWorkerScheduler(context: Context, start: Boolean) {
 
 
-    val workRequest = OneTimeWorkRequestBuilder<LocationWorker>()
+    val workRequest = OneTimeWorkRequestBuilder<PeriodicalNotificationWorker>()
         .build()
-
     WorkManager.getInstance(context).enqueue(workRequest)
 
-
-    /*
-    // Crea un oggetto PeriodicWorkRequest
-    val workRequest = PeriodicWorkRequestBuilder<LocationWorker>(
-        intervalMinutes, // Specifica l'intervallo in minuti
-        TimeUnit.MINUTES
-    ).setConstraints(
-        Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED) // Esempio di constraint, se richiesto
-            .build()).build()
-
-    // Programma il worker
-    WorkManager.getInstance(context).enqueueUniquePeriodicWork(
-        LocationWorker.workName,
-        ExistingPeriodicWorkPolicy.KEEP, // Mantieni il lavoro se già esistente
-        workRequest
-    )
-
-     */
 }

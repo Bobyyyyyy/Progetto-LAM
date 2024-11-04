@@ -83,7 +83,6 @@ class HomeFragment: Fragment() {
                 permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
                     LocationWorkerScheduler(requireContext(),false)
                 } else -> {
-                // No location access granted.
             }
             }
         }

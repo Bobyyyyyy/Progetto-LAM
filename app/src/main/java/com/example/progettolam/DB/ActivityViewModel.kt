@@ -20,6 +20,16 @@ class ActivityViewModel(private val repository: ActivityRepository): ViewModel()
 
     var selectedDate: LocalDate? = LocalDate.now()
 
+    private val _imported = MutableLiveData<Boolean>().apply {
+        value = false
+    }
+
+    val imported: LiveData<Boolean> = _imported
+
+    fun setImported(value: Boolean) {
+        _imported.value = value
+    }
+
     private val _id = MutableLiveData<Long>().apply {
         value = null
     }
@@ -37,7 +47,6 @@ class ActivityViewModel(private val repository: ActivityRepository): ViewModel()
     private fun insertBaseActivity(baseActivity: BaseActivity): Long {
             return repository.insertBaseActivity(baseActivity)
     }
-
 
     fun insertWalkingActivity(baseActivity: BaseActivity, walkingActivity: WalkingActivity) {
         if (baseActivity.activityType == ActivityType.WALKING) {
@@ -81,7 +90,7 @@ class ActivityViewModel(private val repository: ActivityRepository): ViewModel()
     }
 
 
-    fun getAllActivities(startDate: LocalDate?, imported: Boolean = true): LiveData<List<ActivityJoin>> {
+    fun getAllActivities(startDate: LocalDate?, imported: Boolean): LiveData<List<ActivityJoin>> {
         return repository.getAllActivities(startDate,imported)
     }
 
@@ -111,6 +120,7 @@ class ActivityViewModel(private val repository: ActivityRepository): ViewModel()
     fun importCSVtoDB(context: Context, uri: Uri) {
         return repository.importActivitiesFromCSV(uri,context)
     }
+
 
 
 }
