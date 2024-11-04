@@ -11,7 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <ImageButton
+        <ImageView
                 android:id="@+id/profile_image_button1"
                 android:layout_width="140dp"
                 android:layout_height="140dp"
@@ -48,6 +48,25 @@
                 app:layout_constraintTop_toTopOf="@+id/profile_image_button1"
                 app:layout_constraintStart_toEndOf="@+id/profile_image_button1"
                 app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+                android:id="@+id/shareBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/baseline_ios_share_24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/profile_image_button1"
+                app:layout_constraintTop_toTopOf="@+id/profile_image_button1" />
+
+        <ImageView
+                android:id="@+id/importBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/baseline_install_mobile_24"
+                app:layout_constraintStart_toStartOf="@+id/shareBtn"
+                app:layout_constraintEnd_toEndOf="@+id/shareBtn"
+                app:layout_constraintBottom_toBottomOf="@+id/profile_image_button1"
+                app:layout_constraintTop_toBottomOf="@+id/shareBtn" />
 
         <LinearLayout
                 android:id="@+id/linearLayout2"

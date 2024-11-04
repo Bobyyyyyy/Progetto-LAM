@@ -1,15 +1,10 @@
 package com.example.progettolam.UI.calendarFragment
 
-import android.content.Intent
-import android.graphics.Color
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
@@ -22,7 +17,7 @@ import com.example.progettolam.DB.ActivityViewModelFactory
 import com.example.progettolam.R
 import com.example.progettolam.UI.Activities.ActivityAdapter
 import com.example.progettolam.UI.Activities.OldActivityInsertFragment
-import com.example.progettolam.UI.Activities.ResumeActivity
+import com.example.progettolam.UI.Activities.ShowDetailActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.CalendarMonth
@@ -31,9 +26,6 @@ import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import com.kizitonwose.calendar.view.MonthDayBinder
 import com.kizitonwose.calendar.view.MonthHeaderFooterBinder
 import com.kizitonwose.calendar.view.MonthScrollListener
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
@@ -46,11 +38,7 @@ class CalendarFragment: Fragment() {
     private lateinit var monthView: TextView
     private lateinit var addActivityButton: FloatingActionButton
     private lateinit var importedButton: FloatingActionButton
-    private lateinit var createFileLauncher: ActivityResultLauncher<String>
-    private lateinit var getFileLauncher: ActivityResultLauncher<String>
     private var imported = false
-
-
 
     val activityViewModel by lazy {
         val factory = ActivityViewModelFactory(ActivityRepository(requireActivity().application))
@@ -73,33 +61,6 @@ class CalendarFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val activityAdapter = ActivityAdapter(listOf()) { id -> handleOpenDetailActivity(id) }
-
-
-        createFileLauncher = registerForActivityResult(ActivityResultContracts.CreateDocument("text/csv")) { uri: Uri? ->
-            uri?.let {
-                // Chiamata alla funzione di esportazione dei dati
-                CoroutineScope(Dispatchers.IO).launch {
-                    activityViewModel.exportDBtoCSV(requireContext(),it) // Passa l'uri corretto
-                }
-
-                val shareIntent: Intent = Intent().apply {
-                    action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_STREAM, uri)
-                    type = "text/csv"
-                }
-                startActivity(Intent.createChooser(shareIntent, null))
-            }
-        }
-
-
-        getFileLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-            uri?.let {
-                CoroutineScope(Dispatchers.IO).launch {
-                    activityViewModel.importCSVtoDB(requireContext(),it)
-                }
-            }
-        }
-
 
         importedButton = view.findViewById(R.id.importedButton)
         calendarView = view.findViewById(R.id.calendarView)
@@ -146,7 +107,6 @@ class CalendarFragment: Fragment() {
                             activities = null
                             notifyDataSetChanged()
                         }
-
                     }
 
                     container.textView.visibility = View.VISIBLE
@@ -174,10 +134,8 @@ class CalendarFragment: Fragment() {
                 } else {
                     container.textView.visibility = View.INVISIBLE
                 }
-
             }
         }
-
 
         calendarView.monthHeaderBinder = object : MonthHeaderFooterBinder<MonthViewContainer> {
             override fun create(view: View) = MonthViewContainer(view)
@@ -195,7 +153,6 @@ class CalendarFragment: Fragment() {
             }
         }
 
-
         calendarView.monthScrollListener = object : MonthScrollListener {
             override fun invoke(p1: CalendarMonth) {
                 val formatter = DateTimeFormatter.ofPattern("MMMM yyyy", Locale.getDefault())
@@ -208,9 +165,6 @@ class CalendarFragment: Fragment() {
         addActivityButton.setOnClickListener {
             changeFragment(OldActivityInsertFragment(), NEW_ACTIVITY_PAGE_INSERT)
         }
-
-       //showSaveFileDialog()
-       // getFileLauncher.launch("*/*")
 
     }
 
@@ -259,7 +213,7 @@ class CalendarFragment: Fragment() {
     }
 
     private fun handleOpenDetailActivity(id: String) {
-        val resumeActivity = ResumeActivity()
+        val resumeActivity = ShowDetailActivity()
         // Create a bundle to hold the id
         val bundle = Bundle()
         bundle.putString("idActivity", id)
@@ -268,14 +222,5 @@ class CalendarFragment: Fragment() {
         // Using a different tag each time to avoid the use of a fragment which is already in the backstack but refers to a different activity
         changeFragment(resumeActivity,  "resumeActivity_$id")
     }
-
-
-
-    private fun showSaveFileDialog() {
-        createFileLauncher.launch("exported_activities.csv")
-    }
-
-
-
 
 }

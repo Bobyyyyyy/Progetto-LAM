@@ -33,14 +33,6 @@ abstract class ActivityDatabase: RoomDatabase() {
                 _INSTANCE
             }
         }
-
-
-
-
-
-
-
     }
-
 
 }

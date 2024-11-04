@@ -21,7 +21,7 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 // private var idActivity: String
-class ResumeActivity(): Fragment() {
+class ShowDetailActivity(): Fragment() {
     private var idActivity: String? = null
     private lateinit var typeActivity: TextView
     private lateinit var dateActivity: TextView

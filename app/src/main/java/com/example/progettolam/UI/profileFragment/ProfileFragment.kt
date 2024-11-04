@@ -1,6 +1,8 @@
 package com.example.progettolam.UI.profileFragment
 
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
@@ -32,6 +36,9 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 
@@ -39,10 +46,15 @@ class ProfileFragment: Fragment() {
     private lateinit var profileModel: ProfileViewModel
     private lateinit var textView: TextView
     private lateinit var settings: ImageView
+    private lateinit var shareBtn: ImageView
+    private lateinit var importBtn: ImageView
     private lateinit var heightView: TextView
     private lateinit var weightView: TextView
     private lateinit var barChart: BarChart
     private lateinit var pieChart: PieChart
+
+    private lateinit var createFileLauncher: ActivityResultLauncher<String>
+    private lateinit var getFileLauncher: ActivityResultLauncher<String>
 
     private val activityViewModel by lazy {
         val factory = ActivityViewModelFactory(ActivityRepository(requireActivity().application))
@@ -66,9 +78,42 @@ class ProfileFragment: Fragment() {
 
         textView = view.findViewById(R.id.username)
         settings = view.findViewById(R.id.settings)
+        shareBtn = view.findViewById(R.id.shareBtn)
+        importBtn = view.findViewById(R.id.importBtn)
 
         barChart = view.findViewById(R.id.chart2)
         pieChart = view.findViewById(R.id.chart3)
+
+        createFileLauncher = registerForActivityResult(ActivityResultContracts.CreateDocument("text/csv")) { uri: Uri? ->
+            uri?.let {
+                // Chiamata alla funzione di esportazione dei dati
+                CoroutineScope(Dispatchers.IO).launch {
+                    activityViewModel.exportDBtoCSV(requireContext(),it) // Passa l'uri corretto
+                }
+
+                val shareIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_STREAM, uri)
+                    type = "text/csv"
+                }
+                startActivity(Intent.createChooser(shareIntent, null))
+            }
+        }
+
+        getFileLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                CoroutineScope(Dispatchers.IO).launch {
+                    activityViewModel.importCSVtoDB(requireContext(),it)
+                }
+            }
+        }
+
+        shareBtn.setOnClickListener {
+            showSaveFileDialog()
+        }
+        importBtn.setOnClickListener {
+            getFileLauncher.launch("*/*")
+        }
 
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(requireActivity())
 
@@ -115,6 +160,9 @@ class ProfileFragment: Fragment() {
         }
     }
 
+    private fun showSaveFileDialog() {
+        createFileLauncher.launch("exported_activities.csv")
+    }
 
     private fun createLineCharDate(label: String, color: Int, dataObjects: Array<StepsData>): LineData {
         // Create an empty list of Entry objects
