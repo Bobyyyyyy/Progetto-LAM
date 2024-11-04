@@ -52,6 +52,8 @@ class OnGoingWalking : OnGoingActivity() {
 
             registerActivity()
 
+            finish()
+
         }
 
         /*
@@ -86,9 +88,6 @@ class OnGoingWalking : OnGoingActivity() {
     }
 
 
-    private fun stopLocationUpdates() {
-        fusedLocationClient.removeLocationUpdates(locationCallback)
-    }
 
     override fun initViews() {
         super.initViews()

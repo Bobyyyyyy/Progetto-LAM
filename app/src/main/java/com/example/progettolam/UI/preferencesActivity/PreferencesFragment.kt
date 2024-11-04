@@ -17,6 +17,9 @@ class PreferencesFragment: PreferenceFragmentCompat() {
         const val MIN_WEIGHT = 20
         const val MAX_WEIGHT = 300
     }
+
+
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.user_preferences, rootKey)
 

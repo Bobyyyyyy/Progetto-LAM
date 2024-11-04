@@ -64,6 +64,28 @@ class OnGoingViewModel: ViewModel() {
         return _activityType.value
     }
 
+    private val _isStarted = MutableLiveData<Boolean>().apply {
+        value = false
+    }
+
+    val isStarted : LiveData<Boolean> = _isStarted
+
+    fun setStarted(value: Boolean) {
+        _isStarted.value = value
+    }
+
+    private val _isPaused = MutableLiveData<Boolean>().apply {
+        value = false
+    }
+
+    val isPaused : LiveData<Boolean> = _isPaused
+
+    fun setPaused(value: Boolean) {
+        _isPaused.value = value
+    }
+
+
+
     fun addSpeed(value: Float) {
         val currentSpeedList = _speedList.value ?: mutableListOf()
         currentSpeedList.add(value)

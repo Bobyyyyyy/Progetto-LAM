@@ -21,6 +21,7 @@ import com.example.progettolam.DB.ActivityViewModel
 import com.example.progettolam.DB.ActivityViewModelFactory
 import com.example.progettolam.R
 import com.example.progettolam.UI.Activities.OnGoingPlaceholder
+import com.example.progettolam.services.LocationWorkerScheduler
 
 class HomeFragment: Fragment() {
 
@@ -77,10 +78,10 @@ class HomeFragment: Fragment() {
         ) { permissions ->
             when {
                 permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
-                    // Precise location access granted.
+                    LocationWorkerScheduler(requireContext(),true)
                 }
                 permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
-                    // Only approximate location access granted.
+                    LocationWorkerScheduler(requireContext(),false)
                 } else -> {
                 // No location access granted.
             }
