@@ -21,7 +21,9 @@ import com.example.progettolam.DB.ActivityType
 import com.example.progettolam.DB.ActivityViewModel
 import com.example.progettolam.DB.ActivityViewModelFactory
 import com.example.progettolam.DB.BaseActivity
+import com.example.progettolam.DB.DrivingActivity
 import com.example.progettolam.DB.RunningActivity
+import com.example.progettolam.DB.SittingActivity
 import com.example.progettolam.DB.WalkingActivity
 import com.example.progettolam.R
 import java.time.LocalDate
@@ -245,7 +247,7 @@ class OldActivityInsertFragment: Fragment() {
                         endTime,
                         date
                     ),
-                    WalkingActivity(null, null, 0f)
+                    WalkingActivity(null, null, null)
                 )
             }
 
@@ -259,16 +261,36 @@ class OldActivityInsertFragment: Fragment() {
                         endTime,
                         date
                     ),
-                    RunningActivity(null, null, 0f)
+                    RunningActivity(null, null, null)
                 )
             }
 
             getString(R.string.chilling_tag) -> {
-                //TODO: Insert Chilling Activity
+                activityViewModel.insertSittingActivity(
+                    BaseActivity(
+                        null,
+                        ActivityType.STILL,
+                        startTime,
+                        date,
+                        endTime,
+                        date
+                    ),
+                    SittingActivity(null)
+                )
             }
 
             getString(R.string.drive_tag) -> {
-                // TODO: Insert Driving Activity
+                activityViewModel.insertDrivingActivity(
+                    BaseActivity(
+                        null,
+                        ActivityType.DRIVING,
+                        startTime,
+                        date,
+                        endTime,
+                        date
+                    ),
+                    DrivingActivity(null,null)
+                )
             }
         }
     }

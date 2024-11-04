@@ -77,7 +77,6 @@ class ProfileFragment: Fragment() {
         val value = resources.getString(R.string.preferences_username_default)
         val storedName = sharedPref?.getString(getString(R.string.preferences_username), value)
 
-
         val storedHeight = sharedPref?.getString(getString(R.string.preferences_height),resources.getString(R.string.preferences_height_default))
         val storedWeight = sharedPref?.getString(getString(R.string.preferences_weight),resources.getString(R.string.preferences_weight_default))
         heightView.text = storedHeight.toString()

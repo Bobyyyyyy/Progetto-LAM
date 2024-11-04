@@ -184,11 +184,6 @@ class CalendarFragment: Fragment() {
 
         calendarView.monthScrollListener = object : MonthScrollListener {
             override fun invoke(p1: CalendarMonth) {
-                /*
-                val yearMonth =  p1.yearMonth.month.toString() + ", " + p1.yearMonth.year.toString()
-                monthView.text = yearMonth
-                activityViewModel.currentMonth = p1.yearMonth
-                 */
                 val formatter = DateTimeFormatter.ofPattern("MMMM yyyy", Locale.getDefault())
                 val yearMonth = p1.yearMonth.format(formatter)
                 monthView.text = yearMonth.toString().uppercase()
@@ -200,7 +195,7 @@ class CalendarFragment: Fragment() {
             changeFragment(OldActivityInsertFragment(), NEW_ACTIVITY_PAGE_INSERT)
         }
 
-     //   showSaveFileDialog()
+    //   showSaveFileDialog()
       //  getFileLauncher.launch("*/*")
 
     }

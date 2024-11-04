@@ -35,7 +35,7 @@ class ActivityAdapter(var activities: List<ActivityJoin>?, var listener: (String
 
             val start: LocalDateTime = LocalDateTime.of(startDate,startTime)
             val end: LocalDateTime = LocalDateTime.of(endDate,endTime)
-            var duration = Duration.between(start,end)
+            val duration = Duration.between(start,end)
             val time: String
 
             val days = duration.toDays().toInt()

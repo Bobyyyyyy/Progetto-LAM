@@ -23,10 +23,10 @@
     <string name="speed_tag">Speed km/h</string>
     <string name="calories_tag">Calories</string>
     <string name="steps_tag">Steps</string>
-    <string name="height_tag">Height</string>
+    <string name="height_tag">Height (cm)</string>
+    <string name="weight_tag">Weight (kg)</string>
     <string name="enter_height">Enter height (cm)</string>
     <string name="enter_weight">Enter weight (kg)</string>
-    <string name="weight_tag">Weight</string>
 
     <string name="geofence_top_description">Hold down on the map to add control areas. Tap on markers to delete them</string>
     <string name="radius_description">Enter the radius in meters:</string>
@@ -60,4 +60,10 @@
     <string name="total_steps">Steps</string>
     <string name="total_calories">Total calories</string>
     <string name="open_details">Open</string>
+
+    <string name="name_update">Name updated</string>
+    <string name="success_add_weight">Weight inserted successfully</string>
+    <string name="success_add_height">Height inserted successfully</string>
+    <string name="error_add_weight">Error: weight inserted invalid</string>
+    <string name="error_add_height">Error: height inserted invalid</string>
 </resources>

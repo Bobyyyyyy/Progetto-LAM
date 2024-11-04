@@ -7,12 +7,17 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
 import com.example.progettolam.DB.ActivityJoin
 import com.example.progettolam.DB.ActivityRepository
 import com.example.progettolam.DB.ActivityType
 import com.example.progettolam.DB.ActivityViewModel
 import com.example.progettolam.DB.ActivityViewModelFactory
 import com.example.progettolam.R
+import java.time.Duration
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 // private var idActivity: String
@@ -60,9 +65,22 @@ class ResumeActivity(): Fragment() {
 
             typeActivity.text = getFormattedTypeActivity(infoActivity?.baseActivity?.activityType!!)
 
-            val formattedStartTime = infoActivity?.baseActivity?.startTime?.format(timeIntervalFormatter)
-            val formattedEndTime = infoActivity?.baseActivity?.endTime?.format(timeIntervalFormatter)
-            dateActivity.text = infoActivity?.baseActivity?.startDate?.format(dateFormatter).toString().replaceFirstChar {
+            val startTime = infoActivity?.baseActivity?.startTime
+            val endTime = infoActivity?.baseActivity?.endTime
+            val startDate = infoActivity?.baseActivity?.startDate
+            val endDate = infoActivity?.baseActivity?.endDate
+
+            if (startDate != null && startTime != null && endDate != null && endTime != null) {
+                val duration = calculateDuration(startDate, startTime, endDate, endTime)
+                valueTotalTime.text = getFormattedTimeInterval(duration)
+                getOtherInfo(duration)
+            } else {
+                valueTotalTime.text = "--:--:--"
+            }
+
+            val formattedStartTime = startTime?.format(timeIntervalFormatter)
+            val formattedEndTime = endTime?.format(timeIntervalFormatter)
+            dateActivity.text = startDate?.format(dateFormatter).toString().replaceFirstChar {
                 char -> char.titlecase()
             }
 
@@ -81,5 +99,75 @@ class ResumeActivity(): Fragment() {
             ActivityType.STILL -> getString(R.string.chilling_tag)
         }
         return formattedType
+    }
+
+    private fun calculateDuration(startDate: LocalDate, startTime: LocalTime, endDate: LocalDate, endTime: LocalTime): Duration {
+        val start: LocalDateTime = LocalDateTime.of(startDate, startTime)
+        val end: LocalDateTime = LocalDateTime.of(endDate, endTime)
+        return Duration.between(start,end)
+    }
+
+    private fun getFormattedTimeInterval(duration: Duration) : String {
+        val days = duration.toDays().toInt()
+        val hours = (duration.toHours() % 24).toInt()
+        val minutes = (duration.toMinutes() % 60).toInt()
+        val seconds = (duration.seconds % 60).toInt()
+
+        val time = if (days != 0) {
+            "${"%02d".format(days)}:${"%02d".format(hours)}:${"%02d".format(minutes)}:${"%02d".format(seconds)}"
+        } else {
+            // If days are zero, exclude them
+            "${"%02d".format(hours)}:${"%02d".format(minutes)}:${"%02d".format(seconds)}"
+        }
+        return time
+    }
+
+    private fun getOtherInfo(duration: Duration) {
+        when (infoActivity?.baseActivity?.activityType) {
+            ActivityType.WALKING -> {
+                if (infoActivity?.walkingActivity?.avgSpeed != null) {
+                    valueAvSpeed.text = getFormattedAvgSpeed(infoActivity?.walkingActivity?.avgSpeed!!)
+                    getCalories(ActivityType.WALKING, duration, infoActivity?.runningActivity?.avgSpeed!!)
+                }
+                if (infoActivity?.walkingActivity?.steps != null) {
+                    valueTotalSteps.text = infoActivity?.walkingActivity?.steps.toString()
+                }
+            }
+            ActivityType.RUNNING -> {
+                if (infoActivity?.runningActivity?.avgSpeed != null) {
+                    valueAvSpeed.text = getFormattedAvgSpeed(infoActivity?.runningActivity?.avgSpeed!!)
+                    getCalories(ActivityType.RUNNING, duration, infoActivity?.runningActivity?.avgSpeed!!)
+                }
+                if (infoActivity?.runningActivity?.steps != null) {
+                    valueTotalSteps.text = infoActivity?.runningActivity?.steps.toString()
+                }
+            }
+            ActivityType.DRIVING -> {
+                if (infoActivity?.drivingActivity?.avgSpeed != null) {
+                    valueAvSpeed.text = getFormattedAvgSpeed(infoActivity?.drivingActivity?.avgSpeed!!)
+                }
+            }
+            else -> {}
+        }
+    }
+
+    private fun getFormattedAvgSpeed(avgSpeed: Float): String {
+        return "${"%.2f".format(avgSpeed)} km/h"
+    }
+
+    private fun getCalories(type: ActivityType, duration: Duration, avgSpeed: Float) {
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(requireActivity())
+        val storedWeight = sharedPref?.getString(getString(R.string.preferences_weight), null)
+        if (storedWeight != null) {
+            val totalCalories = calculateCaloriesBurnt(type, storedWeight.toInt(), duration, avgSpeed)
+            valueTotalCalories.text = totalCalories.toString()
+        }
+    }
+
+    private fun calculateCaloriesBurnt(type: ActivityType, weight: Int, duration: Duration, avgSpeed: Float) : Int {
+        val coefficient = if (type == ActivityType.RUNNING) { 0.9 } else { 0.48 }
+        val distance : Double = (avgSpeed.toDouble())*duration.toHours()
+        val calories = coefficient*distance*weight.toDouble()
+        return calories.toInt()
     }
 }

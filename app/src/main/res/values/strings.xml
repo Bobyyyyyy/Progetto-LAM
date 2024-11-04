@@ -53,9 +53,9 @@
     <string name="preferences_weight" translatable="false">preferences_weight</string>
     <string name="preferences_weight_default" translatable="false">--</string>
 
-    <string name="height_tag">Altezza</string>
+    <string name="height_tag">Altezza (cm)</string>
+    <string name="weight_tag">Peso (kg)</string>
     <string name="enter_height">Inserisci altezza</string>
-    <string name="weight_tag">Peso</string>
     <string name="enter_weight">Inserisci peso (kg)</string>
 
     <string name="geofence_top_description">Tieni premuto sulla mappa per aggiungere aree di controllo. Tocca sui markers per eliminarle</string>
@@ -98,4 +98,9 @@
     <string name="total_calories">Calorie totali</string>
     <string name="open_details">Apri</string>
 
+    <string name="name_update">Nome aggiornato</string>
+    <string name="success_add_weight">Peso inserito correttamente</string>
+    <string name="success_add_height">Altezza inserita correttamente</string>
+    <string name="error_add_weight">Errore: peso inserito non valido</string>
+    <string name="error_add_height">Errore: altezza inserita non valida</string>
 </resources>
