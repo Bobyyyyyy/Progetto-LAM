@@ -46,7 +46,9 @@ class MainActivity : AppCompatActivity() {
 
         val fragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
         val tag = fragment?.tag
-
+/*
+    TODO: contrallare come selezionare il fragment in base
+            alla tag che sia condiviso in qualche modo tra le due navigation Bar
         if(navigationRail == null) {
             if (tag != null) {
                 bottomNavigation?.selectedItemId = tag.toInt()
@@ -57,6 +59,8 @@ class MainActivity : AppCompatActivity() {
                 navigationRail?.selectedItemId = tag.toInt()
             }
         }
+
+ */
 
 
 
