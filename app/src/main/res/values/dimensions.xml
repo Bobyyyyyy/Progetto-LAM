@@ -9,6 +9,7 @@
     <dimen name="space_between_imageBtn_textView">2dp</dimen>
     <dimen name="space_between_title_value_card_activity">4dp</dimen>
     <dimen name="margin_card_view_chose_activity">16dp</dimen>
+    <dimen name="half_margin_card_view_chose_activity">8dp</dimen>
     <dimen name="padding_constraint_layout_chose_activity">16dp</dimen>
 
     <!-- RECORDING STATS ACTIVITY -->

@@ -20,7 +20,8 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
-// private var idActivity: String
+
+
 class ShowDetailActivity(): Fragment() {
     private var idActivity: String? = null
     private lateinit var typeActivity: TextView
@@ -160,11 +161,13 @@ class ShowDetailActivity(): Fragment() {
     }
 
     private fun getFormattedDistance(distance: Double): String {
-        return "${"%.3f".format(distance)} km/h"
+        return "${"%.3f".format(distance)} km"
     }
 
     private fun getDistanceInKm(avgSpeed: Float, duration: Duration): Double {
-        return (avgSpeed.toDouble())*duration.toHours()
+        val timeInSec = duration.toSeconds()
+        val disMeter = (avgSpeed/3.6) * timeInSec
+        return disMeter/1000
     }
 
     private fun getFormattedAvgSpeed(avgSpeed: Float): String {

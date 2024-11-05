@@ -70,8 +70,8 @@ class LocationForegroundService : Service() {
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("Geofence Tracking")
-            .setContentText("Tracking your location...")
+            .setContentTitle(applicationContext.getString(R.string.geofence_tracking))
+            .setContentText(applicationContext.getString(R.string.tracking_location))
             .setSmallIcon(R.drawable.baseline_person_24)
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)

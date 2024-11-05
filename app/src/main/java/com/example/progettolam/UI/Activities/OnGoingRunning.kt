@@ -1,26 +1,14 @@
 package com.example.progettolam.UI.Activities
 
-import android.Manifest
 import android.content.Intent
 import android.os.Bundle
-import android.os.Looper
-import android.util.Log
 import android.widget.TextView
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.FragmentContainerView
-import androidx.fragment.app.replace
 import androidx.lifecycle.ViewModelProvider
 import com.example.progettolam.DB.ActivityType
 import com.example.progettolam.DB.BaseActivity
 import com.example.progettolam.DB.RunningActivity
-import com.example.progettolam.MapsActivity
 import com.example.progettolam.R
 import com.example.progettolam.services.StepCounter
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationResult
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.SupportMapFragment
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -40,7 +28,7 @@ class OnGoingRunning : OnGoingActivity() {
         initViews()
         setupListeners()
         viewModel.totalSteps.observe(this) {
-            stepsCounter.text = it.toString()
+            stepsCounter.text = it.toInt().toString()
         }
 
         endButton.setOnClickListener {

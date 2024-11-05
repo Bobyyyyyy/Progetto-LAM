@@ -144,7 +144,7 @@ open class OnGoingActivity: AppCompatActivity() {
         stepFilter.addAction(StepCounter.STEP_STATUS)
         stepReceiver = object: BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                viewModel.setTotalSteps(intent?.getFloatExtra(StepCounter.TOTAL_STEPS,0f)!!)
+                viewModel.setTotalSteps(intent?.getIntExtra(StepCounter.TOTAL_STEPS,0)!!)
             }
         }
 

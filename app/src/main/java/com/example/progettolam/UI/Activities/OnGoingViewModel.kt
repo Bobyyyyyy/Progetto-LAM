@@ -26,10 +26,10 @@ class OnGoingViewModel: ViewModel() {
     }
     val isBound: LiveData<Boolean> = _isBound
 
-    private val _totalSteps = MutableLiveData<Float>().apply {
-        value = 0f
+    private val _totalSteps: MutableLiveData<Int> = MutableLiveData<Int>().apply {
+        value = 0
     }
-    val totalSteps: LiveData<Float> = _totalSteps
+    val totalSteps: LiveData<Int> = _totalSteps
 
     private val _activityType = MutableLiveData<ActivityType>().apply {
         value = null
@@ -48,11 +48,11 @@ class OnGoingViewModel: ViewModel() {
         _isBound.value = value
     }
 
-    fun setTotalSteps(value: Float) {
+    fun setTotalSteps(value: Int) {
         _totalSteps.value = value
     }
 
-    fun getTotalSteps() : Float? {
+    fun getTotalSteps(): Int? {
         return _totalSteps.value
     }
 

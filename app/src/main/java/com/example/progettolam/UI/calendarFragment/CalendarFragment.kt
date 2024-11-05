@@ -19,7 +19,6 @@ import com.example.progettolam.R
 import com.example.progettolam.UI.Activities.ActivityAdapter
 import com.example.progettolam.UI.Activities.OldActivityInsertFragment
 import com.example.progettolam.UI.Activities.ShowDetailActivity
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.CalendarMonth
 import com.kizitonwose.calendar.core.DayPosition
@@ -57,18 +56,18 @@ class CalendarFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.prova, container, false)
+        return inflater.inflate(R.layout.calendar_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val activityAdapter = ActivityAdapter(listOf()) { id -> handleOpenDetailActivity(id) }
+        val activityAdapter = ActivityAdapter(requireContext(), listOf()) { id -> handleOpenDetailActivity(id) }
 
         importedButton = view.findViewById(R.id.importedButton)
         calendarView = view.findViewById(R.id.calendarView)
         monthView = view.findViewById(R.id.monthView)
-        addActivityButton = view.findViewById(R.id.floatingActionButton)
+        addActivityButton = view.findViewById(R.id.addActivityBtn)
         recyclerActivity = view.findViewById(R.id.recyclerActivity)
         recyclerActivity.adapter = activityAdapter
         recyclerActivity.layoutManager = LinearLayoutManager(requireActivity())
@@ -92,6 +91,7 @@ class CalendarFragment: Fragment() {
 
         importedButton.setOnClickListener {
             activityViewModel.setImported(!imported)
+            importedButton.text = if (imported) getString(R.string.show_yours_activities) else getString(R.string.show_others_activities)
         }
 
         calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {

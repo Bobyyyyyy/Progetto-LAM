@@ -78,4 +78,13 @@
     <string name="saturday">Sat</string>
     <string name="sunday">Sun</string>
 
+    <string name="show_others_activities">Show others activities</string>
+    w
+    <string name="add_new_activity">Add new activity</string>
+
+    <string name="no_activity_registered">You have not registered any activity yet</string>
+    <string name="register_first_activity">Register your first activity</string>
+    <string name="you_are_still">You’ve been quiet for a while!</string>
+    <string name="register_some_activities">Records activities</string>
+    <string name="tracking_location">Tracking your location…</string>
 </resources>

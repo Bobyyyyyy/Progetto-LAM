@@ -8,6 +8,7 @@
     <color name="background_chart">#f8f8fc</color>
 
     <color name="current_data">#FF0000</color>
+    <color name="other_users">#EE7674</color>
 
     <color name="text">#040307</color>
     <color name="background">#f8f8fc</color>
