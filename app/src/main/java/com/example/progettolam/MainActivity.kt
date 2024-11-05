@@ -37,11 +37,28 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_activity)
         fragmentContainer = findViewById(R.id.fragmentContainerView)
         bottomNavigation = findViewById(R.id.homeNavigation)
+        navigationRail = findViewById(R.id.homeNavigationRail)
 
         if (savedInstanceState == null) {
             PeriodicalNotificationScheduler(this,15)
             changeFragment(HomeFragment(), R.id.homeMenu.toString())
         }
+
+        val fragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
+        val tag = fragment?.tag
+
+        if(navigationRail == null) {
+            if (tag != null) {
+                bottomNavigation?.selectedItemId = tag.toInt()
+            }
+        }
+        else {
+            if(tag != null) {
+                navigationRail?.selectedItemId = tag.toInt()
+            }
+        }
+
+
 
         // Set the appropriate listener based on the active navigation view
         navigationRail?.setOnItemSelectedListener { menuItem ->
