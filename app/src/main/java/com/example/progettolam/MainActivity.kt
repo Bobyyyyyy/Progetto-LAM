@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main_activity)
         fragmentContainer = findViewById(R.id.fragmentContainerView)
         bottomNavigation = findViewById(R.id.homeNavigation)
+        navigationRail = findViewById(R.id.homeNavigationRail)
 
         if (savedInstanceState == null) {
             PeriodicalNotificationScheduler(this,15)
