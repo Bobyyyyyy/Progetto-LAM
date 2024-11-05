@@ -22,6 +22,7 @@ import java.time.LocalTime
 
 class OnGoingWalking : OnGoingActivity() {
 
+    private lateinit var speedText: TextView
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -63,6 +64,14 @@ class OnGoingWalking : OnGoingActivity() {
 
         }
 
+        viewModel.speedList.observe(this) {
+            if(it.isNotEmpty()) {
+                speedText.text = it.last().toString()
+            }
+        }
+
+
+
     }
 
 
@@ -70,6 +79,7 @@ class OnGoingWalking : OnGoingActivity() {
     override fun initViews() {
         super.initViews()
         stepsCounter = findViewById(R.id.stepsCounter)
+        speedText = findViewById(R.id.valueSpeedTextView)
     }
 
 
