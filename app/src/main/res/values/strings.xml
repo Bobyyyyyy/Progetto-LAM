@@ -126,7 +126,7 @@
     <string name="tracking_location">Tracciando la tua posizione…</string>
     <string name="geofence_tracking" translatable="false">Geofence tracking</string>
 
-    <string name="stats_4_today">Statistiche di oggi</string>
+    <string name="steps_4_today">Passi di oggi</string>
     <string name="last_activity_done">Ultima attivita fatta</string>
 
     <string name="OnGoingNotification">C\'è un attività in corso</string>

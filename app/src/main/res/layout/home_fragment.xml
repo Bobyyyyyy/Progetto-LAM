@@ -31,7 +31,7 @@
             <include layout="@layout/card_chose_activity_2_start" />
 
             <TextView
-                    android:text="@string/stats_4_today"
+                    android:text="@string/steps_4_today"
                     android:textAlignment="center"
                     android:layout_marginTop="@dimen/margin_card_view_chose_activity"
                     style="@style/detail_activity_type_title"
@@ -63,28 +63,6 @@
                             app:layout_constraintTop_toTopOf="@+id/stepImage"
                             app:layout_constraintBottom_toBottomOf="@+id/stepImage" />
 
-                    <TextView
-                            android:text="@string/time_tag"
-                            style="@style/detail_activity_time_date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/timerTextView"
-                            app:layout_constraintStart_toStartOf="@+id/walkTextView"
-                            app:layout_constraintTop_toTopOf="@+id/clockImage"
-                            app:layout_constraintBottom_toBottomOf="@+id/clockImage" />
-
-                    <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/circle_background"
-                            android:padding="12dp"
-                            app:srcCompat="@drawable/clock_icon"
-                            android:id="@+id/clockImage"
-                            app:layout_constraintStart_toStartOf="@+id/stepImage"
-                            app:layout_constraintTop_toBottomOf="@+id/stepImage"
-                            android:layout_marginTop="24dp"
-                            app:layout_constraintBottom_toBottomOf="parent" />
-
                     <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -93,8 +71,7 @@
                             app:srcCompat="@drawable/shoe_icon"
                             android:id="@+id/stepImage"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintBottom_toTopOf="@+id/clockImage" />
+                            app:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
                             android:text="@string/no_info"
@@ -106,17 +83,6 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/walkTextView"
                             app:layout_constraintBottom_toBottomOf="@+id/walkTextView" />
-
-                    <TextView
-                            android:text="@string/no_info"
-                            style="@style/detail_activity_stats_value"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/valueTimerTextView"
-                            app:layout_constraintTop_toTopOf="@+id/timerTextView"
-                            app:layout_constraintBottom_toBottomOf="@+id/timerTextView"
-                            app:layout_constraintStart_toStartOf="@+id/valueWalkTextView"
-                            app:layout_constraintEnd_toEndOf="@+id/valueWalkTextView" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -164,6 +130,17 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent" />
+
+                    <TextView
+                            android:text="@string/no_info"
+                            style="@style/detail_activity_stats_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/timeIntervalTextView"
+                            app:layout_constraintTop_toTopOf="@+id/typeLastActTextView"
+                            app:layout_constraintBottom_toBottomOf="@+id/typeLastActTextView"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/typeLastActTextView" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,6 +1,7 @@
 package com.example.progettolam.UI.geofenceFragment
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -62,6 +63,7 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
     companion object {
         const val BACKGROUND_LOCATION_ACCESS_REQUEST_CODE: Int = 100
         const val FINE_LOCATION_ACCESS_REQUEST_CODE = 10001
+        const val ZOOM_LEVEL = 14f
     }
 
     override fun onCreateView(
@@ -118,8 +120,7 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION))
         }
-
-
+        mapFragment.getMapAsync(this)
     }
     // Create a unique id using data class
     private fun createGeofenceId(position: LatLng, color: Int, radius: Int): String {
@@ -160,7 +161,7 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
                 if (lastLocation != null) {
                     val loc = LatLng(lastLocation.latitude, lastLocation.longitude)
                     //mMap.addMarker(MarkerOptions().position(loc).title("Your Current Location"))
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 14f))
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, ZOOM_LEVEL))
                     mMap.isMyLocationEnabled = true
                     mMap.uiSettings.isMyLocationButtonEnabled = true
                 }
@@ -246,7 +247,6 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
     private fun handleMapLongClick(latLng: LatLng) {
         val newId: String = createGeofenceId(latLng, selectedColor, selectedRadius)
         if (!existingGeofence.containsKey(newId)) {
-            Log.i("IDCREATO", "NEW ID; $newId")
             addGeofence(latLng, newId)
             displayGeofence(latLng, selectedColor, selectedRadius, newId)
         }
@@ -259,6 +259,7 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
         existingGeofence[geofenceId] = Pair(newCircle, newMarker)
     }
 
+    @SuppressLint("MissingPermission")
     private fun addGeofence(latLng: LatLng, geofenceId: String) {
         // adding the new geofence to the list in the view model
         geofenceMapViewModel.addGeofenceInfo(GeofenceInfo(geofenceId, latLng.latitude, latLng.longitude, selectedColor, selectedRadius))
@@ -273,11 +274,6 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
 
         val geofencingRequest: GeofencingRequest = geoFenceHelper.getGeofencingRequest(geofence)
         val pendingIntent: PendingIntent = geoFenceHelper.getPendingIntent()
-
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling ActivityCompat#requestPermissions
-            return
-        }
 
         geofencingClient.addGeofences(geofencingRequest, pendingIntent)
             .addOnSuccessListener {
@@ -297,20 +293,6 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
             .title("$latLng")
 
         return mMap.addMarker(markerOptions)
-        /*
-        mMap.setOnMarkerClickListener{ marker ->
-            /*
-            var idMarker = marker.id
-            marker.remove()
-            circle2remove.remove()
-            var geofenceList2remove = ArrayList<String>()
-            geofenceList2remove.add(GEOFENCE_ID)
-            geofencingClient.removeGeofences(geofenceList2remove)
-            */
-            handleMarkerClick(marker)
-            selectedToggleRemove // false shows the info and relocate the camera, true does nothing
-        }
-         */
     }
 
     private fun addCircle(latLng: LatLng, color2use: Int, radius2use: Int): Circle {
@@ -320,7 +302,6 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
         .strokeColor(ColorUtils.setAlphaComponent(color2use, 255)) // Use selected color for stroke
         .fillColor(ColorUtils.setAlphaComponent(color2use, 64)) // Use selected color for fill
         .strokeWidth(4f)
-        //.zIndex(500000f)
 
         return mMap.addCircle(circleOptions)
     }

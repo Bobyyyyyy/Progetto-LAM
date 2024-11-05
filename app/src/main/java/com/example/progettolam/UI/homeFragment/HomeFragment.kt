@@ -12,12 +12,9 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.preference.PreferenceManager
 import com.example.progettolam.DB.ActivityRepository
 import com.example.progettolam.DB.ActivityString
 import com.example.progettolam.DB.ActivityType
@@ -26,7 +23,10 @@ import com.example.progettolam.DB.ActivityViewModelFactory
 import com.example.progettolam.R
 import com.example.progettolam.UI.Activities.OnGoingPlaceholder
 import com.example.progettolam.services.LocationWorkerScheduler
+import java.time.Duration
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 class HomeFragment: Fragment() {
     private lateinit var chairButton: ImageButton
@@ -34,7 +34,7 @@ class HomeFragment: Fragment() {
     private lateinit var runButton: ImageButton
     private lateinit var driveButton: ImageButton
     private lateinit var valueStepToday: TextView
-    private lateinit var valueTimeToday: TextView
+    private lateinit var valueIntervalTimeLastActTextView: TextView
     private lateinit var typeLastActTextView: TextView
     private lateinit var typeLastActImageView: ImageView
 
@@ -85,7 +85,7 @@ class HomeFragment: Fragment() {
         driveButton = view.findViewById(R.id.driveButton)
         chairButton = view.findViewById(R.id.chairButton)
         valueStepToday = view.findViewById(R.id.valueWalkTextView)
-        valueTimeToday = view.findViewById(R.id.valueTimerTextView)
+        valueIntervalTimeLastActTextView = view.findViewById(R.id.timeIntervalTextView)
         typeLastActTextView = view.findViewById(R.id.typeLastActTextView)
         typeLastActImageView = view.findViewById(R.id.imgLastAct)
 
@@ -112,9 +112,32 @@ class HomeFragment: Fragment() {
         activityViewModel.getLastActivityLiveData().observe(viewLifecycleOwner) { lastActivity ->
             if (lastActivity != null) {
                 typeLastActTextView.text = getFormattedTypeActivity(lastActivity.baseActivity.activityType!!)
+                val duration = calculateDuration(lastActivity.baseActivity.startDate!!, lastActivity.baseActivity.startTime!!, lastActivity.baseActivity.endDate!!, lastActivity.baseActivity.endTime!!)
+                valueIntervalTimeLastActTextView.text = getFormattedTimeInterval(duration)
                 updateImageLastActivity(lastActivity.baseActivity.activityType!!)
             }
         }
+    }
+
+    private fun calculateDuration(startDate: LocalDate, startTime: LocalTime, endDate: LocalDate, endTime: LocalTime): Duration {
+        val start: LocalDateTime = LocalDateTime.of(startDate, startTime)
+        val end: LocalDateTime = LocalDateTime.of(endDate, endTime)
+        return Duration.between(start,end)
+    }
+
+    private fun getFormattedTimeInterval(duration: Duration) : String {
+        val days = duration.toDays().toInt()
+        val hours = (duration.toHours() % 24).toInt()
+        val minutes = (duration.toMinutes() % 60).toInt()
+        val seconds = (duration.seconds % 60).toInt()
+
+        val time = if (days != 0) {
+            "${"%02d".format(days)}:${"%02d".format(hours)}:${"%02d".format(minutes)}:${"%02d".format(seconds)}"
+        } else {
+            // If days are zero, exclude them
+            "${"%02d".format(hours)}:${"%02d".format(minutes)}:${"%02d".format(seconds)}"
+        }
+        return time
     }
 
     private fun updateImageLastActivity(type: ActivityType) {

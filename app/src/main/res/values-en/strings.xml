@@ -88,7 +88,7 @@
     <string name="record_some_activities">Record some activities</string>
     <string name="tracking_location">Tracking your location…</string>
 
-    <string name="stats_4_today">Stats for today</string>
+    <string name="steps_4_today">Steps for today</string>
     <string name="last_activity_done">Last activity done</string>
 
     <string name="OnGoingNotification">There is an on going activity</string>
