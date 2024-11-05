@@ -125,4 +125,8 @@
     <string name="register_some_activities">Registra delle attività</string>
     <string name="tracking_location">Tracciando la tua posizione…</string>
     <string name="geofence_tracking" translatable="false">Geofence tracking</string>
+
+    <string name="OnGoingNotification">C\'è un attività in corso</string>
+    <string name="StopNotification">C\'è un attività in pausa</string>
+
 </resources>

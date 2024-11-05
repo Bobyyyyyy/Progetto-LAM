@@ -166,9 +166,9 @@ class TimerService: Service() {
 
     private fun buildNotification(): Notification {
         val title = if (isStopWatchRunning) {
-            "Stopwatch is running!"
+            getString(R.string.OnGoingNotification)
         } else {
-            "Stopwatch is paused!"
+            getString(R.string.StopNotification)
         }
 
         val hours: Int = timeElapsed.div(60).div(60)
@@ -190,7 +190,7 @@ class TimerService: Service() {
                 }"
             )
             .setColorized(true)
-            .setColor(Color.parseColor("#BEAEE2"))
+            .setColor(getColor(R.color.primary))
             .setSmallIcon(R.drawable.baseline_person_24)
             .setOnlyAlertOnce(true)
             .setContentIntent(pIntent)
