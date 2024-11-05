@@ -79,7 +79,7 @@
     <string name="sunday">Sun</string>
 
     <string name="show_others_activities">Show others activities</string>
-    w
+    <string name="show_yours_activities">Show yours activities</string>
     <string name="add_new_activity">Add new activity</string>
 
     <string name="no_activity_registered">You have not registered any activity yet</string>

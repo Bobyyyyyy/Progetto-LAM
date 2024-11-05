@@ -56,44 +56,6 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="@dimen/radius_card_view"
-                    android:layout_weight="1"
-                    android:layout_margin="@dimen/margin_card_view">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/secondary"
-                        android:padding="@dimen/padding_constraint_layout">
-
-                    <TextView
-                            android:text="@string/speed_tag"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/speedTextView"
-                            style="@style/card_activity_title"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                            android:text="@string/default_speed"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/valueSpeedTextView"
-                            style="@style/card_activity_stat"
-                            app:layout_constraintStart_toStartOf="@+id/speedTextView"
-                            app:layout_constraintEnd_toEndOf="@+id/speedTextView"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/speedTextView"
-                            android:layout_marginTop="@dimen/space_between_title_value_card_activity" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-
         </LinearLayout>
 
         <LinearLayout
@@ -163,28 +125,27 @@
                         android:padding="@dimen/padding_constraint_layout">
 
                     <TextView
-                            android:text="@string/calories_tag"
+                            android:text="@string/speed_tag"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/caloriesTextView"
-                            android:layout_weight="1"
+                            android:id="@+id/speedTextView"
                             style="@style/card_activity_title"
-                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                            android:text="@string/default_calories"
+                            android:text="@string/default_speed"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/valueCaloriesTextView"
-                            android:layout_weight="1"
+                            android:id="@+id/valueSpeedTextView"
                             style="@style/card_activity_stat"
-                            app:layout_constraintEnd_toEndOf="@+id/caloriesTextView"
+                            app:layout_constraintStart_toStartOf="@+id/speedTextView"
+                            app:layout_constraintEnd_toEndOf="@+id/speedTextView"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/caloriesTextView"
-                            app:layout_constraintStart_toStartOf="@+id/caloriesTextView"
+                            app:layout_constraintTop_toBottomOf="@+id/speedTextView"
                             android:layout_marginTop="@dimen/space_between_title_value_card_activity" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 

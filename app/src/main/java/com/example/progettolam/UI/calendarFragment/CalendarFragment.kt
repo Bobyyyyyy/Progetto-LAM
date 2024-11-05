@@ -81,17 +81,16 @@ class CalendarFragment: Fragment() {
 
         activityViewModel.selectedDate?.let {
             calendarView.notifyDateChanged(it)
-
         }
 
         activityViewModel.imported.observe(requireActivity()) {
             imported = it
             calendarView.notifyCalendarChanged()
+            importedButton.text = if (imported) getString(R.string.show_yours_activities) else getString(R.string.show_others_activities)
         }
 
         importedButton.setOnClickListener {
             activityViewModel.setImported(!imported)
-            importedButton.text = if (imported) getString(R.string.show_yours_activities) else getString(R.string.show_others_activities)
         }
 
         calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
