@@ -8,17 +8,22 @@
     <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:layout_editor_absoluteY="1dp"
-            tools:layout_editor_absoluteX="1dp">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
 
             <TextView
-                    android:text="registra una attivita"
+                    style="@style/detail_activity_type_title"
+                    android:text="@string/record_some_activities"
+                    android:textAlignment="center"
+                    android:layout_marginTop="@dimen/margin_card_view_chose_activity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/recordActivityTitleTextView" />
@@ -26,7 +31,10 @@
             <include layout="@layout/card_chose_activity_2_start" />
 
             <TextView
-                    android:text="statistiche di oggi"
+                    android:text="@string/stats_4_today"
+                    android:textAlignment="center"
+                    android:layout_marginTop="@dimen/margin_card_view_chose_activity"
+                    style="@style/detail_activity_type_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/statsTodayTextView" />
@@ -45,47 +53,52 @@
                         android:padding="@dimen/padding_constraint_layout_chose_activity">
 
                     <TextView
-                            android:text="TextView"
+                            android:text="@string/steps_tag"
+                            style="@style/detail_activity_time_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/walkTextView"
-                            app:layout_constraintStart_toEndOf="@+id/af43443"
+                            app:layout_constraintStart_toEndOf="@+id/stepImage"
                             android:layout_marginStart="16dp"
-                            app:layout_constraintTop_toTopOf="@+id/af43443"
-                            app:layout_constraintBottom_toBottomOf="@+id/af43443" />
+                            app:layout_constraintTop_toTopOf="@+id/stepImage"
+                            app:layout_constraintBottom_toBottomOf="@+id/stepImage" />
 
                     <TextView
-                            android:text="TextView"
+                            android:text="@string/time_tag"
+                            style="@style/detail_activity_time_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/textView"
+                            android:id="@+id/timerTextView"
                             app:layout_constraintStart_toStartOf="@+id/walkTextView"
-                            app:layout_constraintTop_toTopOf="@+id/imageView2"
-                            app:layout_constraintBottom_toBottomOf="@+id/imageView2" />
+                            app:layout_constraintTop_toTopOf="@+id/clockImage"
+                            app:layout_constraintBottom_toBottomOf="@+id/clockImage" />
 
                     <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/circle_4_time"
+                            android:background="@drawable/circle_background"
                             android:padding="12dp"
                             app:srcCompat="@drawable/clock_icon"
-                            android:id="@+id/imageView2"
-                            app:layout_constraintStart_toStartOf="@+id/af43443"
-                            app:layout_constraintTop_toBottomOf="@+id/af43443"
-                            android:layout_marginTop="24dp" />
+                            android:id="@+id/clockImage"
+                            app:layout_constraintStart_toStartOf="@+id/stepImage"
+                            app:layout_constraintTop_toBottomOf="@+id/stepImage"
+                            android:layout_marginTop="24dp"
+                            app:layout_constraintBottom_toBottomOf="parent" />
 
                     <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/circle_4_steps"
+                            android:background="@drawable/circle_background"
                             android:padding="12dp"
                             app:srcCompat="@drawable/shoe_icon"
-                            android:id="@+id/af43443"
+                            android:id="@+id/stepImage"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toTopOf="@+id/clockImage" />
 
                     <TextView
-                            android:text="TextView"
+                            android:text="@string/no_info"
+                            style="@style/detail_activity_stats_value"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/valueWalkTextView"
@@ -95,12 +108,13 @@
                             app:layout_constraintBottom_toBottomOf="@+id/walkTextView" />
 
                     <TextView
-                            android:text="TextView"
+                            android:text="@string/no_info"
+                            style="@style/detail_activity_stats_value"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/textView10"
-                            app:layout_constraintTop_toTopOf="@+id/textView"
-                            app:layout_constraintBottom_toBottomOf="@+id/textView"
+                            android:id="@+id/valueTimerTextView"
+                            app:layout_constraintTop_toTopOf="@+id/timerTextView"
+                            app:layout_constraintBottom_toBottomOf="@+id/timerTextView"
                             app:layout_constraintStart_toStartOf="@+id/valueWalkTextView"
                             app:layout_constraintEnd_toEndOf="@+id/valueWalkTextView" />
 
@@ -109,10 +123,12 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                    android:text="ultima attivita"
+                    android:text="@string/last_activity_done"
+                    android:textAlignment="center"
+                    style="@style/detail_activity_type_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView6" />
+                    android:id="@+id/lastActivity" />
 
             <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -128,30 +144,31 @@
                         android:padding="@dimen/padding_constraint_layout_chose_activity">
 
                     <TextView
-                            android:text="TextView"
+                            android:text="@string/no_info"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/textView3fe"
-                            tools:layout_editor_absoluteY="18dp"
-                            app:layout_constraintStart_toEndOf="@+id/af43s443"
-                            android:layout_marginStart="16dp" />
+                            android:id="@+id/typeLastActTextView"
+                            style="@style/detail_activity_time_date"
+                            app:layout_constraintStart_toEndOf="@+id/imgLastAct"
+                            android:layout_marginStart="16dp"
+                            app:layout_constraintTop_toTopOf="@+id/imgLastAct"
+                            app:layout_constraintBottom_toBottomOf="@+id/imgLastAct" />
 
                     <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/circle_4_steps"
+                            android:background="@drawable/circle_background"
                             android:padding="12dp"
-                            app:srcCompat="@drawable/shoe_icon"
-                            android:id="@+id/af43s443"
+                            app:srcCompat="@drawable/cross_vector_icon"
+                            android:id="@+id/imgLastAct"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>
-
-
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

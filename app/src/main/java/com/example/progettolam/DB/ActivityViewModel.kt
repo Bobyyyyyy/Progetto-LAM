@@ -121,6 +121,13 @@ class ActivityViewModel(private val repository: ActivityRepository): ViewModel()
         return repository.importActivitiesFromCSV(uri,context)
     }
 
+    fun getLastActivity(): ActivityJoin? {
+        return repository.getLastActivity()
+    }
+
+    fun getLastActivityLiveData(): LiveData<ActivityJoin?> {
+        return repository.getLastActivityLiveData()
+    }
 
 
 }

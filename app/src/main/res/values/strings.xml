@@ -120,9 +120,12 @@
     <string name="add_new_activity">Aggiungi attività</string>
 
     <string name="no_activity_registered">Non hai registrato ancora attività</string>
-    <string name="register_first_activity">Registra la tua prima attività</string>
+    <string name="record_first_activity">Registra la tua prima attività</string>
     <string name="you_are_still">Sei fermo da un po\'!</string>
-    <string name="register_some_activities">Registra delle attività</string>
+    <string name="record_some_activities">Registra delle attività</string>
     <string name="tracking_location">Tracciando la tua posizione…</string>
     <string name="geofence_tracking" translatable="false">Geofence tracking</string>
+
+    <string name="stats_4_today">Statistiche di oggi</string>
+    <string name="last_activity_done">Ultima attivita fatta</string>
 </resources>

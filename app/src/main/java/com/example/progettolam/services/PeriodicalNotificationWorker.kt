@@ -1,22 +1,15 @@
 package com.example.progettolam.services
 
 import android.Manifest
-import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.example.progettolam.DB.ActivityDatabase
-import com.example.progettolam.MainActivity
 import com.example.progettolam.R
 import java.time.LocalTime
 
@@ -53,7 +46,7 @@ class PeriodicalNotificationWorker(context: Context, param: WorkerParameters) :
         if(lastActivity == null ) {
             val notification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
                 .setContentTitle(applicationContext.getString(R.string.no_activity_registered))
-                .setContentText(applicationContext.getString(R.string.register_some_activities))
+                .setContentText(applicationContext.getString(R.string.record_some_activities))
                 .setSmallIcon(R.drawable.baseline_person_24)
                 .build()
 
@@ -63,7 +56,7 @@ class PeriodicalNotificationWorker(context: Context, param: WorkerParameters) :
         else if(lastActivity.baseActivity.endTime?.isBefore(LocalTime.now().minusMinutes(15)) == true ) {
             val notification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
                 .setContentTitle(applicationContext.getString(R.string.you_are_still))
-                .setContentText(applicationContext.getString(R.string.register_some_activities))
+                .setContentText(applicationContext.getString(R.string.record_some_activities))
                 .setSmallIcon(R.drawable.baseline_person_24)
                 .build()
 

@@ -43,6 +43,13 @@ class ActivityRepository(app: Application) {
         return activityDao.insertSittingActivity(sittingActivity)
     }
 
+    fun getLastActivity(): ActivityJoin? {
+        return activityDao.getLastActivity()
+    }
+
+    fun getLastActivityLiveData(): LiveData<ActivityJoin?> {
+        return activityDao.getLastActivityLiveData()
+    }
 
     fun getAllActivities(startDate: LocalDate?, imported: Boolean): LiveData<List<ActivityJoin>> {
         return activityDao.getListOfActivities(startDate, imported)

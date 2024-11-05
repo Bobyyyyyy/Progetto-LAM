@@ -82,9 +82,12 @@
     <string name="show_yours_activities">Show yours activities</string>
     <string name="add_new_activity">Add new activity</string>
 
-    <string name="no_activity_registered">You have not registered any activity yet</string>
-    <string name="register_first_activity">Register your first activity</string>
+    <string name="no_activity_registered">You have not recorded any activity yet</string>
+    <string name="record_first_activity">Record your first activity</string>
     <string name="you_are_still">You’ve been quiet for a while!</string>
-    <string name="register_some_activities">Records activities</string>
+    <string name="record_some_activities">Record some activities</string>
     <string name="tracking_location">Tracking your location…</string>
+
+    <string name="stats_4_today">Stats for today</string>
+    <string name="last_activity_done">Last activity done</string>
 </resources>
