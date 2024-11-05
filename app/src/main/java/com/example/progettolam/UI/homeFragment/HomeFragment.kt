@@ -42,7 +42,7 @@ class HomeFragment: Fragment() {
         val factory = ActivityViewModelFactory(ActivityRepository(requireActivity().application))
         ViewModelProvider(this, factory)[ActivityViewModel::class.java]
     }
-    
+
     private val locationPermissionRequest = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->

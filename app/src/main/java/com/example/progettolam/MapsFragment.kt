@@ -111,7 +111,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             .setWaitForAccurateLocation(true)
             .setMinUpdateIntervalMillis(2500)
             .build()
-
     }
 
     @SuppressLint("MissingPermission")

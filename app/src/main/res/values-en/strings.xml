@@ -90,4 +90,7 @@
 
     <string name="stats_4_today">Stats for today</string>
     <string name="last_activity_done">Last activity done</string>
+
+    <string name="OnGoingNotification">There is an on going activity</string>
+    <string name="StopNotification">There is a paused activity</string>
 </resources>

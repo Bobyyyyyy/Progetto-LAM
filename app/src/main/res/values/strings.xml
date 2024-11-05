@@ -128,4 +128,8 @@
 
     <string name="stats_4_today">Statistiche di oggi</string>
     <string name="last_activity_done">Ultima attivita fatta</string>
+
+    <string name="OnGoingNotification">C\'è un attività in corso</string>
+    <string name="StopNotification">C\'è un attività in pausa</string>
+
 </resources>

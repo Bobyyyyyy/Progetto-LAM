@@ -1,7 +1,10 @@
 package com.example.progettolam.UI.geofenceFragment
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,12 +15,15 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ToggleButton
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.progettolam.R
-import yuku.ambilwarna.AmbilWarnaDialog;
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.example.progettolam.DB.GeofenceRepository
+import com.example.progettolam.R
+import com.example.progettolam.services.LocationWorkerScheduler
+import yuku.ambilwarna.AmbilWarnaDialog
 
 
 class GeofenceFragment : Fragment() {
@@ -26,6 +32,7 @@ class GeofenceFragment : Fragment() {
         val factory = GeofenceViewModelFactory(GeofenceRepository(requireActivity().application))
         ViewModelProvider(requireActivity(),factory)[GeofenceMapViewModel::class.java]
     }
+
 
     private lateinit var mPickColorButton: Button
     private var mColorPreview: View? = null
@@ -46,6 +53,7 @@ class GeofenceFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
 
         // Initialize the UI elements
@@ -77,27 +85,22 @@ class GeofenceFragment : Fragment() {
             geofenceMapViewModel.setSelectedToggleRemove(isChecked)
         }
 
+
+
+
     }
 
-    /**
-     * the dialog functionality is handled separately using openColorPickerDialog this is triggered as
-     * soon as the user clicks on the Pick Color button And the AmbilWarnaDialog has 2 methods to be overridden
-     * those are onCancel and onOk which handle the "Cancel" and "OK" button of color picker dialog
-     */
     private fun openColorPickerDialogue() {
         val colorPickerDialogue = AmbilWarnaDialog(requireContext(), mDefaultColor,
             object : AmbilWarnaDialog.OnAmbilWarnaListener {
                 override fun onCancel(dialog: AmbilWarnaDialog?) {
-                    // Leave this function body as blank, as the dialog automatically closes when clicked on cancel button
                 }
                 override fun onOk(dialog: AmbilWarnaDialog?, color: Int) {
-                    // Change the mDefaultColor to the selected color when OK is clicked
                     mDefaultColor = color
                     val background = mColorPreview?.background
                     if (background is GradientDrawable) {
                         background.setColor(mDefaultColor)
                     }
-                    // Update the selected color in the ViewModel
                     geofenceMapViewModel.setSelectedColor(mDefaultColor)
                     Log.i("COLORE_GEO", "selectedColor: $mDefaultColor")
                 }
