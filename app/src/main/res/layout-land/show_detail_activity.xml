@@ -27,12 +27,11 @@
                 android:layout_height="wrap_content"
                 android:text="@string/no_info"
                 style="@style/detail_activity_time_date"
-                app:layout_constraintTop_toBottomOf="@+id/typeActivityTextView"
-                app:layout_constraintStart_toStartOf="parent"
                 android:textSize="20sp"
-                android:layout_marginTop="24dp"
                 app:layout_constraintEnd_toStartOf="@+id/intervalTimeTextView"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/typeActivityTextView"
+                app:layout_constraintStart_toEndOf="@+id/typeActivityTextView"
+                app:layout_constraintBottom_toBottomOf="@+id/typeActivityTextView" />
 
         <TextView
                 android:text="@string/no_info"
