@@ -103,15 +103,6 @@ class HomeFragment: Fragment() {
     }
 
 
-    override fun onStart() {
-        super.onStart()
-    }
-
-    override fun onPause() {
-        super.onPause()
-    }
-
-
 
     private fun activityButtonListener(view: View) {
 

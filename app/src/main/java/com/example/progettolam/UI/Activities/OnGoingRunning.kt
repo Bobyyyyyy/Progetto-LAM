@@ -1,8 +1,12 @@
 package com.example.progettolam.UI.Activities
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.progettolam.DB.ActivityType
 import com.example.progettolam.DB.BaseActivity
@@ -14,6 +18,18 @@ import java.time.LocalTime
 
 
 class OnGoingRunning : OnGoingActivity() {
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ){ isGranted: Boolean ->
+        if(isGranted) {
+            startActivity()
+        }
+
+        else {
+            super.startActivity()
+        }
+    }
 
     private lateinit var stepsCounter: TextView
     private lateinit var speedText: TextView
@@ -82,10 +98,24 @@ class OnGoingRunning : OnGoingActivity() {
     }
 
     override fun startActivity() {
-        super.startActivity()
-        startSteps()
-    }
 
+        if (ContextCompat.checkSelfPermission
+                (this, Manifest.permission.ACTIVITY_RECOGNITION) !=
+            PackageManager.PERMISSION_GRANTED) {
+            requestPermissionLauncher.launch(Manifest.permission.ACTIVITY_RECOGNITION)
+        }
+
+        else {
+            super.startActivity()
+            if(isPaused) {
+                resumeStepsSensor()
+            }
+            else {
+                startSteps()
+            }
+        }
+
+    }
     override fun stopActivity() {
         super.stopActivity()
         stopSensor()

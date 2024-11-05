@@ -2,9 +2,11 @@ package com.example.progettolam.UI.Activities
 
 import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.progettolam.DB.ActivityType
 import com.example.progettolam.DB.BaseActivity
@@ -20,10 +22,21 @@ import java.time.LocalTime
 
 class OnGoingWalking : OnGoingActivity() {
 
-    private lateinit var stepsCounter: TextView
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var locationCallback: LocationCallback
 
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ){ isGranted: Boolean ->
+        if(isGranted) {
+            startActivity()
+        }
+
+        else {
+            super.startActivity()
+        }
+    }
+
+
+    private lateinit var stepsCounter: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.recording_stats_with_map_activity)
@@ -50,26 +63,6 @@ class OnGoingWalking : OnGoingActivity() {
 
         }
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
-        //va messo prima o messo l'accesso nella onresult sennò crasha
-        val locationPermissionRequest = registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions()
-        ) { permissions ->
-            when {
-                permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
-                    // Precise location access granted.
-                }
-                permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
-                    // Only approximate location access granted.
-                } else -> {
-                // No location access granted.
-            }
-            }
-        }
-        locationPermissionRequest.launch(arrayOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION))
     }
 
 
@@ -103,8 +96,23 @@ class OnGoingWalking : OnGoingActivity() {
     }
 
     override fun startActivity() {
-        super.startActivity()
-        startSteps()
+
+        if (ContextCompat.checkSelfPermission
+                (this, Manifest.permission.ACTIVITY_RECOGNITION) !=
+            PackageManager.PERMISSION_GRANTED) {
+            requestPermissionLauncher.launch(Manifest.permission.ACTIVITY_RECOGNITION)
+        }
+
+        else {
+            super.startActivity()
+            if(isPaused) {
+                resumeStepsSensor()
+            }
+            else {
+                startSteps()
+            }
+        }
+
     }
 
     override fun stopActivity() {

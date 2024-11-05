@@ -73,7 +73,7 @@ class StepCounter : SensorEventListener, Service(){
         if(stepCounterSensor != null) {
             val stepsIntent = Intent()
             stepsIntent.action = STEP_STATUS
-            stepsIntent.putExtra(TOTAL_STEPS, totalSteps)
+            stepsIntent.putExtra(TOTAL_STEPS, totalSteps.toInt())
             sendBroadcast(stepsIntent)
         }
 
