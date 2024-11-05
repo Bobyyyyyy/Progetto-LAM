@@ -50,6 +50,10 @@ class ProfileFragment: Fragment() {
     private lateinit var importBtn: ImageView
     private lateinit var heightView: TextView
     private lateinit var weightView: TextView
+    private lateinit var valueWalkTextView: TextView
+    private lateinit var valueRunTextView: TextView
+    private lateinit var valueChillTextView: TextView
+    private lateinit var valueDriveTextView: TextView
     private lateinit var barChart: BarChart
     private lateinit var pieChart: PieChart
 
@@ -83,6 +87,11 @@ class ProfileFragment: Fragment() {
 
         barChart = view.findViewById(R.id.chart2)
         pieChart = view.findViewById(R.id.chart3)
+
+        valueWalkTextView = view.findViewById(R.id.valueWalkTextView)
+        valueRunTextView = view.findViewById(R.id.valueRunTextView)
+        valueChillTextView = view.findViewById(R.id.valueChillTextView)
+        valueDriveTextView = view.findViewById(R.id.valueDriveTextView)
 
         createFileLauncher = registerForActivityResult(ActivityResultContracts.CreateDocument("text/csv")) { uri: Uri? ->
             uri?.let {
@@ -256,12 +265,30 @@ class ProfileFragment: Fragment() {
         return formattedType
     }
 
+    private fun updateUiValueTypeActivity(type: ActivityType, value: Int) {
+        when (type) {
+            ActivityType.WALKING -> {
+                valueWalkTextView.text = value.toString()
+            }
+            ActivityType.RUNNING -> {
+                valueRunTextView.text = value.toString()
+            }
+            ActivityType.DRIVING -> {
+                valueDriveTextView.text = value.toString()
+            }
+            ActivityType.STILL -> {
+                valueChillTextView.text = value.toString()
+            }
+        }
+    }
+
     private fun createPieCharDate(data: Array<ActivitiesGraphData>): PieData {
         val entries: MutableList<PieEntry> = ArrayList()
         val sumActivities = data.sumOf { it.number }
 
-        for ( entry in data ) {
+        for (entry in data) {
             entries.add(PieEntry(((entry.number.toFloat() / sumActivities.toFloat()) * 100), getFormattedTypeActivity(entry.type)))
+            updateUiValueTypeActivity(entry.type, entry.number)
         }
         val set = PieDataSet(entries, "")
         set.colors = arrayListOf(Color.GREEN, Color.RED, Color.BLUE, Color.MAGENTA)

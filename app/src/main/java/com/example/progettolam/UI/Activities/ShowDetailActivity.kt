@@ -46,7 +46,7 @@ class ShowDetailActivity(): Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         idActivity = arguments?.getString("idActivity")
-        return inflater.inflate(R.layout.show_deatil_activity, container, false)
+        return inflater.inflate(R.layout.show_detail_activity, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
