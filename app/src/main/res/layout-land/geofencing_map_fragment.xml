@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background">
+
+    <!-- Top Description TextView aligned above the CardView -->
+    <TextView
+            android:id="@+id/topDescriptionTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:textAlignment="center"
+            android:text="@string/geofence_top_description"
+            style="@style/description_text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/cardView"
+            app:layout_constraintEnd_toEndOf="@+id/cardView"
+            android:layout_marginEnd="32dp" />
+
+    <!-- CardView placed below topDescriptionTextView -->
+    <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_card_view_chose_activity"
+            app:cardCornerRadius="@dimen/radius_card_view"
+            app:layout_constraintTop_toBottomOf="@id/topDescriptionTextView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/map_container">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_constraint_layout"
+                android:background="@color/secondary">
+
+            <TextView
+                    android:id="@+id/insertRadiusLengthTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/radius_description"
+                    style="@style/insert_text_description"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/colorCircleTextView" />
+
+            <TextView
+                    android:id="@+id/colorCircleTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="24dp"
+                    android:text="@string/color_circle_description"
+                    style="@style/insert_text_description"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/insertRadiusLengthTextView"
+                    app:layout_constraintEnd_toStartOf="@+id/preview_selected_color"
+                    app:layout_constraintBottom_toTopOf="@+id/removingGeofenceTextView" />
+
+            <View
+                    android:id="@+id/preview_selected_color"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/circle_color_picker"
+                    app:layout_constraintStart_toEndOf="@id/colorCircleTextView"
+                    app:layout_constraintTop_toTopOf="@id/colorCircleTextView"
+                    app:layout_constraintBottom_toBottomOf="@id/colorCircleTextView" />
+
+            <Button
+                    android:id="@+id/changeColorButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/change_color_button"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/primary"
+                    app:layout_constraintStart_toEndOf="@+id/preview_selected_color"
+                    app:layout_constraintTop_toTopOf="@+id/colorCircleTextView"
+                    app:layout_constraintBottom_toBottomOf="@+id/colorCircleTextView"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            <EditText
+                    android:id="@+id/radiusLengthEditTextNumberSigned"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="500"
+                    android:hint="500"
+                    android:inputType="number"
+                    android:ems="6"
+                    app:layout_constraintTop_toTopOf="@id/insertRadiusLengthTextView"
+                    app:layout_constraintBottom_toBottomOf="@id/insertRadiusLengthTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/insertRadiusLengthTextView" />
+
+            <TextView
+                    android:id="@+id/removingGeofenceTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/switch_removing_geofence_button"
+                    style="@style/insert_text_description"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/colorCircleTextView" />
+
+            <ToggleButton
+                    android:id="@+id/toggleRemovingGeofenceButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/primary"
+                    app:layout_constraintStart_toEndOf="@+id/removingGeofenceTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/removingGeofenceTextView"
+                    app:layout_constraintBottom_toBottomOf="@id/removingGeofenceTextView" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Map Container on the right side of the screen -->
+    <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/map_container"
+            android:name="com.example.progettolam.UI.geofenceFragment.GeofenceMapFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="12dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cardView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

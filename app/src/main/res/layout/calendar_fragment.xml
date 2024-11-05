@@ -15,7 +15,8 @@
             android:gravity="center"
             android:layout_margin="20dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     <include
             android:id="@+id/titlesContainer"
