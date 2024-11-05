@@ -46,7 +46,7 @@ class OnGoingResting: OnGoingActivity() {
                 viewModel.getActivityType(),
                 viewModel.startTime,
                 viewModel.startDate,
-                viewModel.endTime,
+                viewModel.startTime?.plusSeconds(timeElapsed.toLong()),
                 viewModel.endDate
             ),
             SittingActivity(null)

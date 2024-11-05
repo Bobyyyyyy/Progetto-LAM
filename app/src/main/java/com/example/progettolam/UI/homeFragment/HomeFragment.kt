@@ -1,6 +1,7 @@
 package com.example.progettolam.UI.homeFragment
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -25,9 +27,30 @@ import com.example.progettolam.services.LocationWorkerScheduler
 
 class HomeFragment: Fragment() {
 
+    private val locationPermissionRequest = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        when {
+            permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
+                LocationWorkerScheduler(requireContext(),true)
+            }
+            permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
+                LocationWorkerScheduler(requireContext(),false)
+            } else -> {
+        }
+        }
+    }
+
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ){}
+    ){ isGranted: Boolean ->
+        if(isGranted) {
+            locationPermissionRequest.launch(arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION))
+
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,39 +81,18 @@ class HomeFragment: Fragment() {
         }
 
 
-
-
         if (ContextCompat.checkSelfPermission
                 (requireActivity(), Manifest.permission.POST_NOTIFICATIONS) !=
             PackageManager.PERMISSION_GRANTED) {
-            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            requestNotificationPermission()
         }
-
-        if (ContextCompat.checkSelfPermission
-                (requireActivity(), Manifest.permission.ACTIVITY_RECOGNITION) !=
+        else if (ContextCompat.checkSelfPermission
+                (requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) !=
             PackageManager.PERMISSION_GRANTED) {
-            requestPermissionLauncher.launch(Manifest.permission.ACTIVITY_RECOGNITION)
+            locationPermissionRequest.launch(arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION))
         }
-
-        //va messo prima o messo l'accesso nella onresult sennò crasha
-        val locationPermissionRequest = registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions()
-        ) { permissions ->
-            when {
-                permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
-                    LocationWorkerScheduler(requireContext(),true)
-                }
-                permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
-                    LocationWorkerScheduler(requireContext(),false)
-                } else -> {
-            }
-            }
-        }
-        locationPermissionRequest.launch(arrayOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION))
-
-
 
         walkButton.setOnClickListener { activityButtonListener(it)}
         driveButton.setOnClickListener { activityButtonListener(it)}
@@ -133,4 +135,21 @@ class HomeFragment: Fragment() {
         startActivity(intent)
     }
 
+
+    fun requestNotificationPermission() {
+        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.POST_NOTIFICATIONS)
+            != PackageManager.PERMISSION_GRANTED) {
+
+            // Mostra un dialogo esplicativo prima di chiedere il permesso
+            AlertDialog.Builder(requireContext())
+                .setTitle("Attiva le Notifiche")
+                .setMessage("Abilitando le notifiche, possiamo inviarti notifiche periodiche e aggiornarti sulle attività in corso.")
+                .setPositiveButton("Concedi") { _, _ ->
+                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
+                .setNegativeButton("Annulla", null)
+                .create()
+                .show()
+        }
+    }
 }

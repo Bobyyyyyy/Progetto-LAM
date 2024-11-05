@@ -25,9 +25,9 @@ interface ActivityDao {
 
     @Transaction
     @Query("""SELECT sum(tot_steps) FROM
-             (SELECT sum(steps) as tot_steps FROM base_activity_table JOIN WalkingActivity_table ON id=activityId WHERE endDate = :endDate
+             (SELECT sum(steps) as tot_steps FROM base_activity_table JOIN WalkingActivity_table ON id=activityId WHERE endDate = :endDate AND imported = false
                 UNION
-              SELECT sum(steps) as tot_steps FROM base_activity_table JOIN RunningActivity_table ON id=activityId WHERE endDate = :endDate)
+              SELECT sum(steps) as tot_steps FROM base_activity_table JOIN RunningActivity_table ON id=activityId WHERE endDate = :endDate AND imported = false)
             """)
     fun getAllStepsFromDay(endDate: LocalDate?) : LiveData<Int?>
 
@@ -45,14 +45,14 @@ FROM (
     FROM base_activity_table
     JOIN WalkingActivity_table ON id = activityId
     WHERE endDate >= DATE(:today, '-6 days', 'weekday 0') 
-      AND endDate <= DATE(:today, 'weekday 6')
+      AND endDate <= DATE(:today, 'weekday 6') AND imported = false 
     GROUP BY endDate
     UNION ALL
     SELECT endDate, SUM(steps) AS tot_steps
     FROM base_activity_table
     JOIN RunningActivity_table ON id = activityId
     WHERE endDate >= DATE(:today, '-6 days', 'weekday 0') 
-      AND endDate <= DATE(:today, 'weekday 6')
+      AND endDate <= DATE(:today, 'weekday 6') AND imported = false
     GROUP BY endDate
 ) AS steps_per_day
 GROUP BY steps_per_day.endDate
@@ -67,7 +67,7 @@ ORDER BY steps_per_day.endDate ASC;
 @Query("""
     SELECT activityType as type, COUNT(*) AS number
     FROM base_activity_table
-     WHERE endDate >= DATE(:today, '-6 days', 'weekday 0') AND endDate <= DATE(:today, 'weekday 6')
+     WHERE endDate >= DATE(:today, '-6 days', 'weekday 0') AND endDate <= DATE(:today, 'weekday 6') AND imported = false
     GROUP BY activityType;
 """)
     fun getCurrentWeekActivities(today: LocalDate?): LiveData<Array<ActivitiesGraphData>>
@@ -106,6 +106,9 @@ ORDER BY steps_per_day.endDate ASC;
     @Query("SELECT * FROM base_activity_table WHERE id = :id")
     fun getInfoActivityByID(id: Long?): LiveData<ActivityJoin>
 
+    @Transaction
+    @Query("SELECT * FROM base_activity_table WHERE id = :id")
+    fun getActivityByID(id: Long?): ActivityJoin
 
     @Transaction
     @Query("SELECT * FROM base_activity_table WHERE imported = false ORDER BY id DESC LIMIT 1")

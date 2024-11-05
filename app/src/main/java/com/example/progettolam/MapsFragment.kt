@@ -82,6 +82,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     val speed = msTOkm(location.speed)
                     if (roundCoordinates(location.latitude, location.longitude) != roundCoordinates(previousPosition.latitude,previousPosition.longitude)) {
                         if (speed >= SPEED_THRESHOLD && speed != currentSpeed) {
+                            previousPosition = LatLng(location.latitude,location.longitude)
                             currentSpeed = speed
                             if(isStarted) {
                                 viewModel.addSpeed(currentSpeed)
@@ -166,8 +167,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
     private fun roundCoordinates(latitude: Double, longitude: Double): LatLng {
         return LatLng(
-            ((latitude * 10000).roundToInt() / 10000.0f).toDouble(),
-            ((longitude * 10000).roundToInt() / 10000.0f).toDouble()
+            ((latitude * 100000).roundToInt() / 100000.0f).toDouble(),
+            ((longitude * 100000).roundToInt() / 100000.0f).toDouble()
         )
     }
 

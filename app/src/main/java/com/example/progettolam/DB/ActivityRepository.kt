@@ -89,8 +89,12 @@ class ActivityRepository(app: Application) {
         if(walkingActivities.isNotEmpty()) {
             csvBuilder.append("activityId,steps,avgSpeed\n")
             walkingActivities.forEach { activity ->
+                val base = activityDao.getActivityByID(activity.activityId)
+
+                if (base.baseActivity.imported != true ) {
                 csvBuilder.append("${activity.activityId},${activity.steps},${activity.avgSpeed}")
                 csvBuilder.append("\n")
+                }
             }
             csvBuilder.append("\n")
 
@@ -102,8 +106,12 @@ class ActivityRepository(app: Application) {
         if(runningActivities.isNotEmpty()) {
             csvBuilder.append("activityId,steps,avgSpeed\n")
             runningActivities.forEach { activity ->
-                csvBuilder.append("${activity.activityId},${activity.steps},${activity.avgSpeed}")
-                csvBuilder.append("\n")
+                val base = activityDao.getActivityByID(activity.activityId)
+
+                if (base.baseActivity.imported != true ) {
+                    csvBuilder.append("${activity.activityId},${activity.steps},${activity.avgSpeed}")
+                    csvBuilder.append("\n")
+                }
             }
             csvBuilder.append("\n")
 
@@ -116,8 +124,12 @@ class ActivityRepository(app: Application) {
             csvBuilder.append("activityId\n")
 
             sittingActivities.forEach { activity ->
-                csvBuilder.append("${activity.activityId}")
-                csvBuilder.append("\n")
+                val base = activityDao.getActivityByID(activity.activityId)
+
+                if (base.baseActivity.imported != true ) {
+                    csvBuilder.append("${activity.activityId}")
+                    csvBuilder.append("\n")
+                }
             }
             csvBuilder.append("\n")
 
@@ -128,9 +140,14 @@ class ActivityRepository(app: Application) {
 
 
         if(drivingActivities.isNotEmpty()) {
+
             csvBuilder.append("activityId,avgSpeed\n")
             drivingActivities.forEach { activity ->
-                csvBuilder.append("${activity.activityId}, ${activity.avgSpeed}")
+                val base = activityDao.getActivityByID(activity.activityId)
+
+                if (base.baseActivity.imported != true ) {
+                    csvBuilder.append("${activity.activityId}, ${activity.avgSpeed}")
+                }
             }
             csvBuilder.append("\n")
         }
@@ -160,18 +177,20 @@ class ActivityRepository(app: Application) {
                 line = reader.readLine()
                 while (line != null && line.isNotEmpty()) {
                     val parts = line.split(",")
-                    // Assumendo che i campi siano nell'ordine corretto
-                    val activity = BaseActivity(
-                        id = parts[0].toLong(),
-                        imported = true,
-                        author = parts[2],
-                        activityType = parts[3].toActivityType(),
-                        startTime = LocalTime.parse(parts[4]),
-                        startDate = LocalDate.parse(parts[5]),
-                        endTime = LocalTime.parse(parts[6]),
-                        endDate = LocalDate.parse(parts[7])
-                    )
-                    activityDao.insertBaseActivity(activity) // Inserisci nel database
+                    if(parts[1] != "true") {
+                        // Assumendo che i campi siano nell'ordine corretto
+                        val activity = BaseActivity(
+                            id = parts[0].toLong(),
+                            imported = true,
+                            author = parts[2],
+                            activityType = parts[3].toActivityType(),
+                            startTime = LocalTime.parse(parts[4]),
+                            startDate = LocalDate.parse(parts[5]),
+                            endTime = LocalTime.parse(parts[6]),
+                            endDate = LocalDate.parse(parts[7])
+                        )
+                        activityDao.insertBaseActivity(activity)
+                    }
                     line = reader.readLine()
                 }
             }
