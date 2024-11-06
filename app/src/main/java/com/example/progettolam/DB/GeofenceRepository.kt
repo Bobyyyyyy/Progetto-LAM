@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 
 class GeofenceRepository(app: Application) {
-
     private var geofenceDao: GeofenceInfoDao
 
     init {
@@ -17,15 +16,10 @@ class GeofenceRepository(app: Application) {
     }
 
     fun insertGeofence(geofenceInfo: GeofenceInfo) {
-
         geofenceDao.insertGeofence(geofenceInfo)
     }
 
     fun deleteGeofence(id: String) {
         return geofenceDao.deleteGeofence(id)
     }
-
-
-
-
 }

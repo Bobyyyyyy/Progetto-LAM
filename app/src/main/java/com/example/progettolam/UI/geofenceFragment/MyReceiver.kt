@@ -3,7 +3,6 @@ package com.example.progettolam.UI.geofenceFragment
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
 import android.os.Looper
 import android.util.Log
 import android.widget.Toast
@@ -15,19 +14,17 @@ import com.google.android.gms.location.GeofencingEvent
 
 
 class MyReceiver : BroadcastReceiver() {
+
+    // Called when the BroadcastReceiver is receiving an Intent broadcast.
     override fun onReceive(context: Context, intent: Intent) {
-        // TODO: This method is called when the BroadcastReceiver is receiving
-        // an Intent broadcast.
         val notificationHelper: NotificationHelper = NotificationHelper(context)
         val geofencingEvent = checkNotNull(GeofencingEvent.fromIntent(intent))
+
         if (geofencingEvent.hasError()) {
-            Log.d("TAG", "onReceive: Error receiving geofence event...")
+            Log.d("Error", "onReceive: Error receiving geofence event...")
             return
         }
-        val geofenceList = geofencingEvent.triggeringGeofences
-        for (geofence in geofenceList!!) {
-            Log.d("TAG", "onReceive: " + geofence.requestId)
-        }
+
         val transitionType = geofencingEvent.geofenceTransition
         when (transitionType) {
             Geofence.GEOFENCE_TRANSITION_ENTER -> {

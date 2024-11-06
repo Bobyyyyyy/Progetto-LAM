@@ -52,8 +52,7 @@ class HomeFragment: Fragment() {
             }
             permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
                 LocationWorkerScheduler(requireContext(),false)
-            } else -> {
-        }
+            } else -> {}
         }
     }
 
@@ -64,7 +63,6 @@ class HomeFragment: Fragment() {
             locationPermissionRequest.launch(arrayOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION))
-
         }
     }
 
@@ -73,7 +71,6 @@ class HomeFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return inflater.inflate(R.layout.home_fragment, container, false)
     }
 
@@ -109,6 +106,7 @@ class HomeFragment: Fragment() {
         activityViewModel.getAllStepsFromDay(LocalDate.now()).observe(viewLifecycleOwner) { step ->
             valueStepToday.text = step?.toString() ?: "0"
         }
+
         activityViewModel.getLastActivityLiveData().observe(viewLifecycleOwner) { lastActivity ->
             if (lastActivity != null) {
                 typeLastActTextView.text = getFormattedTypeActivity(lastActivity.baseActivity.activityType!!)
@@ -164,34 +162,24 @@ class HomeFragment: Fragment() {
         val intent = Intent(requireActivity(), OnGoingPlaceholder::class.java)
 
         when(view.id) {
-            R.id.walkButton -> {
-                intent.putExtra(ActivityString.ACTIVITY_TYPE, ActivityType.WALKING.toString())
-            }
-            R.id.runButton -> {
-                intent.putExtra(ActivityString.ACTIVITY_TYPE, ActivityType.RUNNING.toString())
-            }
-            R.id.chairButton -> {
-                intent.putExtra(ActivityString.ACTIVITY_TYPE, ActivityType.STILL.toString())
-            }
-            R.id.driveButton -> {
-                intent.putExtra(ActivityString.ACTIVITY_TYPE, ActivityType.DRIVING.toString())
-            }
+            R.id.walkButton -> intent.putExtra(ActivityString.ACTIVITY_TYPE, ActivityType.WALKING.toString())
+            R.id.runButton -> intent.putExtra(ActivityString.ACTIVITY_TYPE, ActivityType.RUNNING.toString())
+            R.id.chairButton -> intent.putExtra(ActivityString.ACTIVITY_TYPE, ActivityType.STILL.toString())
+            R.id.driveButton -> intent.putExtra(ActivityString.ACTIVITY_TYPE, ActivityType.DRIVING.toString())
         }
         startActivity(intent)
     }
 
-
-    fun requestNotificationPermission() {
+    private fun requestNotificationPermission() {
         if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-
-            // Mostra un dialogo esplicativo prima di chiedere il permesso
+            // Show an explanatory dialog before asking for permission
             AlertDialog.Builder(requireContext())
-                .setTitle("Attiva le Notifiche")
-                .setMessage("Abilitando le notifiche, possiamo inviarti notifiche periodiche e aggiornarti sulle attività in corso.")
-                .setPositiveButton("Concedi") { _, _ ->
+                .setTitle(getString(R.string.enable_notification))
+                .setMessage(getString(R.string.enable_notification_description))
+                .setPositiveButton(getString(R.string.approve)) { _, _ ->
                     requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
-                .setNegativeButton("Annulla", null)
+                .setNegativeButton(getString(R.string.cancel_button), null)
                 .create()
                 .show()
         }

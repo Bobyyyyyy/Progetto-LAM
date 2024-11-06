@@ -34,13 +34,12 @@ open class OnGoingActivity: AppCompatActivity() {
     protected lateinit var pauseButton: Button
     protected lateinit var endButton: Button
     protected lateinit var viewModel: OnGoingViewModel
+    protected lateinit var storedName: String
+
     protected var isBound: Boolean = false
     protected var isStarted: Boolean = false
     protected var isPaused: Boolean = false
     protected var timeElapsed: Int = -1
-
-    protected lateinit var storedName: String
-
 
     val activityViewModel by lazy {
         val factory = ActivityViewModelFactory(ActivityRepository(this.application))
@@ -58,10 +57,8 @@ open class OnGoingActivity: AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        var sharedPref: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-
-        var value = resources.getString(R.string.preferences_username_default)
-        storedName = sharedPref.getString(getString(R.string.preferences_username), value).toString()
+        val sharedPref: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        storedName = sharedPref.getString(getString(R.string.preferences_username), resources.getString(R.string.preferences_username_default)).toString()
         super.onCreate(savedInstanceState)
     }
 
@@ -69,8 +66,7 @@ open class OnGoingActivity: AppCompatActivity() {
         super.onStart()
         if (isBound) {
             timerService.moveToBackground()
-        }
-        else {
+        } else {
             val service = Intent(this,TimerService::class.java)
             startService(service)
             bindService(service, serviceConnection, BIND_AUTO_CREATE)
@@ -82,8 +78,6 @@ open class OnGoingActivity: AppCompatActivity() {
         registerTimeReceiver()
     }
 
-
-
     override fun onPause() {
         super.onPause()
         if(!isChangingConfigurations) {
@@ -91,7 +85,6 @@ open class OnGoingActivity: AppCompatActivity() {
             unregisterReceiver(timeReceiver)
         }
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
@@ -101,10 +94,8 @@ open class OnGoingActivity: AppCompatActivity() {
         }
     }
 
-
     protected open fun startActivity() {
         timerService.startStopwatch()
-
     }
 
     protected open fun stopActivity() {
@@ -124,9 +115,7 @@ open class OnGoingActivity: AppCompatActivity() {
         timer.text = time
     }
 
-
     private fun registerTimeReceiver() {
-
         val timeFilter = IntentFilter()
         timeFilter.addAction(TimerService.STOPWATCH_TICK)
         timeReceiver = object : BroadcastReceiver() {
@@ -134,9 +123,7 @@ open class OnGoingActivity: AppCompatActivity() {
                 viewModel.changeTime(intent?.getIntExtra(TimerService.TIME_ELAPSED,0)!!)
             }
         }
-
         registerReceiver(timeReceiver,timeFilter, RECEIVER_EXPORTED)
-
     }
 
     protected fun registerStepReceiver() {
@@ -147,10 +134,8 @@ open class OnGoingActivity: AppCompatActivity() {
                 viewModel.setTotalSteps(intent?.getIntExtra(StepCounter.TOTAL_STEPS,0)!!)
             }
         }
-
         registerReceiver(stepReceiver,stepFilter,RECEIVER_EXPORTED)
     }
-
 
     protected open fun initViews() {
         startButton = findViewById(R.id.startButton)
@@ -160,16 +145,13 @@ open class OnGoingActivity: AppCompatActivity() {
     }
 
     protected fun setupListeners() {
-
         viewModel.isStarted.observe(this) {
             isStarted = it
 
             if (it == false) {
                 startButton.visibility = View.VISIBLE
                 pauseButton.visibility = View.INVISIBLE
-            }
-
-            else {
+            } else {
                 startButton.visibility = View.INVISIBLE
                 endButton.visibility = View.VISIBLE
                 pauseButton.visibility = View.VISIBLE
@@ -178,7 +160,6 @@ open class OnGoingActivity: AppCompatActivity() {
 
         viewModel.isPaused.observe(this) {
             isPaused = it
-
             if(it == true) {
                 endButton.visibility = View.VISIBLE
             }
@@ -193,7 +174,6 @@ open class OnGoingActivity: AppCompatActivity() {
                 viewModel.setStarted(true)
                 startActivity()
             }
-
         }
 
         pauseButton.setOnClickListener {
@@ -213,7 +193,4 @@ open class OnGoingActivity: AppCompatActivity() {
             updateStopwatchValue(it)
         }
     }
-
-
-
 }

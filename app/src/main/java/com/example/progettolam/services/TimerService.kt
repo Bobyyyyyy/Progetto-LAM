@@ -8,7 +8,6 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
@@ -21,20 +20,18 @@ import java.util.Timer
 import java.util.TimerTask
 
 class TimerService: Service() {
+    private var timeElapsed: Int = -1
+    private var isStopWatchRunning = false
+    private lateinit var notificationManagerCompat: NotificationManagerCompat
+
+    private var updateTimer = Timer()
+    private var stopwatchTimer = Timer()
+    private val binder = TimerBinder()
 
     companion object {
         const val CHANNEL_ID = "Timer_Notifications"
 
-        // Service Actions
-        const val START = "START"
-        const val PAUSE = "PAUSE"
-        const val END = "END"
-        const val GET_STATUS = "GET_STATUS"
-        const val MOVE_TO_FOREGROUND = "MOVE_TO_FOREGROUND"
-        const val MOVE_TO_BACKGROUND = "MOVE_TO_BACKGROUND"
-
         // Intent Extras
-        const val TIMER_ACTION = "TIMER_ACTION"
         const val TIME_ELAPSED = "TIME_ELAPSED"
         const val IS_TIMER_RUNNING = "IS_TIMER_RUNNING"
 
@@ -43,19 +40,10 @@ class TimerService: Service() {
         const val STOPWATCH_STATUS = "STOPWATCH_STATUS"
 
     }
-    private var timeElapsed: Int = -1
-    var isStopWatchRunning = false
-    private lateinit var notificationManagerCompat: NotificationManagerCompat
-
-    private var updateTimer = Timer()
-    private var stopwatchTimer = Timer()
-
 
     inner class TimerBinder: Binder() {
         fun getService(): TimerService { return this@TimerService}
     }
-
-    private val binder = TimerBinder()
 
     override fun onBind(intent: Intent?): IBinder {
         return binder
@@ -65,23 +53,19 @@ class TimerService: Service() {
         return START_STICKY
     }
 
-
     override fun onCreate() {
         getNotificationManager()
         createChannel()
         super.onCreate()
     }
 
-
     fun moveToForeground() {
-
         if (isStopWatchRunning) {
             startForeground(1,buildNotification())
             updateTimer = Timer()
             updateTimer.schedule(object : TimerTask() {
                 override fun run() {
                     updateNotification()
-
                 }
             }, 0, 1000)
         }
@@ -89,23 +73,18 @@ class TimerService: Service() {
 
     fun startStopwatch() {
         isStopWatchRunning = true
-
         sendStatus()
-
         stopwatchTimer = Timer()
         stopwatchTimer.schedule(object : TimerTask() {
             override fun run() {
                 val stopwatchIntent = Intent()
                 stopwatchIntent.action = STOPWATCH_TICK
-
                 timeElapsed++
-
                 stopwatchIntent.putExtra(TIME_ELAPSED, timeElapsed)
                 sendBroadcast(stopwatchIntent)
             }
         }, 0, 1000)
     }
-
 
     fun pauseStopwatch() {
         stopwatchTimer.cancel()
@@ -127,8 +106,6 @@ class TimerService: Service() {
         stopSelf()
     }
 
-
-
     private fun sendStatus() {
         val statusIntent = Intent()
         statusIntent.action = STOPWATCH_STATUS
@@ -137,11 +114,7 @@ class TimerService: Service() {
         sendBroadcast(statusIntent)
     }
 
-
-
-    /*
-    funzioni per notifiche
-     */
+    /* Notification functions */
 
     private fun createChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -161,8 +134,6 @@ class TimerService: Service() {
             notificationManagerCompat = NotificationManagerCompat.from(this)
         }
     }
-
-
 
     private fun buildNotification(): Notification {
         val title = if (isStopWatchRunning) {
@@ -198,19 +169,9 @@ class TimerService: Service() {
             .build()
     }
 
-
     private fun updateNotification() {
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.POST_NOTIFICATIONS
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            notificationManagerCompat.notify(
-                1,
-                buildNotification()
-            )
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            notificationManagerCompat.notify(1, buildNotification())
         }
-
     }
-
 }

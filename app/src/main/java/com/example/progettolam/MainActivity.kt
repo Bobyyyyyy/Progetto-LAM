@@ -44,26 +44,6 @@ class MainActivity : AppCompatActivity() {
             changeFragment(HomeFragment(), R.id.homeMenu.toString())
         }
 
-        val fragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
-        val tag = fragment?.tag
-/*
-    TODO: contrallare come selezionare il fragment in base
-            alla tag che sia condiviso in qualche modo tra le due navigation Bar
-        if(navigationRail == null) {
-            if (tag != null) {
-                bottomNavigation?.selectedItemId = tag.toInt()
-            }
-        }
-        else {
-            if(tag != null) {
-                navigationRail?.selectedItemId = tag.toInt()
-            }
-        }
-
- */
-
-
-
         // Set the appropriate listener based on the active navigation view
         navigationRail?.setOnItemSelectedListener { menuItem ->
             navbarListener(menuItem)
@@ -72,7 +52,6 @@ class MainActivity : AppCompatActivity() {
             navbarListener(menuItem)
         }
     }
-
 
     override fun onResume() {
         super.onResume()
@@ -93,8 +72,6 @@ class MainActivity : AppCompatActivity() {
         }
         return true
     }
-
-
 
     private fun changeFragment(fragment: Fragment, tag: String) {
         val currentFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
@@ -121,5 +98,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 }

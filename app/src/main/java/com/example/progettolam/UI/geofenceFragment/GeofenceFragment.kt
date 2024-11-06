@@ -1,10 +1,7 @@
 package com.example.progettolam.UI.geofenceFragment
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,24 +12,18 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ToggleButton
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.example.progettolam.DB.GeofenceRepository
 import com.example.progettolam.R
-import com.example.progettolam.services.LocationWorkerScheduler
 import yuku.ambilwarna.AmbilWarnaDialog
 
 
 class GeofenceFragment : Fragment() {
-
     private val geofenceMapViewModel by lazy {
         val factory = GeofenceViewModelFactory(GeofenceRepository(requireActivity().application))
         ViewModelProvider(requireActivity(),factory)[GeofenceMapViewModel::class.java]
     }
-
 
     private lateinit var mPickColorButton: Button
     private var mColorPreview: View? = null
@@ -53,7 +44,6 @@ class GeofenceFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         super.onViewCreated(view, savedInstanceState)
 
         // Initialize the UI elements
@@ -74,7 +64,7 @@ class GeofenceFragment : Fragment() {
                 if (radius != null && radius >= MIN_RADIUS && radius <= MAX_RADIUS) {
                     geofenceMapViewModel.setSelectedRadius(radius)
                 } else {
-                    radiusEditText.error = "Please enter a value between $MIN_RADIUS and $MAX_RADIUS"
+                    radiusEditText.error = getString(R.string.error_radius)
                 }
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -84,10 +74,6 @@ class GeofenceFragment : Fragment() {
         removeGeofenceToggleButton.setOnCheckedChangeListener { _, isChecked ->
             geofenceMapViewModel.setSelectedToggleRemove(isChecked)
         }
-
-
-
-
     }
 
     private fun openColorPickerDialogue() {
@@ -102,7 +88,6 @@ class GeofenceFragment : Fragment() {
                         background.setColor(mDefaultColor)
                     }
                     geofenceMapViewModel.setSelectedColor(mDefaultColor)
-                    Log.i("COLORE_GEO", "selectedColor: $mDefaultColor")
                 }
             })
         colorPickerDialogue.show()

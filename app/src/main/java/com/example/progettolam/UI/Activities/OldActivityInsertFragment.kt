@@ -43,6 +43,7 @@ class OldActivityInsertFragment: Fragment() {
     private lateinit var txtDate: TextView
     private lateinit var txtStartTime: TextView
     private lateinit var txtEndTime: TextView
+
     private var mYear: Int = 0
     private var mMonth: Int = 0
     private var mDay: Int = 0
@@ -184,7 +185,6 @@ class OldActivityInsertFragment: Fragment() {
         try {
             localTime = LocalTime.parse(textView.text.toString(), timeFormatter)
         } catch (e: Exception) {
-            // Handle parsing error (e.g., if the times are not set correctly)
             Log.i("LocalTime", "Error")
         }
         return localTime
@@ -196,7 +196,6 @@ class OldActivityInsertFragment: Fragment() {
         try {
             localDate = LocalDate.parse(textView.text, dateFormatter)
         } catch (e: Exception) {
-            // Handle parsing error (e.g., if the times are not set correctly)
             Log.i("LocalTime", "Error")
         }
         return localDate
@@ -318,5 +317,4 @@ class OldActivityInsertFragment: Fragment() {
             requireActivity().supportFragmentManager.popBackStackImmediate()
         }
     }
-
 }

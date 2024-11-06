@@ -16,27 +16,21 @@ import java.time.LocalTime
 class PeriodicalNotificationWorker(context: Context, param: WorkerParameters) :
     CoroutineWorker(context, param) {
     companion object {
-        val workName = "PeriodicalNotification"
-        private const val TAG = "PeriodicalNotificationWorker"
+        const val WORK_NAME = "PeriodicalNotification"
+        const val CHANNEL_NAME = "PeriodicalNotification"
         private const val CHANNEL_ID = "Periodical_notification"
-        private const val NOTIFICATION_ID = 3
     }
 
     private val db = ActivityDatabase.getDB(context)
 
     override suspend fun doWork(): Result {
-
-        if (ActivityCompat.checkSelfPermission(
-                applicationContext,
-                Manifest.permission.POST_NOTIFICATIONS,
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
+        if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.POST_NOTIFICATIONS,) != PackageManager.PERMISSION_GRANTED) {
             return Result.failure()
         }
 
         val notificationManager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val channel = NotificationChannel(CHANNEL_ID, "Periodical Notificationn", NotificationManager.IMPORTANCE_DEFAULT)
+        val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
         notificationManager.createNotificationChannel(channel)
 
         val activityDao = db.activityDao()
@@ -63,13 +57,8 @@ class PeriodicalNotificationWorker(context: Context, param: WorkerParameters) :
             notificationManager.notify(1001, notification)
         }
 
-
-
-
-
         return Result.success()
     }
-
 }
 
 

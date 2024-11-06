@@ -5,16 +5,14 @@ enum class ActivityType {
 }
 
 fun String.toActivityType(): ActivityType? {
-    return when (this.uppercase()) {  // Converte la stringa in maiuscolo per un confronto non sensibile al caso
+    return when (this.uppercase()) { // Convert the string to uppercase for a non-case-sensitive comparison
         "WALKING" -> ActivityType.WALKING
         "RUNNING" -> ActivityType.RUNNING
         "DRIVING" -> ActivityType.DRIVING
         "STILL" -> ActivityType.STILL
-        else -> null // Restituisce null se non c'è corrispondenza
+        else -> null
     }
 }
-
-
 
 data object ActivityString {
     const val ACTIVITY_TYPE = "ACTIVITY_TYPE"

@@ -18,16 +18,11 @@ class PreferencesFragment: PreferenceFragmentCompat() {
         const val MAX_WEIGHT = 300
     }
 
-
-
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.user_preferences, rootKey)
 
-
         val heightPreference: EditTextPreference? = findPreference(getString(R.string.preferences_height))
-
         val weightPreference: EditTextPreference? = findPreference(getString(R.string.preferences_height))
-
 
         heightPreference?.setOnBindEditTextListener { editText ->
             editText.inputType = InputType.TYPE_CLASS_NUMBER
@@ -62,7 +57,6 @@ class PreferencesFragment: PreferenceFragmentCompat() {
 
             }
 
-
         findPreference<EditTextPreference>(getString(R.string.preferences_weight))
             ?.setOnPreferenceChangeListener { _, newValue ->
                 if(newValue.toString().toIntOrNull() in MIN_WEIGHT..MAX_WEIGHT) {
@@ -74,13 +68,6 @@ class PreferencesFragment: PreferenceFragmentCompat() {
                     false
                 }
             }
-
-
-
-
     }
-
-
-
 }
 

@@ -1,9 +1,7 @@
 package com.example.progettolam.DB
 
 import androidx.room.Embedded
-import androidx.room.Entity
 import androidx.room.Relation
-import androidx.room.TypeConverter
 
 data class ActivityJoin(
     @Embedded val baseActivity: BaseActivity,

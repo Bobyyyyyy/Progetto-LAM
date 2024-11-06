@@ -1,6 +1,5 @@
 package com.example.progettolam.DB
 
-import android.app.Activity
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert

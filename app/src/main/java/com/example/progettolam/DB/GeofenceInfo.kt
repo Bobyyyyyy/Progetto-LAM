@@ -2,7 +2,6 @@ package com.example.progettolam.DB
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.android.gms.maps.model.LatLng
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "geofence_info")

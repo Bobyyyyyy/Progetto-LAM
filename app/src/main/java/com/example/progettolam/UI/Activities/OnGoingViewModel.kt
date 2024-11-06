@@ -1,6 +1,5 @@
 package com.example.progettolam.UI.Activities
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -39,6 +38,15 @@ class OnGoingViewModel: ViewModel() {
     private val _speedList = MutableLiveData<MutableList<Float>>(mutableListOf())
     val speedList: LiveData<MutableList<Float>> get() = _speedList
 
+    private val _isStarted = MutableLiveData<Boolean>().apply {
+        value = false
+    }
+    val isStarted : LiveData<Boolean> = _isStarted
+
+    private val _isPaused = MutableLiveData<Boolean>().apply {
+        value = false
+    }
+    val isPaused : LiveData<Boolean> = _isPaused
 
     fun changeTime(int: Int) {
         _timeElapsed.value = int
@@ -64,34 +72,18 @@ class OnGoingViewModel: ViewModel() {
         return _activityType.value
     }
 
-    private val _isStarted = MutableLiveData<Boolean>().apply {
-        value = false
-    }
-
-    val isStarted : LiveData<Boolean> = _isStarted
-
     fun setStarted(value: Boolean) {
         _isStarted.value = value
     }
-
-    private val _isPaused = MutableLiveData<Boolean>().apply {
-        value = false
-    }
-
-    val isPaused : LiveData<Boolean> = _isPaused
 
     fun setPaused(value: Boolean) {
         _isPaused.value = value
     }
 
-
-
     fun addSpeed(value: Float) {
         val currentSpeedList = _speedList.value ?: mutableListOf()
         currentSpeedList.add(value)
-        Log.d("SpeedViewModel", "Aggiungo velocità: $value")
         _speedList.postValue(currentSpeedList)
-        Log.d("SpeedViewModel", "Nuova lista velocità: ${_speedList.value}")
     }
 
     fun getAverageSpeed(): Float {
@@ -99,8 +91,6 @@ class OnGoingViewModel: ViewModel() {
         if (speedList.isNullOrEmpty()) {
             return 0f
         }
-        val sum = speedList.sum()
-        return sum / speedList.size
+        return speedList.sum() / speedList.size
     }
-
 }

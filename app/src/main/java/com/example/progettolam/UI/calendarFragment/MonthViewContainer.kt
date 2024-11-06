@@ -2,7 +2,6 @@ package com.example.progettolam.UI.calendarFragment
 
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.example.progettolam.R
 import com.kizitonwose.calendar.view.ViewContainer
 

@@ -15,33 +15,16 @@ import java.time.LocalDate
 import java.time.YearMonth
 
 class ActivityViewModel(private val repository: ActivityRepository): ViewModel() {
-
     var currentMonth: YearMonth = YearMonth.now()
-
     var selectedDate: LocalDate? = LocalDate.now()
 
     private val _imported = MutableLiveData<Boolean>().apply {
         value = false
     }
-
     val imported: LiveData<Boolean> = _imported
 
     fun setImported(value: Boolean) {
         _imported.value = value
-    }
-
-    private val _id = MutableLiveData<Long>().apply {
-        value = null
-    }
-
-    val id: LiveData<Long> = _id
-
-    private fun changeId(value: Long) {
-        _id.value = value
-    }
-
-    fun returnId(): Long? {
-        return _id.value
     }
 
     private fun insertBaseActivity(baseActivity: BaseActivity): Long {
@@ -54,7 +37,6 @@ class ActivityViewModel(private val repository: ActivityRepository): ViewModel()
                 val id = insertBaseActivity(baseActivity)
                 walkingActivity.activityId = id
                 repository.insertWalkingActivity(walkingActivity)
-
             }
         }
     }
@@ -98,10 +80,6 @@ class ActivityViewModel(private val repository: ActivityRepository): ViewModel()
         return repository.getAllStepsFromDay(date)
     }
 
-    fun getAllActivities(activityType: ActivityType?): LiveData<List<ActivityJoin>> {
-        return repository.getActivitiesFromType(activityType)
-    }
-
     fun getInfoActivityByID(id: Long?): LiveData<ActivityJoin> {
         return repository.getInfoActivityByID(id)
     }
@@ -121,15 +99,9 @@ class ActivityViewModel(private val repository: ActivityRepository): ViewModel()
         return repository.importActivitiesFromCSV(uri,context)
     }
 
-    fun getLastActivity(): ActivityJoin? {
-        return repository.getLastActivity()
-    }
-
     fun getLastActivityLiveData(): LiveData<ActivityJoin?> {
         return repository.getLastActivityLiveData()
     }
-
-
 }
 
 

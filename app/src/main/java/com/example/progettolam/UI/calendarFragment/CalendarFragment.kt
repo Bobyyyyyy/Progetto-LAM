@@ -32,12 +32,9 @@ import java.time.format.TextStyle
 import java.util.Locale
 
 class CalendarFragment: Fragment() {
-    private lateinit var viewModel: ActivityViewModel
     private lateinit var calendarView: com.kizitonwose.calendar.view.CalendarView
     private lateinit var recyclerActivity: RecyclerView
     private lateinit var monthView: TextView
-    //private lateinit var addActivityButton: FloatingActionButton
-    //private lateinit var importedButton: FloatingActionButton
     private lateinit var addActivityButton: Button
     private lateinit var importedButton: Button
     private var imported = false
@@ -114,7 +111,6 @@ class CalendarFragment: Fragment() {
                     container.textView.visibility = View.VISIBLE
 
                     if (data.date == activityViewModel.selectedDate) {
-
                         activityViewModel.getAllActivities(activityViewModel.selectedDate, imported).observe(requireActivity()) { newActivities ->
                             activityAdapter.apply {
                                 activities = newActivities
@@ -185,7 +181,6 @@ class CalendarFragment: Fragment() {
             }
         }
     }
-
 
     private fun changeFragment(fragment: Fragment, tag: String) {
         val currentFragment = parentFragmentManager.findFragmentById(R.id.fragmentContainerView)

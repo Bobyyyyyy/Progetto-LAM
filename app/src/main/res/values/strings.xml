@@ -60,6 +60,7 @@
 
     <string name="geofence_top_description">Tieni premuto sulla mappa per aggiungere aree di controllo. Tocca sui markers per eliminarle</string>
     <string name="radius_description">Inserisci il raggio in metri</string>
+    <string name="error_radius">Inserisci un valore compreso tra 100 e 2000 metri</string>
     <string name="color_circle_description">Colore cerchio</string>
     <string name="change_color_button">Cambia colore</string>
     <string name="switch_removing_geofence_button">Attiva rimozione geofence</string>
@@ -127,9 +128,15 @@
     <string name="geofence_tracking" translatable="false">Geofence tracking</string>
 
     <string name="steps_4_today">Passi di oggi</string>
-    <string name="last_activity_done">Ultima attivita fatta</string>
+    <string name="last_activity_done">Ultima attività fatta</string>
 
     <string name="OnGoingNotification">C\'è un attività in corso</string>
     <string name="StopNotification">C\'è un attività in pausa</string>
 
+    <string name="activity_permission">Permesso di Riconoscimento delle Attività</string>
+    <string name="activity_permission_description">Per fornirti una migliore esperienza, l\'app necessita del riconoscimento delle attività fisiche. In questo modo possiamo personalizzare le funzionalità in base al tuo livello di attività.</string>
+    <string name="approve">Concedi</string>
+
+    <string name="enable_notification">Abilita notifiche</string>
+    <string name="enable_notification_description">Abilitando le notifiche, possiamo inviarti notifiche periodiche e aggiornarti sulle attività in corso.</string>
 </resources>

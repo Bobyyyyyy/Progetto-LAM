@@ -3,15 +3,11 @@ package com.example.progettolam.services
 import android.content.Context
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import java.util.concurrent.TimeUnit
-import kotlin.time.Duration
 
 fun PeriodicalNotificationScheduler(context: Context, intervalMinutes: Long) {
-
     val workRequest = PeriodicWorkRequestBuilder<PeriodicalNotificationWorker>(
         intervalMinutes,
         TimeUnit.MINUTES
@@ -19,12 +15,10 @@ fun PeriodicalNotificationScheduler(context: Context, intervalMinutes: Long) {
         Constraints.Builder()
             .build()).build()
 
-    // Programma il worker
+    // Program the worker
     WorkManager.getInstance(context).enqueueUniquePeriodicWork(
-        PeriodicalNotificationWorker.workName,
+        PeriodicalNotificationWorker.WORK_NAME,
         ExistingPeriodicWorkPolicy.KEEP,
         workRequest
     )
-
-
 }

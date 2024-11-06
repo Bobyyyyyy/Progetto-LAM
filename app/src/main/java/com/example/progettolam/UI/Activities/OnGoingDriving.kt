@@ -6,13 +6,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.progettolam.DB.ActivityType
 import com.example.progettolam.DB.BaseActivity
 import com.example.progettolam.DB.DrivingActivity
-import com.example.progettolam.DB.RunningActivity
 import com.example.progettolam.R
 import java.time.LocalDate
 import java.time.LocalTime
 
 class OnGoingDriving: OnGoingActivity() {
-
     private lateinit var speedText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +23,6 @@ class OnGoingDriving: OnGoingActivity() {
         initViews()
         setupListeners()
 
-
         endButton.setOnClickListener {
             viewModel.endDate = LocalDate.now()
             viewModel.endTime = LocalTime.now()
@@ -37,15 +34,12 @@ class OnGoingDriving: OnGoingActivity() {
             finish()
         }
 
-
         viewModel.speedList.observe(this) {
             if(it.isNotEmpty()) {
                 speedText.text = it.last().toString()
             }
         }
-
     }
-
 
     private fun registerActivity() {
         activityViewModel.insertDrivingActivity(
@@ -63,12 +57,8 @@ class OnGoingDriving: OnGoingActivity() {
         )
     }
 
-
     override fun initViews() {
         super.initViews()
         speedText = findViewById(R.id.valueSpeedTextView)
     }
-
-
-
 }

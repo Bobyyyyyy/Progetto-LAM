@@ -3,35 +3,31 @@ package com.example.progettolam
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
-import android.location.Location
-import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.progettolam.UI.Activities.OnGoingViewModel
+import com.example.progettolam.databinding.ActivityMapsBinding
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.example.progettolam.databinding.ActivityMapsBinding
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationResult
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.Priority
 import kotlin.math.roundToInt
 
 
 class MapsFragment : Fragment(), OnMapReadyCallback {
-
     private lateinit var viewModel: OnGoingViewModel
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var mMap: GoogleMap
@@ -58,9 +54,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         viewModel = ViewModelProvider(requireActivity())[OnGoingViewModel::class.java]
-
         viewModel.isStarted.observe(requireActivity()) {
             isStarted = it
         }
@@ -79,7 +73,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     return
                 }
                 for (location in p0.locations) {
-                    val speed = msTOkm(location.speed)
+                    val speed = ms2kmh(location.speed)
                     if (roundCoordinates(location.latitude, location.longitude) != roundCoordinates(previousPosition.latitude,previousPosition.longitude)) {
                         if (speed >= SPEED_THRESHOLD && speed != currentSpeed) {
                             previousPosition = LatLng(location.latitude,location.longitude)
@@ -88,14 +82,12 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                                 viewModel.addSpeed(currentSpeed)
                             }
                         }
-
                         mMap.animateCamera(
                             CameraUpdateFactory.newLatLngZoom(
                                 LatLng(location.latitude, location.longitude), 15f
                             )
                         )
-                    }
-                    else {
+                    } else {
                         if (currentSpeed != 0f) {
                             currentSpeed = 0f
                             if(isStarted) {
@@ -123,42 +115,36 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             if (task.isSuccessful) {
                 val lastLocation = task.result
                 previousPosition = LatLng(lastLocation.latitude, lastLocation.longitude)
-                currentSpeed = msTOkm(lastLocation.speed)
+                currentSpeed = ms2kmh(lastLocation.speed)
                 if (lastLocation != null) {
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                        LatLng(lastLocation!!.latitude,
-                            lastLocation!!.longitude), 15.toFloat()))
+                        LatLng(lastLocation.latitude,
+                            lastLocation.longitude), 15.toFloat()))
 
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(lastLocation!!.latitude,
-                        lastLocation!!.longitude), 15.toFloat()))
-                     }
-
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(lastLocation.latitude, lastLocation.longitude), 15.toFloat()))
                 }
-
-                else {
+            } else {
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(-34.0,151.0),15.toFloat()))
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(-34.0,
                     151.0), 15.toFloat()))
-                }
             }
+        }
     }
-
 
     private fun updateLocationUI() {
         if (mMap == null) {
             return
         }
         try {
-            mMap?.isMyLocationEnabled = true
-            mMap?.uiSettings?.isMyLocationButtonEnabled = true
-
-
+            mMap.isMyLocationEnabled = true
+            mMap.uiSettings.isMyLocationButtonEnabled = true
         } catch (e: SecurityException) {
             Log.e("Exception: %s", e.message, e)
         }
     }
 
-    private fun msTOkm (value: Float): Float {
+    // Convert the speed from m/s to km/h
+    private fun ms2kmh (value: Float): Float {
         val speedInKm = value * 3.6f
         Log.i("SpeedViewModel", value.toString())
         return (speedInKm * 10).roundToInt() / 10.0f
@@ -186,7 +172,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             }
 
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
-
 
         } catch (e: Exception) {
             Log.e("Exception: %s", e.message, e )

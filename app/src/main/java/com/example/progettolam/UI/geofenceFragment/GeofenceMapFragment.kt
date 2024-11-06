@@ -41,7 +41,6 @@ import com.google.android.gms.tasks.OnFailureListener
 
 
 class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongClickListener {
-
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var geofencingClient: GeofencingClient
@@ -54,6 +53,7 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
         val factory = GeofenceViewModelFactory(GeofenceRepository(requireActivity().application))
         ViewModelProvider(requireActivity(),factory)[GeofenceMapViewModel::class.java]
     }
+
     private var selectedColor: Int = Color.rgb(255, 0, 0) // Default circle color
     private var selectedRadius: Int = 500 // Default circle radius
     private var selectedToggleRemove: Boolean = false
@@ -70,7 +70,6 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = ActivityMapsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -122,6 +121,7 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
         }
         mapFragment.getMapAsync(this)
     }
+
     // Create a unique id using data class
     private fun createGeofenceId(position: LatLng, color: Int, radius: Int): String {
         return GeofenceKey(position, color, radius).toString()
@@ -165,7 +165,6 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
                     mMap.isMyLocationEnabled = true
                     mMap.uiSettings.isMyLocationButtonEnabled = true
                 }
-
             } else {
                 Toast.makeText(requireContext(), ContextCompat.getString(requireContext(), R.string.error_fetch_location), Toast.LENGTH_SHORT).show();
             }
@@ -180,7 +179,8 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
         mMap.setOnMapLongClickListener(this)
         mMap.setOnMarkerClickListener{ marker ->
             handleMarkerClick(marker)
-            selectedToggleRemove // false shows the info and relocate the camera, true does nothing
+            // false shows the info and relocate the camera, true does nothing
+            selectedToggleRemove
         }
 
         geofenceMapViewModel.getGeofencesDB().observe(requireActivity()) {
@@ -193,9 +193,9 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mMap.isMyLocationEnabled = true
         } else {
-            //Ask for permission
+            // Ask for permission
             if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
-                //We need to show user a dialog for displaying why the permission is needed and then ask for the permission...
+                // Show a dialog for displaying why the permission is needed and then ask for the permission
                 ActivityCompat.requestPermissions(
                     requireActivity(),
                     arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
@@ -213,12 +213,12 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
 
     override fun onMapLongClick(p0: LatLng) {
         if (Build.VERSION.SDK_INT >= 29) {
-            // We need background permission
+            // Need background permission
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 handleMapLongClick(p0);
             } else {
                 if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
-                    // We show a dialog and ask for permission
+                    // Show a dialog and ask for permission
                     ActivityCompat.requestPermissions(
                         requireActivity(),
                         arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
@@ -232,12 +232,10 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
                     );
                 }
             }
-
         } else {
             handleMapLongClick(p0);
         }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -310,7 +308,7 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
         if (selectedToggleRemove) {
             val geofenceId2remove = getGeofenceIdByMarkerId(marker.id)
             if (geofenceId2remove == null) {
-                Log.i("error", "geofenceId2remove is null")
+                Log.i("Error", "geofenceId2remove is null")
                 return
             }
            deleteGeofence(geofenceId2remove, marker)
@@ -318,32 +316,32 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
     }
 
     private fun deleteGeofence(geofenceId2remove: String, marker: Marker) {
-        // removing the geofence from the client
+        // Removing the geofence from the client
         geofencingClient.removeGeofences(listOf(geofenceId2remove))
             .addOnSuccessListener {
-                // removing the circle and marker from the map
+                // Removing the circle and marker from the map
                 val circle2remove = getCircleByGeofenceId(geofenceId2remove)
                 marker.remove()
                 circle2remove?.remove()
 
-                // removing the geofence from the view model
+                // Removing the geofence from the view model
                 geofenceMapViewModel.removeGeofenceInfo(geofenceId2remove)
 
-                // removing the geofence from the existing geofence list
+                // Removing the geofence from the existing geofence list
                 existingGeofence.remove(geofenceId2remove)
 
-                // notify the user the successful removal
+                // Notify the user the successful removal
                 Toast.makeText(requireContext(), ContextCompat.getString(requireContext(), R.string.success_geofence_removal), Toast.LENGTH_SHORT).show();
             }
             .addOnFailureListener {
-                // notify the user the successful removal
+                // Notify the user the successful removal
                 Toast.makeText(requireContext(), ContextCompat.getString(requireContext(), R.string.error_geofence_removal), Toast.LENGTH_SHORT).show();
             }
 
     }
 
     private fun getGeofenceIdByMarkerId(markerId: String) : String? {
-        // iterate through the existing geofences and find the one with the matching markerId
+        // Iterate through the existing geofences and find the one with the matching markerId
         return existingGeofence.entries.firstOrNull {
             it.value.second?.id == markerId
         }?.key

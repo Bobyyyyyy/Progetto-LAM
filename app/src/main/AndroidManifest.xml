@@ -44,7 +44,7 @@
 
         <meta-data
                 android:name="com.google.android.geo.API_KEY"
-                android:value="AIzaSyDpwaTngY0ys1Ssimczqk_1C2nwfCyqsPw" />
+                android:value="${MAPS_API_KEY}" />
 
         <service
                 android:name=".services.TimerService"
@@ -60,7 +60,7 @@
                 android:enabled="true"
                 android:foregroundServiceType="location" />
         <activity
-                android:name=".UI.frontpageActivity.frontpageActivity"
+                android:name=".UI.frontpageActivity.FrontpageActivity"
                 android:exported="true"
                 android:launchMode="singleInstance">
             <intent-filter>

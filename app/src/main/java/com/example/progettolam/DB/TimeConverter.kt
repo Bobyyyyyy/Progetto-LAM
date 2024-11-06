@@ -2,9 +2,7 @@ package com.example.progettolam.DB
 
 import androidx.room.TypeConverter
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.LocalTime
-import java.util.*
 
 class TimeConverter {
     @TypeConverter
@@ -26,6 +24,4 @@ class TimeConverter {
     fun timeToString(time: LocalTime?): String? {
         return time?.toString()
     }
-
-
 }

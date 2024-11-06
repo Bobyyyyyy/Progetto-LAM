@@ -1,19 +1,14 @@
 package com.example.progettolam.UI.Activities
 
-import android.app.Activity
 import android.content.Context
-import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.progettolam.DB.ActivityJoin
 import com.example.progettolam.DB.ActivityType
 import com.example.progettolam.R
 import java.time.Duration
 import java.time.LocalDateTime
-import kotlin.io.path.name
 
 
 class ActivityAdapter(val context: Context, var activities: List<ActivityJoin>?, var listener: (String) -> Unit): RecyclerView.Adapter<ActivityViewHolder>() {
@@ -28,14 +23,12 @@ class ActivityAdapter(val context: Context, var activities: List<ActivityJoin>?,
         return activities?.size ?: 0
     }
 
-
     override fun onBindViewHolder(holder: ActivityViewHolder, position: Int) {
         holder.apply {
             val startTime = activities?.get(position)?.baseActivity?.startTime
             val endTime = activities?.get(position)?.baseActivity?.endTime
             val startDate = activities?.get(position)?.baseActivity?.startDate
             val endDate = activities?.get(position)?.baseActivity?.endDate
-
 
             val start: LocalDateTime = LocalDateTime.of(startDate,startTime)
             val end: LocalDateTime = LocalDateTime.of(endDate,endTime)
@@ -76,6 +69,5 @@ class ActivityAdapter(val context: Context, var activities: List<ActivityJoin>?,
             ActivityType.STILL -> context.getString(R.string.chilling_tag)
         }
         return formattedType
-
     }
 }

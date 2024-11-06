@@ -2,7 +2,6 @@ package com.example.progettolam.DB
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -18,5 +17,4 @@ interface GeofenceInfoDao {
 
     @Query("DELETE FROM geofence_info WHERE id = :id")
     fun deleteGeofence(id: String)
-
 }

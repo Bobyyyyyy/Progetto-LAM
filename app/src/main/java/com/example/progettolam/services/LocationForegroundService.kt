@@ -1,7 +1,5 @@
 package com.example.progettolam.services
 
-import com.example.progettolam.MainActivity
-import com.example.progettolam.R
 import android.Manifest
 import android.app.Notification
 import android.app.NotificationChannel
@@ -15,6 +13,8 @@ import android.os.IBinder
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
+import com.example.progettolam.MainActivity
+import com.example.progettolam.R
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
@@ -46,7 +46,6 @@ class LocationForegroundService : Service() {
                 } ?: Log.i(TAG, "No location result")
             }
         }
-
         startLocationUpdates()
     }
 
@@ -76,8 +75,6 @@ class LocationForegroundService : Service() {
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .build()
-
-
     }
 
     private fun createNotificationChannel() {

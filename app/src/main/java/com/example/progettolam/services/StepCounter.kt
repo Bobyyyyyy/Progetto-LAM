@@ -9,13 +9,14 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Binder
 import android.os.IBinder
-import android.util.Log
-import com.example.progettolam.services.TimerService.Companion.TIMER_ACTION
 
 class StepCounter : SensorEventListener, Service(){
 
     private lateinit var sensorManager: SensorManager
     private var stepCounterSensor: Sensor? = null
+
+    private var totalSteps = -1f
+    private val binder = StepBinder()
 
     companion object {
         const val STEP_ACTION = "STEP_ACTION"
@@ -31,19 +32,13 @@ class StepCounter : SensorEventListener, Service(){
         fun getService(): StepCounter {return this@StepCounter}
     }
 
-    private var totalSteps = -1f
-
-    private val binder = StepBinder()
-
     override fun onBind(intent: Intent?): IBinder {
         return binder
     }
 
-
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         val action = intent?.getStringExtra(STEP_ACTION)!!
-
 
         when (action) {
             START_SENSOR -> startSensor()
@@ -51,22 +46,19 @@ class StepCounter : SensorEventListener, Service(){
             RESUME_SENSOR -> resumeSensor()
         }
 
-
         return START_STICKY
     }
-
 
     private fun startSensor() {
         if(stepCounterSensor == null) {
             stepCounterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
-            //controllo se il dispositivo non ha il sensore
+            // Check if the device has no sensor
             sensorManager.registerListener(
                 this,
                 stepCounterSensor,
                 SensorManager.SENSOR_DELAY_FASTEST
             )
         }
-
     }
 
     private fun sendSteps() {
@@ -76,7 +68,6 @@ class StepCounter : SensorEventListener, Service(){
             stepsIntent.putExtra(TOTAL_STEPS, totalSteps.toInt())
             sendBroadcast(stepsIntent)
         }
-
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
@@ -87,9 +78,8 @@ class StepCounter : SensorEventListener, Service(){
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-        // Non è necessario implementare nulla qui per questa app
+        // No need to implement anything here for this app
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
@@ -111,5 +101,4 @@ class StepCounter : SensorEventListener, Service(){
             )
         }
     }
-
 }

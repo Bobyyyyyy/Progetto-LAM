@@ -30,6 +30,7 @@
 
     <string name="geofence_top_description">Hold down on the map to add control areas. Tap on markers to delete them</string>
     <string name="radius_description">Enter the radius in meters:</string>
+    <string name="error_radius">Please enter a value between 100 and 2000 meters</string>
     <string name="color_circle_description">Circle color:</string>
     <string name="change_color_button">Change color</string>
     <string name="switch_removing_geofence_button">Activate geofence removal:</string>
@@ -93,4 +94,10 @@
 
     <string name="OnGoingNotification">There is an on going activity</string>
     <string name="StopNotification">There is a paused activity</string>
+
+    <string name="activity_permission">Permit for recognition of activities</string>
+    <string name="activity_permission_description">To provide you with a better experience, the app needs to recognize physical activity. This way we can customize the features according to your level of activity.</string>
+    <string name="approve">Grant</string>
+    <string name="enable_notification">Enable notifications</string>
+    <string name="enable_notification_description">By enabling notifications, we can send you periodic notifications and update you on ongoing activities.</string>
 </resources>

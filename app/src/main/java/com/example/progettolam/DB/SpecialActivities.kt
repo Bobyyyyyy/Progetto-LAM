@@ -5,7 +5,6 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-
 @Entity(tableName = "WalkingActivity_table",
     foreignKeys = [ForeignKey(
         entity = BaseActivity::class,
@@ -22,7 +21,6 @@ data class WalkingActivity (
 
     @SerializedName("avgSpeed")
     val avgSpeed: Float?
-
 )
 
 @Entity(tableName = "RunningActivity_table",
@@ -41,10 +39,7 @@ data class RunningActivity (
 
     @SerializedName("avgSpeed")
     val avgSpeed: Float?
-
 )
-
-
 
 @Entity(tableName = "SittingActivity_table",
     foreignKeys = [ForeignKey(
@@ -56,12 +51,7 @@ data class RunningActivity (
 data class SittingActivity(
     @PrimaryKey(autoGenerate = false)
     var activityId: Long?,
-
-
-
-    )
-
-
+)
 
 @Entity(tableName = "DrivingActivity_table",
     foreignKeys = [ForeignKey(
@@ -76,5 +66,4 @@ data class DrivingActivity(
 
     @SerializedName("avgSpeed")
     val avgSpeed: Float?
-
 )

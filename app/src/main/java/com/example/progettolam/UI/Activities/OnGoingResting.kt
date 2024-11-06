@@ -2,7 +2,6 @@ package com.example.progettolam.UI.Activities
 
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
-import androidx.preference.PreferenceManager
 import com.example.progettolam.DB.ActivityType
 import com.example.progettolam.DB.BaseActivity
 import com.example.progettolam.DB.SittingActivity
@@ -11,8 +10,6 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 class OnGoingResting: OnGoingActivity() {
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.timer_activity)
@@ -33,8 +30,6 @@ class OnGoingResting: OnGoingActivity() {
             }
             finish()
         }
-
-
     }
 
     private fun registerActivity() {
@@ -52,5 +47,4 @@ class OnGoingResting: OnGoingActivity() {
             SittingActivity(null)
         )
     }
-
 }

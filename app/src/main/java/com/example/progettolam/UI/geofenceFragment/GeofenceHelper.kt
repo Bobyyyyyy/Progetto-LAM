@@ -13,7 +13,10 @@ import com.google.android.gms.maps.model.LatLng
 
 class GeofenceHelper(base: Context?) : ContextWrapper(base) {
     private var pendingIntent: PendingIntent? = null
-    private val DURATION_FOR_DWELL = 1000
+
+    companion object {
+        const val DURATION_FOR_DWELL = 10000
+    }
 
     fun getGeofencingRequest(geofence: Geofence?): GeofencingRequest {
         return GeofencingRequest.Builder()
@@ -44,16 +47,13 @@ class GeofenceHelper(base: Context?) : ContextWrapper(base) {
 
     fun getErrorString(e: Exception): String {
         if (e is ApiException) {
-            when (e.statusCode) {
-                GeofenceStatusCodes.GEOFENCE_NOT_AVAILABLE -> return "GEOFENCE_NOT_AVAILABLE"
-
-                GeofenceStatusCodes.GEOFENCE_TOO_MANY_GEOFENCES -> return "GEOFENCE_TOO_MANY_GEOFENCES"
-
-                GeofenceStatusCodes.GEOFENCE_TOO_MANY_PENDING_INTENTS -> return "GEOFENCE_TOO_MANY_PENDING_INTENTS"
-
-                else -> return "errore sconosciuto"
+            return when (e.statusCode) {
+                GeofenceStatusCodes.GEOFENCE_NOT_AVAILABLE -> "GEOFENCE_NOT_AVAILABLE"
+                GeofenceStatusCodes.GEOFENCE_TOO_MANY_GEOFENCES -> "GEOFENCE_TOO_MANY_GEOFENCES"
+                GeofenceStatusCodes.GEOFENCE_TOO_MANY_PENDING_INTENTS -> "GEOFENCE_TOO_MANY_PENDING_INTENTS"
+                else -> "errore sconosciuto"
             }
         }
-        return e.localizedMessage
+        return e.localizedMessage!!
     }
 }

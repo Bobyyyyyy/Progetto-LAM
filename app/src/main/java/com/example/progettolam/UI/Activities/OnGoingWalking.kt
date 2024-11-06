@@ -13,31 +13,24 @@ import com.example.progettolam.DB.BaseActivity
 import com.example.progettolam.DB.WalkingActivity
 import com.example.progettolam.R
 import com.example.progettolam.services.StepCounter
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationServices
 import java.time.LocalDate
 import java.time.LocalTime
 
 
 class OnGoingWalking : OnGoingActivity() {
-
     private lateinit var speedText: TextView
+    private lateinit var stepsCounter: TextView
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ){ isGranted: Boolean ->
         if(isGranted) {
             startActivity()
-        }
-
-        else {
+        } else {
             super.startActivity()
         }
     }
 
-
-    private lateinit var stepsCounter: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.recording_stats_with_map_activity)
@@ -59,9 +52,7 @@ class OnGoingWalking : OnGoingActivity() {
             if(timeElapsed != 0) {
                 registerActivity()
             }
-
             finish()
-
         }
 
         viewModel.speedList.observe(this) {
@@ -69,19 +60,13 @@ class OnGoingWalking : OnGoingActivity() {
                 speedText.text = it.last().toString()
             }
         }
-
-
-
     }
-
-
 
     override fun initViews() {
         super.initViews()
         stepsCounter = findViewById(R.id.stepsCounter)
         speedText = findViewById(R.id.valueSpeedTextView)
     }
-
 
     override fun onResume() {
         super.onResume()
@@ -106,30 +91,24 @@ class OnGoingWalking : OnGoingActivity() {
     }
 
     override fun startActivity() {
-
         if (ContextCompat.checkSelfPermission
                 (this, Manifest.permission.ACTIVITY_RECOGNITION) !=
             PackageManager.PERMISSION_GRANTED) {
             requestPermissionLauncher.launch(Manifest.permission.ACTIVITY_RECOGNITION)
-        }
-
-        else {
+        } else {
             super.startActivity()
             if(isPaused) {
                 resumeStepsSensor()
-            }
-            else {
+            } else {
                 startSteps()
             }
         }
-
     }
 
     override fun stopActivity() {
         super.stopActivity()
         stopSensor()
     }
-
 
     override fun endActivity() {
         super.endActivity()
@@ -141,7 +120,6 @@ class OnGoingWalking : OnGoingActivity() {
         intent.putExtra(StepCounter.STEP_ACTION, StepCounter.STOP_SENSOR)
         startService(intent)
     }
-
 
     private fun startSteps() {
         val intent = Intent(this,StepCounter::class.java)
@@ -160,7 +138,6 @@ class OnGoingWalking : OnGoingActivity() {
         startService(intent)
     }
 
-
     private fun registerActivity() {
         activityViewModel.insertWalkingActivity(
             BaseActivity(
@@ -173,10 +150,7 @@ class OnGoingWalking : OnGoingActivity() {
                 viewModel.startTime?.plusSeconds(timeElapsed.toLong()),
                 viewModel.endDate
             ),
-            WalkingActivity(null, viewModel.getTotalSteps()?.toInt() ,viewModel.getAverageSpeed())
-
+            WalkingActivity(null, viewModel.getTotalSteps(), viewModel.getAverageSpeed())
         )
     }
-
-
 }

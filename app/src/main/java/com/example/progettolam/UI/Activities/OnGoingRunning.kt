@@ -24,9 +24,7 @@ class OnGoingRunning : OnGoingActivity() {
     ){ isGranted: Boolean ->
         if(isGranted) {
             startActivity()
-        }
-
-        else {
+        } else {
             super.startActivity()
         }
     }
@@ -63,17 +61,13 @@ class OnGoingRunning : OnGoingActivity() {
                 speedText.text = it.last().toString()
             }
         }
-
-
     }
-
 
     override fun initViews() {
         super.initViews()
         stepsCounter = findViewById(R.id.stepsCounter)
         speedText = findViewById(R.id.valueSpeedTextView)
     }
-
 
     override fun onResume() {
         super.onResume()
@@ -98,29 +92,22 @@ class OnGoingRunning : OnGoingActivity() {
     }
 
     override fun startActivity() {
-
-        if (ContextCompat.checkSelfPermission
-                (this, Manifest.permission.ACTIVITY_RECOGNITION) !=
-            PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissionLauncher.launch(Manifest.permission.ACTIVITY_RECOGNITION)
-        }
-
-        else {
+        } else {
             super.startActivity()
             if(isPaused) {
                 resumeStepsSensor()
-            }
-            else {
+            } else {
                 startSteps()
             }
         }
-
     }
+
     override fun stopActivity() {
         super.stopActivity()
         stopSensor()
     }
-
 
     override fun endActivity() {
         super.endActivity()
@@ -132,7 +119,6 @@ class OnGoingRunning : OnGoingActivity() {
         intent.putExtra(StepCounter.STEP_ACTION, StepCounter.STOP_SENSOR)
         startService(intent)
     }
-
 
     private fun startSteps() {
         val intent = Intent(this,StepCounter::class.java)
@@ -151,7 +137,6 @@ class OnGoingRunning : OnGoingActivity() {
         startService(intent)
     }
 
-
     private fun registerActivity() {
         activityViewModel.insertRunningActivity(
             BaseActivity(
@@ -164,9 +149,7 @@ class OnGoingRunning : OnGoingActivity() {
                 viewModel.startTime?.plusSeconds(timeElapsed.toLong()),
                 viewModel.endDate
             ),
-            RunningActivity(null, viewModel.getTotalSteps()?.toInt(), viewModel.getAverageSpeed())
+            RunningActivity(null, viewModel.getTotalSteps(), viewModel.getAverageSpeed())
         )
     }
-
-
 }
