@@ -18,18 +18,19 @@
 
         <TextView
                 android:id="@+id/typeActivity"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Title"
                 style="@style/preview_detail_activity"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="16dp" />
 
         <TextView
                 android:id="@+id/durationActivity"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Title"
@@ -37,7 +38,8 @@
                 app:layout_constraintStart_toEndOf="@+id/typeActivity"
                 app:layout_constraintTop_toTopOf="@+id/typeActivity"
                 app:layout_constraintBottom_toBottomOf="@+id/typeActivity"
-                android:layout_marginStart="32dp" />
+                android:layout_marginStart="16dp"
+                app:layout_constraintEnd_toStartOf="@+id/btnOpenDetails" />
 
 
         <Button
@@ -50,7 +52,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/durationActivity"
                 app:layout_constraintBottom_toBottomOf="@+id/durationActivity"
-                android:layout_marginEnd="32dp" />
+                android:layout_marginEnd="16dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

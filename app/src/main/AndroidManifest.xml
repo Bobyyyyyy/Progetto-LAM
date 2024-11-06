@@ -46,20 +46,6 @@
                 android:name="com.google.android.geo.API_KEY"
                 android:value="AIzaSyDpwaTngY0ys1Ssimczqk_1C2nwfCyqsPw" />
 
-
-        <activity
-                android:name=".MapsActivity"
-                android:exported="true"
-                android:label="@string/title_activity_maps">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-
-
         <service
                 android:name=".services.TimerService"
                 android:enabled="true"
