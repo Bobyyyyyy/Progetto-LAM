@@ -133,7 +133,6 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
             for (geofence in geofenceListFromDb) {
                 if (!existingGeofence.containsKey(geofence.id)) {
                     position = LatLng(geofence.latitude, geofence.longitude)
-                    //addGeofence(position, geofence.id, geofence.radius)
                     displayGeofence(position, geofence.color, geofence.radius, geofence.id)
                 }
             }
@@ -275,13 +274,10 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
 
         geofencingClient.addGeofences(geofencingRequest, pendingIntent)
             .addOnSuccessListener {
-                Log.i("funziona", "onSuccess: Geofence Added...")
                 Toast.makeText(requireContext(), ContextCompat.getString(requireContext(), R.string.success_add_geofence), Toast.LENGTH_SHORT).show();
             }
             .addOnFailureListener { e ->
-                val errorMessage: String = geoFenceHelper.getErrorString(e)
                 Toast.makeText(requireContext(), ContextCompat.getString(requireContext(), R.string.error_add_geofence), Toast.LENGTH_SHORT).show();
-                Log.d("errore", "onFailure: $errorMessage")
             }
     }
 

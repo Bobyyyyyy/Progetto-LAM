@@ -46,15 +46,15 @@ FROM (
     SELECT endDate, SUM(steps) AS tot_steps
     FROM base_activity_table
     JOIN WalkingActivity_table ON id = activityId
-    WHERE endDate >= DATE(:today, '-6 days', 'weekday 0') 
-      AND endDate <= DATE(:today, 'weekday 6') AND imported = 0 
+    WHERE endDate >= DATE(:today, '-6 days', 'weekday 1') 
+      AND endDate <= DATE(:today, 'weekday 0') AND imported = 0 
     GROUP BY endDate
     UNION ALL
     SELECT endDate, SUM(steps) AS tot_steps
     FROM base_activity_table
     JOIN RunningActivity_table ON id = activityId
-    WHERE endDate >= DATE(:today, '-6 days', 'weekday 0') 
-      AND endDate <= DATE(:today, 'weekday 6') AND imported = 0
+    WHERE endDate >= DATE(:today, '-6 days', 'weekday 1') 
+      AND endDate <= DATE(:today, 'weekday 0 ') AND imported = 0
     GROUP BY endDate
 ) AS steps_per_day
 GROUP BY steps_per_day.endDate

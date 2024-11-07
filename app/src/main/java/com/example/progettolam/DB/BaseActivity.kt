@@ -38,3 +38,6 @@ class BaseActivity(
     var endDate: LocalDate?
 )
 
+
+
+
