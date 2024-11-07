@@ -15,6 +15,7 @@ import com.example.progettolam.R
 import com.example.progettolam.services.StepCounter
 import java.time.LocalDate
 import java.time.LocalTime
+import java.util.UUID
 
 
 class OnGoingRunning : OnGoingActivity() {
@@ -138,9 +139,10 @@ class OnGoingRunning : OnGoingActivity() {
     }
 
     private fun registerActivity() {
+        val id = UUID.randomUUID().toString()
         activityViewModel.insertRunningActivity(
             BaseActivity(
-                null,
+                id,
                 false,
                 storedName,
                 viewModel.getActivityType(),
@@ -149,7 +151,7 @@ class OnGoingRunning : OnGoingActivity() {
                 viewModel.startTime?.plusSeconds(timeElapsed.toLong()),
                 viewModel.endDate
             ),
-            RunningActivity(null, viewModel.getTotalSteps(), viewModel.getAverageSpeed())
+            RunningActivity(id, viewModel.getTotalSteps(), viewModel.getAverageSpeed())
         )
     }
 }

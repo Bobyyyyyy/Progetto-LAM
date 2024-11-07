@@ -7,10 +7,12 @@ import androidx.lifecycle.LiveData
 import com.example.progettolam.UI.profileFragment.ActivitiesGraphData
 import com.example.progettolam.UI.profileFragment.StepsData
 import java.io.BufferedReader
+import java.io.File
 import java.io.IOException
 import java.io.InputStreamReader
 import java.time.LocalDate
 import java.time.LocalTime
+import java.util.UUID
 
 class ActivityRepository(app: Application) {
     private var activityDao: ActivityDao
@@ -20,7 +22,7 @@ class ActivityRepository(app: Application) {
         activityDao = db.activityDao()
     }
 
-    fun insertBaseActivity(baseActivity: BaseActivity): Long {
+    fun insertBaseActivity(baseActivity: BaseActivity) {
         return activityDao.insertBaseActivity(baseActivity)
     }
 
@@ -60,7 +62,7 @@ class ActivityRepository(app: Application) {
         return activityDao.getActivitiesFromType(activityType)
     }
 
-    fun getInfoActivityByID(id: Long?): LiveData<ActivityJoin> {
+    fun getInfoActivityByID(id: String?): LiveData<ActivityJoin> {
         return activityDao.getInfoActivityByID(id)
     }
 
@@ -127,7 +129,7 @@ class ActivityRepository(app: Application) {
 
                 if (base != null) {
                     if (base.baseActivity.imported != true) {
-                        csvBuilder.append("${activity.activityId}")
+                        csvBuilder.append(activity.activityId)
                         csvBuilder.append("\n")
                     }
                 }
@@ -168,12 +170,6 @@ class ActivityRepository(app: Application) {
             val inputStream = contentResolver.openInputStream(uri)
             val reader = BufferedReader(InputStreamReader(inputStream))
 
-            var lastID = activityDao.getLastActivity()?.baseActivity?.id
-
-            if (lastID == null) {
-                lastID = 0
-            }
-
             // Read the first line to determine the headers
             var line = reader.readLine()
             if (line != null) {
@@ -182,18 +178,17 @@ class ActivityRepository(app: Application) {
                 while (line != null && line.isNotEmpty()) {
                     val parts = line.split(",")
                     if(parts[1] != "true") {
-                        // Assuming fields are in the correct order
-                        val activity = BaseActivity(
-                            id = parts[0].toLong() + lastID,
-                            imported = true,
-                            author = parts[2],
-                            activityType = parts[3].toActivityType(),
-                            startTime = LocalTime.parse(parts[4]),
-                            startDate = LocalDate.parse(parts[5]),
-                            endTime = LocalTime.parse(parts[6]),
-                            endDate = LocalDate.parse(parts[7])
-                        )
-                        activityDao.insertBaseActivity(activity)
+                            val activity = BaseActivity(
+                                id = parts[0],
+                                imported = true,
+                                author = parts[2],
+                                activityType = parts[3].toActivityType(),
+                                startTime = LocalTime.parse(parts[4]),
+                                startDate = LocalDate.parse(parts[5]),
+                                endTime = LocalTime.parse(parts[6]),
+                                endDate = LocalDate.parse(parts[7])
+                            )
+                            activityDao.insertBaseActivity(activity)
                     }
                     line = reader.readLine()
                 }
@@ -207,7 +202,7 @@ class ActivityRepository(app: Application) {
             while (line != null && line.isNotEmpty()) {
                 val parts = line.split(",")
                 val walkingActivity = WalkingActivity(
-                    activityId = parts[0].toLong() + lastID,
+                    activityId = parts[0],
                     steps = if (parts[1] == "null") {null} else {parts[1].toInt()},
                     avgSpeed = if (parts[2] == "null") {null} else {parts[2].toFloat()},
                 )
@@ -221,7 +216,7 @@ class ActivityRepository(app: Application) {
             while (line != null && line.isNotEmpty()) {
                 val parts = line.split(",")
                 val runningActivity = RunningActivity(
-                    activityId = parts[0].toLong() + lastID,
+                    activityId = parts[0],
                     steps = if (parts[1] == "null") {null} else {parts[1].toInt()},
                     avgSpeed = if (parts[2] == "null") {null} else {parts[2].toFloat()},
                 )
@@ -235,7 +230,7 @@ class ActivityRepository(app: Application) {
             while (line != null && line.isNotEmpty()) {
                 val parts = line.split(",")
                 val sittingActivity = SittingActivity(
-                    activityId = parts[0].toLong() + lastID
+                    activityId = parts[0]
                 )
                 activityDao.insertSittingActivity(sittingActivity)
                 line = reader.readLine()
@@ -247,7 +242,7 @@ class ActivityRepository(app: Application) {
             while (line != null && line.isNotEmpty()) {
                 val parts = line.split(",")
                 val drivingActivity = DrivingActivity(
-                    activityId = parts[0].toLong() + lastID,
+                    activityId = parts[0],
                     avgSpeed = parts[1].toFloat()
                 )
                 activityDao.insertDrivingActivity(drivingActivity)
@@ -258,6 +253,22 @@ class ActivityRepository(app: Application) {
         } catch (e: IOException) {
             e.printStackTrace()
         }
+    }
+
+    fun replaceOccurrencesInFile(filePath: String, target: String, replacement: String) {
+        // Leggi tutto il contenuto del file come una singola stringa
+        val file = File(filePath)
+
+        // Leggi tutto il contenuto del file
+        var content = file.readText()
+
+        // Sostituisci tutte le occorrenze della stringa target con la stringa di sostituzione
+        content = content.replace(target, replacement)
+
+        // Scrivi il contenuto modificato nel file, sovrascrivendo il file originale
+        file.writeText(content)
+
+        println("Sostituzione completata!")
     }
 }
 

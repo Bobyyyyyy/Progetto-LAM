@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:ems="10"
-            android:hint="Inserisci nome"
+            android:hint="@string/username_default"
             android:autofillHints="name"
             android:inputType="text"
             app:layout_constraintEnd_toEndOf="parent"

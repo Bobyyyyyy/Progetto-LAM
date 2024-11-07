@@ -36,6 +36,8 @@ open class OnGoingActivity: AppCompatActivity() {
     protected lateinit var viewModel: OnGoingViewModel
     protected lateinit var storedName: String
 
+
+
     protected var isBound: Boolean = false
     protected var isStarted: Boolean = false
     protected var isPaused: Boolean = false

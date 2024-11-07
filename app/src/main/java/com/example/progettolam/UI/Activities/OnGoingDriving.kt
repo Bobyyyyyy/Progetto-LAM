@@ -9,6 +9,7 @@ import com.example.progettolam.DB.DrivingActivity
 import com.example.progettolam.R
 import java.time.LocalDate
 import java.time.LocalTime
+import java.util.UUID
 
 class OnGoingDriving: OnGoingActivity() {
     private lateinit var speedText: TextView
@@ -42,9 +43,10 @@ class OnGoingDriving: OnGoingActivity() {
     }
 
     private fun registerActivity() {
+        val id = UUID.randomUUID().toString()
         activityViewModel.insertDrivingActivity(
             BaseActivity(
-                null,
+                id,
                 false,
                 storedName,
                 viewModel.getActivityType(),
@@ -53,7 +55,7 @@ class OnGoingDriving: OnGoingActivity() {
                 viewModel.startTime?.plusSeconds(timeElapsed.toLong()),
                 viewModel.endDate
             ),
-            DrivingActivity(null, viewModel.getAverageSpeed())
+            DrivingActivity(id, viewModel.getAverageSpeed())
         )
     }
 

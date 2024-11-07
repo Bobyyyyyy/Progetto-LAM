@@ -13,7 +13,7 @@ import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingEvent
 
 
-class MyReceiver : BroadcastReceiver() {
+class GeofenceReceiver : BroadcastReceiver() {
 
     // Called when the BroadcastReceiver is receiving an Intent broadcast.
     override fun onReceive(context: Context, intent: Intent) {

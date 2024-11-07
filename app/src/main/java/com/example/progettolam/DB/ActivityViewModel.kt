@@ -27,25 +27,23 @@ class ActivityViewModel(private val repository: ActivityRepository): ViewModel()
         _imported.value = value
     }
 
-    private fun insertBaseActivity(baseActivity: BaseActivity): Long {
-            return repository.insertBaseActivity(baseActivity)
+    private fun insertBaseActivity(baseActivity: BaseActivity) {
+        repository.insertBaseActivity(baseActivity)
     }
 
     fun insertWalkingActivity(baseActivity: BaseActivity, walkingActivity: WalkingActivity) {
-        if (baseActivity.activityType == ActivityType.WALKING) {
-            CoroutineScope(Dispatchers.IO).launch {
-                val id = insertBaseActivity(baseActivity)
-                walkingActivity.activityId = id
-                repository.insertWalkingActivity(walkingActivity)
+            if (baseActivity.activityType == ActivityType.WALKING) {
+                CoroutineScope(Dispatchers.IO).launch {
+                    insertBaseActivity(baseActivity)
+                    repository.insertWalkingActivity(walkingActivity)
+                }
             }
-        }
     }
 
     fun insertRunningActivity(baseActivity: BaseActivity, runningActivity: RunningActivity) {
         if(baseActivity.activityType == ActivityType.RUNNING) {
             CoroutineScope(Dispatchers.IO).launch {
-                val id = insertBaseActivity(baseActivity)
-                runningActivity.activityId = id
+                insertBaseActivity(baseActivity)
                 repository.insertRunningActivity(runningActivity)
             }
         }
@@ -54,8 +52,7 @@ class ActivityViewModel(private val repository: ActivityRepository): ViewModel()
     fun insertDrivingActivity(baseActivity: BaseActivity, drivingActivity: DrivingActivity) {
         if(baseActivity.activityType == ActivityType.DRIVING) {
             CoroutineScope(Dispatchers.IO).launch {
-                val id = insertBaseActivity(baseActivity)
-                drivingActivity.activityId = id
+                insertBaseActivity(baseActivity)
                 repository.insertDrivingActivity(drivingActivity)
             }
         }
@@ -64,8 +61,7 @@ class ActivityViewModel(private val repository: ActivityRepository): ViewModel()
     fun insertSittingActivity(baseActivity: BaseActivity, sittingActivity: SittingActivity) {
         if (baseActivity.activityType == ActivityType.STILL) {
             CoroutineScope(Dispatchers.IO).launch {
-                val id = insertBaseActivity(baseActivity)
-                sittingActivity.activityId = id
+                insertBaseActivity(baseActivity)
                 repository.insertSittingActivity(sittingActivity)
             }
         }
@@ -80,7 +76,7 @@ class ActivityViewModel(private val repository: ActivityRepository): ViewModel()
         return repository.getAllStepsFromDay(date)
     }
 
-    fun getInfoActivityByID(id: Long?): LiveData<ActivityJoin> {
+    fun getInfoActivityByID(id: String?): LiveData<ActivityJoin> {
         return repository.getInfoActivityByID(id)
     }
     fun getCurrentWeekSteps(today: LocalDate?) : LiveData<Array<StepsData>> {

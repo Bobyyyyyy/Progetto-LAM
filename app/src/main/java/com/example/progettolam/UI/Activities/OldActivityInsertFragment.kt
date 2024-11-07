@@ -31,6 +31,7 @@ import com.example.progettolam.R
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.util.UUID
 
 
 class OldActivityInsertFragment: Fragment() {
@@ -242,12 +243,12 @@ class OldActivityInsertFragment: Fragment() {
         val startTime = getLocalTimeFromString(txtStartTime)
         val endTime = getLocalTimeFromString(txtEndTime)
         val date = getLocalDateFromString(txtDate)
-
+        val id = UUID.randomUUID().toString()
         when (typeActivity) {
             getString(R.string.walk_tag) -> {
                 activityViewModel.insertWalkingActivity(
                     BaseActivity(
-                        null,
+                        id,
                         false,
                         storedName,
                         ActivityType.WALKING,
@@ -256,14 +257,14 @@ class OldActivityInsertFragment: Fragment() {
                         endTime,
                         date
                     ),
-                    WalkingActivity(null, null, null)
+                    WalkingActivity(id, null, null)
                 )
             }
 
             getString(R.string.run_tag) -> {
                 activityViewModel.insertRunningActivity(
                     BaseActivity(
-                        null,
+                        id,
                         false,
                         storedName,
                         ActivityType.RUNNING,
@@ -272,14 +273,14 @@ class OldActivityInsertFragment: Fragment() {
                         endTime,
                         date
                     ),
-                    RunningActivity(null, null, null)
+                    RunningActivity(id, null, null)
                 )
             }
 
             getString(R.string.chilling_tag) -> {
                 activityViewModel.insertSittingActivity(
                     BaseActivity(
-                        null,
+                        id,
                         false,
                         storedName,
                         ActivityType.STILL,
@@ -288,14 +289,14 @@ class OldActivityInsertFragment: Fragment() {
                         endTime,
                         date
                     ),
-                    SittingActivity(null)
+                    SittingActivity(id)
                 )
             }
 
             getString(R.string.drive_tag) -> {
                 activityViewModel.insertDrivingActivity(
                     BaseActivity(
-                        null,
+                        id,
                         false,
                         storedName,
                         ActivityType.DRIVING,
@@ -304,7 +305,7 @@ class OldActivityInsertFragment: Fragment() {
                         endTime,
                         date
                     ),
-                    DrivingActivity(null,null)
+                    DrivingActivity(id,null)
                 )
             }
         }

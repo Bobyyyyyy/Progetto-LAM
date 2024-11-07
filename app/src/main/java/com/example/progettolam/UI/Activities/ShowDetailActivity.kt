@@ -65,7 +65,7 @@ class ShowDetailActivity(): Fragment() {
         val timeIntervalFormatter = DateTimeFormatter.ofPattern("H:mm")
         val dateFormatter = DateTimeFormatter.ofPattern("EEEE d MMMM yyyy", Locale.getDefault())
 
-        activityViewModel.getInfoActivityByID(idActivity?.toLong()).observe(requireActivity()) {
+        activityViewModel.getInfoActivityByID(idActivity).observe(requireActivity()) {
             infoActivity = it
 
             valueUser.text = infoActivity?.baseActivity?.author

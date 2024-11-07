@@ -8,6 +8,7 @@ import com.example.progettolam.DB.SittingActivity
 import com.example.progettolam.R
 import java.time.LocalDate
 import java.time.LocalTime
+import java.util.UUID
 
 class OnGoingResting: OnGoingActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,9 +34,10 @@ class OnGoingResting: OnGoingActivity() {
     }
 
     private fun registerActivity() {
+        val id = UUID.randomUUID().toString()
         activityViewModel.insertSittingActivity(
             BaseActivity(
-                null,
+                id,
                 false,
                 storedName,
                 viewModel.getActivityType(),
@@ -44,7 +46,7 @@ class OnGoingResting: OnGoingActivity() {
                 viewModel.startTime?.plusSeconds(timeElapsed.toLong()),
                 viewModel.endDate
             ),
-            SittingActivity(null)
+            SittingActivity(id)
         )
     }
 }

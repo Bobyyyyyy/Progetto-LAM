@@ -78,7 +78,7 @@ ORDER BY steps_per_day.endDate ASC;
     fun getCurrentWeekActivities(today: LocalDate?): LiveData<Array<ActivitiesGraphData>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertBaseActivity(activity: BaseActivity): Long
+    fun insertBaseActivity(activity: BaseActivity)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertWalkingActivity(activity: WalkingActivity)
@@ -109,11 +109,11 @@ ORDER BY steps_per_day.endDate ASC;
     
     @Transaction
     @Query("SELECT * FROM base_activity_table WHERE id = :id")
-    fun getInfoActivityByID(id: Long?): LiveData<ActivityJoin>
+    fun getInfoActivityByID(id: String?): LiveData<ActivityJoin>
 
     @Transaction
     @Query("SELECT * FROM base_activity_table WHERE id = :id AND imported = 0")
-    fun getActivityByID(id: Long?): ActivityJoin
+    fun getActivityByID(id: String): ActivityJoin
 
     @Transaction
     @Query("SELECT * FROM base_activity_table WHERE imported = 0 ORDER BY id DESC LIMIT 1")

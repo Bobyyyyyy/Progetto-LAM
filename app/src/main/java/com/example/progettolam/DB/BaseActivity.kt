@@ -12,9 +12,9 @@ import java.time.LocalTime
     indices = [Index(value = ["id","imported", "author"], unique = true)])
 class BaseActivity(
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @SerializedName("id")
-    var id: Long?,
+    var id: String,
 
     @SerializedName("imported")
     var imported: Boolean? = false,

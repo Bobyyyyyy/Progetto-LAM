@@ -38,7 +38,7 @@
         -->
 
         <receiver
-                android:name=".UI.geofenceFragment.MyReceiver"
+                android:name=".UI.geofenceFragment.GeofenceReceiver"
                 android:enabled="true"
                 android:exported="true" />
 

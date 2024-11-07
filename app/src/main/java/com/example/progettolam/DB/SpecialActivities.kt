@@ -14,7 +14,7 @@ import com.google.gson.annotations.SerializedName
     )])
 data class WalkingActivity (
     @PrimaryKey(autoGenerate = false)
-    var activityId: Long?,
+    var activityId: String,
 
     @SerializedName("steps")
     val steps: Int?,
@@ -32,7 +32,7 @@ data class WalkingActivity (
     )])
 data class RunningActivity (
     @PrimaryKey(autoGenerate = false)
-    var activityId: Long?,
+    var activityId: String,
 
     @SerializedName("steps")
     val steps: Int?,
@@ -50,7 +50,7 @@ data class RunningActivity (
     )])
 data class SittingActivity(
     @PrimaryKey(autoGenerate = false)
-    var activityId: Long?,
+    var activityId: String,
 )
 
 @Entity(tableName = "DrivingActivity_table",
@@ -62,7 +62,7 @@ data class SittingActivity(
     )])
 data class DrivingActivity(
     @PrimaryKey(autoGenerate = false)
-    var activityId: Long?,
+    var activityId: String,
 
     @SerializedName("avgSpeed")
     val avgSpeed: Float?
