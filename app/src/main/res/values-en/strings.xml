@@ -100,4 +100,14 @@
     <string name="approve">Grant</string>
     <string name="enable_notification">Enable notifications</string>
     <string name="enable_notification_description">By enabling notifications, we can send you periodic notifications and update you on ongoing activities.</string>
+
+
+    <string name="export_dialog_title">Export Activities</string>
+    <string name="export_dialog_description">You can export your activities in a csv file, by doing that you will be able to share them with other users using an external app</string>
+
+    <string name="import_dialog_title">Import Activities</string>
+    <string name="import_dialog_description"> You can import other users\' activities via a csv file, by doing that you will see them in your calendar</string>
+
+    <string name="continue_button"> Continue </string>
+
 </resources>

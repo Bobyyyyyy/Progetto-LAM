@@ -1,6 +1,9 @@
 package com.example.progettolam.UI.profileFragment
 
+import android.Manifest
+import android.app.AlertDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -11,6 +14,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
@@ -113,10 +117,10 @@ class ProfileFragment: Fragment() {
         }
 
         shareBtn.setOnClickListener {
-            showSaveFileDialog()
+            exportDialog()
         }
         importBtn.setOnClickListener {
-            getFileLauncher.launch("*/*")
+            importDialog()
         }
 
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(requireActivity())
@@ -271,5 +275,30 @@ class ProfileFragment: Fragment() {
                 commit()
             }
         }
+    }
+
+
+    private fun importDialog() {
+            AlertDialog.Builder(requireContext())
+                .setTitle(getString(R.string.import_dialog_title))
+                .setMessage(getString(R.string.import_dialog_description))
+                .setPositiveButton(getString(R.string.continue_button)) { _, _ ->
+                    getFileLauncher.launch("*/*")
+                }
+                .setNegativeButton(getString(R.string.cancel_button), null)
+                .create()
+                .show()
+
+    }
+    private fun exportDialog() {
+            AlertDialog.Builder(requireContext())
+                .setTitle(getString(R.string.export_dialog_title))
+                .setMessage(getString(R.string.export_dialog_description))
+                .setPositiveButton(getString(R.string.continue_button)) { _, _ ->
+                    showSaveFileDialog()
+                }
+                .setNegativeButton(getString(R.string.cancel_button), null)
+                .create()
+                .show()
     }
 }

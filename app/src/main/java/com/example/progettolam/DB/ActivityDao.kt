@@ -112,7 +112,7 @@ ORDER BY steps_per_day.endDate ASC;
     fun getInfoActivityByID(id: Long?): LiveData<ActivityJoin>
 
     @Transaction
-    @Query("SELECT * FROM base_activity_table WHERE id = :id")
+    @Query("SELECT * FROM base_activity_table WHERE id = :id AND imported = 0")
     fun getActivityByID(id: Long?): ActivityJoin
 
     @Transaction

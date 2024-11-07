@@ -114,9 +114,9 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         fusedLocationClient.lastLocation.addOnCompleteListener(requireActivity()) { task ->
             if (task.isSuccessful) {
                 val lastLocation = task.result
+                if (lastLocation != null) {
                 previousPosition = LatLng(lastLocation.latitude, lastLocation.longitude)
                 currentSpeed = ms2kmh(lastLocation.speed)
-                if (lastLocation != null) {
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                         LatLng(lastLocation.latitude,
                             lastLocation.longitude), 15.toFloat()))

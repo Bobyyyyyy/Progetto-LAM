@@ -139,4 +139,13 @@
 
     <string name="enable_notification">Abilita notifiche</string>
     <string name="enable_notification_description">Abilitando le notifiche, possiamo inviarti notifiche periodiche e aggiornarti sulle attività in corso.</string>
+
+    <string name="export_dialog_title">Esporta Attività</string>
+    <string name="export_dialog_description">Esportando le attività in un file csv, sarai in grado di condividerle con altri utenti tramite un app esterna!</string>
+
+    <string name="import_dialog_title">Importa Attività</string>
+    <string name="import_dialog_description">Importando le attività tramite un file csv, sarai in grado di mostrare le attività di altri utenti nel tuo calendario</string>
+
+    <string name="continue_button"> Continua </string>
+
 </resources>

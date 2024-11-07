@@ -76,9 +76,8 @@ class ActivityRepository(app: Application) {
     fun exportActivitiesToCSV(uri: Uri, context: Context) {
         val csvBuilder = StringBuilder()
         val baseActivities = activityDao.getAllBaseActivities()
-
+        csvBuilder.append("id,imported,author,activityType,startTime,startDate,endTime,endDate\n")
         if(baseActivities.isNotEmpty()) {
-            csvBuilder.append("id,imported,author,activityType,startTime,startDate,endTime,endDate\n")
             baseActivities.forEach { activity ->
                 csvBuilder.append("${activity.id},${activity.imported},${activity.author},${activity.activityType},${activity.startTime},${activity.startDate},${activity.endTime},${activity.endDate}")
                 csvBuilder.append("\n")
@@ -87,45 +86,50 @@ class ActivityRepository(app: Application) {
         }
 
         val walkingActivities = activityDao.getAllWalkingActivities()
-
+        csvBuilder.append("activityId,steps,avgSpeed\n")
         if (walkingActivities.isNotEmpty()) {
-            csvBuilder.append("activityId,steps,avgSpeed\n")
             walkingActivities.forEach { activity ->
                 val base = activityDao.getActivityByID(activity.activityId)
 
-                if (base.baseActivity.imported != true ) {
-                    csvBuilder.append("${activity.activityId},${activity.steps},${activity.avgSpeed}")
-                    csvBuilder.append("\n")
+                if(base != null) {
+                    if (base.baseActivity.imported != true) {
+                        csvBuilder.append("${activity.activityId},${activity.steps},${activity.avgSpeed}")
+                        csvBuilder.append("\n")
+                    }
                 }
             }
             csvBuilder.append("\n")
         }
 
         val runningActivities = activityDao.getAllRunningActivities()
-
+        csvBuilder.append("activityId,steps,avgSpeed\n")
         if (runningActivities.isNotEmpty()) {
-            csvBuilder.append("activityId,steps,avgSpeed\n")
             runningActivities.forEach { activity ->
                 val base = activityDao.getActivityByID(activity.activityId)
 
-                if (base.baseActivity.imported != true ) {
-                    csvBuilder.append("${activity.activityId},${activity.steps},${activity.avgSpeed}")
-                    csvBuilder.append("\n")
+                if(base != null) {
+                    if (base.baseActivity.imported != true) {
+                        csvBuilder.append("${activity.activityId},${activity.steps},${activity.avgSpeed}")
+                        csvBuilder.append("\n")
+                    }
                 }
+
             }
             csvBuilder.append("\n")
         }
 
         val sittingActivities = activityDao.getAllStillActivities()
+        csvBuilder.append("activityId\n")
 
         if (sittingActivities.isNotEmpty()) {
-            csvBuilder.append("activityId\n")
             sittingActivities.forEach { activity ->
                 val base = activityDao.getActivityByID(activity.activityId)
 
-                if (base.baseActivity.imported != true ) {
-                    csvBuilder.append("${activity.activityId}")
-                    csvBuilder.append("\n")
+                if (base != null) {
+                    if (base.baseActivity.imported != true) {
+                        csvBuilder.append("${activity.activityId}")
+                        csvBuilder.append("\n")
+                    }
                 }
             }
             csvBuilder.append("\n")
@@ -133,14 +137,16 @@ class ActivityRepository(app: Application) {
         }
 
         val drivingActivities = activityDao.getAllDrivingActivities()
-
+        csvBuilder.append("activityId,avgSpeed\n")
         if (drivingActivities.isNotEmpty()) {
-            csvBuilder.append("activityId,avgSpeed\n")
             drivingActivities.forEach { activity ->
                 val base = activityDao.getActivityByID(activity.activityId)
 
-                if (base.baseActivity.imported != true ) {
-                    csvBuilder.append("${activity.activityId}, ${activity.avgSpeed}")
+                if(base != null) {
+                    if (base.baseActivity.imported != true) {
+                        csvBuilder.append("${activity.activityId}, ${activity.avgSpeed}")
+                        csvBuilder.append("\n")
+                    }
                 }
             }
             csvBuilder.append("\n")
@@ -162,6 +168,12 @@ class ActivityRepository(app: Application) {
             val inputStream = contentResolver.openInputStream(uri)
             val reader = BufferedReader(InputStreamReader(inputStream))
 
+            var lastID = activityDao.getLastActivity()?.baseActivity?.id
+
+            if (lastID == null) {
+                lastID = 0
+            }
+
             // Read the first line to determine the headers
             var line = reader.readLine()
             if (line != null) {
@@ -172,7 +184,7 @@ class ActivityRepository(app: Application) {
                     if(parts[1] != "true") {
                         // Assuming fields are in the correct order
                         val activity = BaseActivity(
-                            id = parts[0].toLong(),
+                            id = parts[0].toLong() + lastID,
                             imported = true,
                             author = parts[2],
                             activityType = parts[3].toActivityType(),
@@ -195,7 +207,7 @@ class ActivityRepository(app: Application) {
             while (line != null && line.isNotEmpty()) {
                 val parts = line.split(",")
                 val walkingActivity = WalkingActivity(
-                    activityId = parts[0].toLong(),
+                    activityId = parts[0].toLong() + lastID,
                     steps = if (parts[1] == "null") {null} else {parts[1].toInt()},
                     avgSpeed = if (parts[2] == "null") {null} else {parts[2].toFloat()},
                 )
@@ -209,7 +221,7 @@ class ActivityRepository(app: Application) {
             while (line != null && line.isNotEmpty()) {
                 val parts = line.split(",")
                 val runningActivity = RunningActivity(
-                    activityId = parts[0].toLong(),
+                    activityId = parts[0].toLong() + lastID,
                     steps = if (parts[1] == "null") {null} else {parts[1].toInt()},
                     avgSpeed = if (parts[2] == "null") {null} else {parts[2].toFloat()},
                 )
@@ -223,7 +235,7 @@ class ActivityRepository(app: Application) {
             while (line != null && line.isNotEmpty()) {
                 val parts = line.split(",")
                 val sittingActivity = SittingActivity(
-                    activityId = parts[0].toLong()
+                    activityId = parts[0].toLong() + lastID
                 )
                 activityDao.insertSittingActivity(sittingActivity)
                 line = reader.readLine()
@@ -235,7 +247,7 @@ class ActivityRepository(app: Application) {
             while (line != null && line.isNotEmpty()) {
                 val parts = line.split(",")
                 val drivingActivity = DrivingActivity(
-                    activityId = parts[0].toLong(),
+                    activityId = parts[0].toLong() + lastID,
                     avgSpeed = parts[1].toFloat()
                 )
                 activityDao.insertDrivingActivity(drivingActivity)
