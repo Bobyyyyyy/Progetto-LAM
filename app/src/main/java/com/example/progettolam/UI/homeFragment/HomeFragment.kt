@@ -97,6 +97,9 @@ class HomeFragment: Fragment() {
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION))
         }
+        else {
+            LocationWorkerScheduler(requireContext(),true)
+        }
 
         walkButton.setOnClickListener { activityButtonListener(it)}
         driveButton.setOnClickListener { activityButtonListener(it)}
