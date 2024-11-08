@@ -182,7 +182,6 @@ class OldActivityInsertFragment: Fragment() {
     }
 
     private fun getLocalTimeFromString(textView: TextView) : LocalTime? {
-        val timeFormatter = DateTimeFormatter.ofPattern("H:mm:ss.SSSSSS")
         var localTime: LocalTime? = null
         try {
             val newTime = "${textView.text}:15.1234567"
@@ -244,10 +243,6 @@ class OldActivityInsertFragment: Fragment() {
         val typeActivity = getTypeActivity()
         val startTime: LocalTime? = getLocalTimeFromString(txtStartTime)
         val endTime: LocalTime? = getLocalTimeFromString(txtEndTime)
-
-        //val prova = java.time.LocalTime(8, 30, 15, 123_456_700)
-        val time = LocalTime.parse("08:30:15.1234567")
-
 
         val date = getLocalDateFromString(txtDate)
         val id = UUID.randomUUID().toString()
