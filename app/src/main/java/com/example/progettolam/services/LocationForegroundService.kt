@@ -71,7 +71,7 @@ class LocationForegroundService : Service() {
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(applicationContext.getString(R.string.geofence_tracking))
             .setContentText(applicationContext.getString(R.string.tracking_location))
-            .setSmallIcon(R.drawable.baseline_person_24)
+            .setSmallIcon(R.drawable.baseline_location_on_24)
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .build()
