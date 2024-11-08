@@ -83,7 +83,7 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
         // Initialize Google Maps, FusedLocationProviderClient, and GeofencingClient
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         geofencingClient = LocationServices.getGeofencingClient(requireActivity())
-        geoFenceHelper = GeofenceHelper(requireContext());
+        geoFenceHelper = GeofenceHelper(requireContext())
 
         // Initialize observers for the geofenceMapViewModel
         geofenceMapViewModel.selectedColor.observe(viewLifecycleOwner) { color ->
@@ -159,13 +159,12 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
                 val lastLocation = location.result
                 if (lastLocation != null) {
                     val loc = LatLng(lastLocation.latitude, lastLocation.longitude)
-                    //mMap.addMarker(MarkerOptions().position(loc).title("Your Current Location"))
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, ZOOM_LEVEL))
                     mMap.isMyLocationEnabled = true
                     mMap.uiSettings.isMyLocationButtonEnabled = true
                 }
             } else {
-                Toast.makeText(requireContext(), ContextCompat.getString(requireContext(), R.string.error_fetch_location), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), ContextCompat.getString(requireContext(), R.string.error_fetch_location), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -214,7 +213,7 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
         if (Build.VERSION.SDK_INT >= 29) {
             // Need background permission
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                handleMapLongClick(p0);
+                handleMapLongClick(p0)
             } else {
                 if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
                     // Show a dialog and ask for permission
@@ -222,17 +221,17 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
                         requireActivity(),
                         arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
                         BACKGROUND_LOCATION_ACCESS_REQUEST_CODE
-                    );
+                    )
                 } else {
                     ActivityCompat.requestPermissions(
                         requireActivity(),
                         arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
                         BACKGROUND_LOCATION_ACCESS_REQUEST_CODE
-                    );
+                    )
                 }
             }
         } else {
-            handleMapLongClick(p0);
+            handleMapLongClick(p0)
         }
     }
 
@@ -274,10 +273,10 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
 
         geofencingClient.addGeofences(geofencingRequest, pendingIntent)
             .addOnSuccessListener {
-                Toast.makeText(requireContext(), ContextCompat.getString(requireContext(), R.string.success_add_geofence), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), ContextCompat.getString(requireContext(), R.string.success_add_geofence), Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { e ->
-                Toast.makeText(requireContext(), ContextCompat.getString(requireContext(), R.string.error_add_geofence), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), ContextCompat.getString(requireContext(), R.string.error_add_geofence), Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -327,11 +326,11 @@ class GeofenceMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMapLongC
                 existingGeofence.remove(geofenceId2remove)
 
                 // Notify the user the successful removal
-                Toast.makeText(requireContext(), ContextCompat.getString(requireContext(), R.string.success_geofence_removal), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), ContextCompat.getString(requireContext(), R.string.success_geofence_removal), Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
                 // Notify the user the successful removal
-                Toast.makeText(requireContext(), ContextCompat.getString(requireContext(), R.string.error_geofence_removal), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), ContextCompat.getString(requireContext(), R.string.error_geofence_removal), Toast.LENGTH_SHORT).show()
             }
 
     }
