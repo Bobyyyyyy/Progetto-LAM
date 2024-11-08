@@ -33,6 +33,7 @@ class FrontpageActivity: AppCompatActivity(){
 
         if (storedName.toString().isNotBlank() && storedName.toString() != value) {
             startActivity(Intent(this@FrontpageActivity, MainActivity::class.java))
+            finish()
         }
 
         confirmButton.setOnClickListener {
@@ -45,8 +46,10 @@ class FrontpageActivity: AppCompatActivity(){
                     }
                 }
                 startActivity(Intent(this, MainActivity::class.java))
+                finish()
             }
         }
+
     }
 
     private fun initViews() {

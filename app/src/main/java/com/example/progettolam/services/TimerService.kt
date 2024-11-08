@@ -22,6 +22,7 @@ import java.util.TimerTask
 class TimerService: Service() {
     private var timeElapsed: Int = -1
     private var isStopWatchRunning = false
+    private var isServiceRunning = false
     private lateinit var notificationManagerCompat: NotificationManagerCompat
 
     private var updateTimer = Timer()
@@ -69,10 +70,12 @@ class TimerService: Service() {
                 }
             }, 0, 1000)
         }
+        else if (isServiceRunning) {startForeground(1,buildNotification())}
     }
 
     fun startStopwatch() {
         isStopWatchRunning = true
+        isServiceRunning = true
         sendStatus()
         stopwatchTimer = Timer()
         stopwatchTimer.schedule(object : TimerTask() {
@@ -99,6 +102,7 @@ class TimerService: Service() {
 
     fun deleteTimer() {
         pauseStopwatch()
+        isServiceRunning = false
         stopwatchTimer.purge()
         stopForeground(STOP_FOREGROUND_REMOVE)
         updateTimer.cancel()

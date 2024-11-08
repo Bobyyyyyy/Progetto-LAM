@@ -83,7 +83,9 @@ open class OnGoingActivity: AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         if(!isChangingConfigurations) {
-            timerService.moveToForeground()
+            if(isBound) {
+                timerService.moveToForeground()
+            }
             unregisterReceiver(timeReceiver)
         }
     }

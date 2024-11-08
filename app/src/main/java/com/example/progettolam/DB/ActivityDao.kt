@@ -116,10 +116,10 @@ ORDER BY steps_per_day.endDate ASC;
     fun getActivityByID(id: String): ActivityJoin
 
     @Transaction
-    @Query("SELECT * FROM base_activity_table WHERE imported = 0 ORDER BY id DESC LIMIT 1")
+    @Query("SELECT * FROM base_activity_table WHERE imported = 0 ORDER BY endTime DESC, endTime DESC LIMIT 1")
     fun getLastActivity(): ActivityJoin?
 
     @Transaction
-    @Query("SELECT * FROM base_activity_table WHERE imported = 0 ORDER BY id DESC LIMIT 1")
+    @Query("SELECT * FROM base_activity_table WHERE imported = 0 ORDER BY endDate DESC, endTime DESC LIMIT 1")
     fun getLastActivityLiveData(): LiveData<ActivityJoin?>
 }
