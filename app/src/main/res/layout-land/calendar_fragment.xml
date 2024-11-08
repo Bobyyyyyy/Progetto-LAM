@@ -65,9 +65,9 @@
             android:text="@string/add_new_activity"
             android:textColor="@color/white"
             app:layout_constraintStart_toEndOf="@+id/importedButton"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/importedButton"
-            app:layout_constraintTop_toTopOf="@+id/importedButton" />
+            app:layout_constraintTop_toTopOf="@+id/importedButton"
+            app:layout_constraintEnd_toEndOf="@+id/recyclerActivity" />
 
     <!-- Button for showing other activities -->
     <Button
@@ -81,6 +81,7 @@
             android:layout_marginBottom="@dimen/half_margin_card_view_chose_activity"
             app:layout_constraintStart_toStartOf="@id/recyclerActivity"
             app:layout_constraintEnd_toStartOf="@id/addActivityBtn"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

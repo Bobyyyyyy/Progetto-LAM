@@ -30,6 +30,7 @@ import com.example.progettolam.DB.WalkingActivity
 import com.example.progettolam.R
 import java.time.LocalDate
 import java.time.LocalTime
+
 import java.time.format.DateTimeFormatter
 import java.util.UUID
 
@@ -181,12 +182,13 @@ class OldActivityInsertFragment: Fragment() {
     }
 
     private fun getLocalTimeFromString(textView: TextView) : LocalTime? {
-        val timeFormatter = DateTimeFormatter.ofPattern("H:mm")
+        val timeFormatter = DateTimeFormatter.ofPattern("H:mm:ss.SSSSSS")
         var localTime: LocalTime? = null
         try {
-            localTime = LocalTime.parse(textView.text.toString(), timeFormatter)
+            val newTime = "${textView.text}:15.1234567"
+            localTime = LocalTime.parse(newTime)
         } catch (e: Exception) {
-            Log.i("LocalTime", "Error")
+            Log.i("LocalTime", "Error: $e")
         }
         return localTime
     }
@@ -240,8 +242,13 @@ class OldActivityInsertFragment: Fragment() {
 
     private fun saveNewActivity() {
         val typeActivity = getTypeActivity()
-        val startTime = getLocalTimeFromString(txtStartTime)
-        val endTime = getLocalTimeFromString(txtEndTime)
+        val startTime: LocalTime? = getLocalTimeFromString(txtStartTime)
+        val endTime: LocalTime? = getLocalTimeFromString(txtEndTime)
+
+        //val prova = java.time.LocalTime(8, 30, 15, 123_456_700)
+        val time = LocalTime.parse("08:30:15.1234567")
+
+
         val date = getLocalDateFromString(txtDate)
         val id = UUID.randomUUID().toString()
         when (typeActivity) {
